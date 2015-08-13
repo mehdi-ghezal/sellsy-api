@@ -1,0 +1,15 @@
+<?php
+
+namespace Sellsy\Tests;
+
+/**
+ * Class Fixtures
+ * @package Sellsy\Tests
+ */
+class Fixtures
+{
+    /**
+     * @var int
+     */
+    public static $catalogueItem = 314159265359;
+}
