@@ -4,6 +4,8 @@ namespace Sellsy\Clients;
 
 use Sellsy\Adapters\BaseAdapter;
 use Sellsy\Clients\Catalogue\ItemCriteria;
+use Sellsy\Clients\Catalogue\ItemsSearchCriteria;
+use Sellsy\Collection\Catalogue\ItemCollection;
 use Sellsy\Models\Catalogue\Item;
 
 /**
@@ -33,6 +35,18 @@ class Catalogue
     {
         return $this->adapter->map(new Item())->call(array(
             'method' => 'Catalogue.getOne',
+            'params' => $criteria->getParameters()
+        ));
+    }
+
+    /**
+     * @param ItemsSearchCriteria $criteria
+     * @return ItemCollection
+     */
+    public function searchItems(ItemsSearchCriteria $criteria)
+    {
+        return $this->adapter->map(new ItemCollection())->call(array(
+            'method' => 'Catalogue.getList',
             'params' => $criteria->getParameters()
         ));
     }

@@ -3,6 +3,7 @@
 namespace Sellsy\Mappers;
 
 use Minime\Annotations\Reader;
+use Sellsy\Collection\Collection;
 
 /**
  * Class BaseMapper
@@ -24,11 +25,25 @@ class BaseMapper
     }
 
     /**
+     * @param object $object The object or the collection to map
+     * @param object $response
+     * @return object The mapped object or collection
+     */
+    public function map($object, $response)
+    {
+        if ($object instanceof Collection) {
+            return $this->mapCollection($object, $response);
+        }
+
+        return $this->mapObject($object, $response);
+    }
+
+    /**
      * @param object $object
      * @param object $response
      * @return object The mapped object
      */
-    public function map($object, $response)
+    protected function mapObject($object, $response)
     {
         $class = get_class($object);
 
@@ -54,6 +69,22 @@ class BaseMapper
         }
 
         return $object;
+    }
+
+    /**
+     * @param Collection $collection
+     * @param object $response
+     * @return object The mapped collection of objects
+     */
+    protected function mapCollection(Collection $collection, $response)
+    {
+        $object = $collection->createCollectionItem();
+
+        foreach($response->result as $result) {
+            $collection->push($this->mapObject($object, $result));
+        }
+
+        return $collection;
     }
 
     /**

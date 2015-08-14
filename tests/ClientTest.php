@@ -59,6 +59,16 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Sellsy\Models\Catalogue\Item', $item);
     }
 
+    /**
+     * @depends testCatalogue
+     */
+    public function testCatalogueSearchItems(Catalogue $catalogue)
+    {
+        $items = $catalogue->searchItems(new Catalogue\ItemsSearchCriteria());
+
+        $this->assertInstanceOf('Sellsy\Collection\Catalogue\ItemCollection', $items);
+    }
+
     public function initializeTestApp()
     {
         if (! file_exists(__DIR__ . '/Fixtures.php')) {
