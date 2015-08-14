@@ -42,7 +42,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testCatalogue(Client $client)
     {
-        $catalogue = $client->getCatalogue();
+        $catalogue = $client->catalogue();
 
         $this->assertInstanceOf('Sellsy\Clients\Catalogue', $catalogue);
 

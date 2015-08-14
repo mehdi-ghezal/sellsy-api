@@ -44,7 +44,7 @@ class Client
     /**
      * @return Catalogue
      */
-    public function getCatalogue()
+    public function catalogue()
     {
         if (! isset($clients['catalogue'])) {
             $clients['catalogue'] = new Catalogue($this->adapter);
