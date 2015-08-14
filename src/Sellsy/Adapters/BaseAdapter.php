@@ -90,8 +90,8 @@ class BaseAdapter
     public function call(array $requestSettings)
     {
         try {
-            /** @var Response $response */
-            $response = Request::post(self::API_ENDPOINT)
+            /** @var Response $result */
+            $httpResponse = Request::post(self::API_ENDPOINT)
                 ->body(array(
                     'request' => 1,
                     'io_mode' => 'json',
@@ -100,40 +100,40 @@ class BaseAdapter
                 ->send();
 
             //OAuth issue : Invalid signature
-            if (false !== strpos($response->body, 'oauth_problem=signature_invalid')) {
+            if (false !== strpos($httpResponse->body, 'oauth_problem=signature_invalid')) {
                 throw new \Exception("The oauth signature is invalid, please verify the authentication credentials provided");
             }
 
             //OAuth issue : Consummer refused
-            if (false !== strpos($response->body, 'oauth_problem=consumer_key_refused)')) {
+            if (false !== strpos($httpResponse->body, 'oauth_problem=consumer_key_refused)')) {
                 throw new \Exception("The consummer key has been refused, please verify it still valid");
             }
 
-            $request = json_decode($response->body);
+            $apiResponse = json_decode($httpResponse->body);
 
             // Sometimes Sellsy send an empty response ; I suppose it append when an internal error append in Sellsy API
-            if (is_null($request)) {
+            if (is_null($apiResponse)) {
                 throw new \Exception(sprintf(
                     "An unexpected error occurred when contacting the Sellsy API, the response is null with HTTP Code %s",
-                    $response->code
+                    $httpResponse->code
                 ));
             }
 
-            if ($request->status != 'success') {
-                $message = $request;
+            if ($apiResponse->status != 'success') {
+                $message = $apiResponse;
 
-                if (is_object($request)) {
-                    $message = $request->error;
+                if (is_object($apiResponse)) {
+                    $message = $apiResponse->error;
 
-                    if (isset($request->more)) {
-                        $message .= ' | ' . $request->more;
+                    if (isset($apiResponse->more)) {
+                        $message .= ' | ' . $apiResponse->more;
                     }
 
-                    if (is_object($request->error)) {
-                        $message = $request->error->message;
+                    if (is_object($apiResponse->error)) {
+                        $message = $apiResponse->error->message;
 
-                        if (isset($request->error->more)) {
-                            $message .= ' | ' . $request->error->more;
+                        if (isset($apiResponse->error->more)) {
+                            $message .= ' | ' . $apiResponse->error->more;
                         }
                     }
                 }
@@ -141,21 +141,21 @@ class BaseAdapter
                 throw new \Exception($message);
             }
 
-            $response = $request->response;
+            $result = $apiResponse->response;
 
             if ($this->subject) {
-                $response = $this->mapper->map($this->subject, $response);
+                $result = $this->mapper->map($this->subject, $result);
                 $this->subject = null;
             }
 
-            return $response;
+            return $result;
         }
         catch(\Exception $e) {
             throw new ServerException(
                 sprintf(
                     'An error occurred during the call of Sellsy API with message "%s". The response is "%s".',
                     $e->getMessage(),
-                    $response->raw_body
+                    $result->raw_body
                 ),
                 $e->getCode(),
                 $e
