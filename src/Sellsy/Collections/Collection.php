@@ -1,10 +1,10 @@
 <?php
 
-namespace Sellsy\Collection;
+namespace Sellsy\Collections;
 
 /**
  * Class Collection
- * @package Sellsy\Collection
+ * @package Sellsy\Collections
  */
 abstract class Collection implements \ArrayAccess, \Countable, \IteratorAggregate
 {

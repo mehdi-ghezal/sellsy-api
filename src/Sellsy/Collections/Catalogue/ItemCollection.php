@@ -1,13 +1,13 @@
 <?php
 
-namespace Sellsy\Collection\Catalogue;
+namespace Sellsy\Collections\Catalogue;
 
-use Sellsy\Collection\Collection;
+use Sellsy\Collections\Collection;
 use Sellsy\Models\Catalogue\Item;
 
 /**
  * Class ItemCollection
- * @package Sellsy\Collection\Catalogue
+ * @package Sellsy\Collections\Catalogue
  */
 class ItemCollection extends Collection
 {

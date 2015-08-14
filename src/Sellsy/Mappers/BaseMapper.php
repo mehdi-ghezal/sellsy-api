@@ -3,7 +3,7 @@
 namespace Sellsy\Mappers;
 
 use Minime\Annotations\Reader;
-use Sellsy\Collection\Collection;
+use Sellsy\Collections\Collection;
 
 /**
  * Class BaseMapper

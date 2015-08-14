@@ -66,7 +66,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $items = $catalogue->searchItems(new Catalogue\ItemsSearchCriteria());
 
-        $this->assertInstanceOf('Sellsy\Collection\Catalogue\ItemCollection', $items);
+        $this->assertInstanceOf('Sellsy\Collections\Catalogue\ItemCollection', $items);
     }
 
     public function initializeTestApp()

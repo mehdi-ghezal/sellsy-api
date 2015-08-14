@@ -5,7 +5,7 @@ namespace Sellsy\Clients;
 use Sellsy\Adapters\BaseAdapter;
 use Sellsy\Clients\Catalogue\ItemCriteria;
 use Sellsy\Clients\Catalogue\ItemsSearchCriteria;
-use Sellsy\Collection\Catalogue\ItemCollection;
+use Sellsy\Collections\Catalogue\ItemCollection;
 use Sellsy\Models\Catalogue\Item;
 
 /**
