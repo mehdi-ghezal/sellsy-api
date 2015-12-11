@@ -24,6 +24,11 @@ class ReadTest extends ClientTest
     public function testSearchEstimates(Documents $documents)
     {
         $criteria = new DocumentsSearchCriteria(DocumentsSearchCriteria::TYPE_ESTIMATE);
+        $criteria->setCreatePeriodStart(new \DateTime());
+        $criteria->setCreatePeriodEnd(new \DateTime());
+        $criteria->setExpirePeriodStart(new \DateTime());
+        $criteria->setExpirePeriodEnd(new \DateTime());
+
         $documents = $documents->searchDocuments($criteria);
 
         $this->assertInstanceOf('Sellsy\Collections\Documents\DocumentCollection', $documents);

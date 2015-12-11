@@ -31,6 +31,26 @@ class DocumentsSearchCriteria implements CriteriaInterface
     protected $type;
 
     /**
+     * @var \DateTime
+     */
+    protected $createPeriodStart;
+
+    /**
+     * @var \DateTime
+     */
+    protected $createPeriodEnd;
+
+    /**
+     * @var \DateTime
+     */
+    protected $expirePeriodStart;
+
+    /**
+     * @var \DateTime
+     */
+    protected $expirePeriodEnd;
+
+    /**
      * @var string
      */
     protected $order = self::ORDER_BY_DISPLAY_DATE;
@@ -85,6 +105,70 @@ class DocumentsSearchCriteria implements CriteriaInterface
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @param \DateTime $createPeriodStart
+     */
+    public function setCreatePeriodStart(\DateTime $createPeriodStart)
+    {
+        $this->createPeriodStart = $createPeriodStart;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatePeriodStart()
+    {
+        return $this->createPeriodStart;
+    }
+
+    /**
+     * @param \DateTime $createPeriodEnd
+     */
+    public function setCreatePeriodEnd(\DateTime $createPeriodEnd)
+    {
+        $this->createPeriodEnd = $createPeriodEnd;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatePeriodEnd()
+    {
+        return $this->createPeriodEnd;
+    }
+
+    /**
+     * @param \DateTime $expirePeriodStart
+     */
+    public function setExpirePeriodStart($expirePeriodStart)
+    {
+        $this->expirePeriodStart = $expirePeriodStart;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getExpirePeriodStart()
+    {
+        return $this->expirePeriodStart;
+    }
+
+    /**
+     * @param \DateTime $expirePeriodEnd
+     */
+    public function setExpirePeriodEnd($expirePeriodEnd)
+    {
+        $this->expirePeriodEnd = $expirePeriodEnd;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getExpirePeriodEnd()
+    {
+        return $this->expirePeriodEnd;
     }
 
     /**
@@ -189,17 +273,29 @@ class DocumentsSearchCriteria implements CriteriaInterface
             'search' => array()
         );
 
+        // Handle period search
+        if ($this->createPeriodStart) {
+            $parameters['search']['periodecreated_start'] = $this->createPeriodStart->getTimestamp();
+        }
+
+        if ($this->createPeriodEnd) {
+            $parameters['search']['periodecreated_end'] = $this->createPeriodEnd->getTimestamp();
+        }
+        if ($this->expirePeriodStart) {
+            $parameters['search']['periodeexpired_start'] = $this->expirePeriodStart->getTimestamp();
+        }
+
+        if ($this->expirePeriodEnd) {
+            $parameters['search']['periodeexpired_end'] = $this->expirePeriodEnd->getTimestamp();
+        }
+
         /*
         'includePayments' => {{includePayments}}
         'search' => array(
             'ident'		=>	{{ident}},
             'steps'		=>	{{steps}},
             'thirds'	=>	{{thirds}},
-            'tags'		=>	{{tags}},
-            'periodecreated_start'	=>	{{periodecreated_start}},
-            'periodecreated_end'	=>	{{periodecreated_end}},
-            'periodeexpired_start'	=>	{{periodeexpired_start}},
-            'periodeexpired_end'	=>	{{periodeexpired_end}},
+            'tags'		=>	{{tags}}
         )
         */
 
