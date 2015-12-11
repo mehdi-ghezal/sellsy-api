@@ -4,6 +4,7 @@ namespace Sellsy\Mappers;
 
 use Minime\Annotations\Reader;
 use Sellsy\Collections\Collection;
+use Sellsy\Exception\RuntimeException;
 
 /**
  * Class BaseMapper
@@ -57,6 +58,28 @@ class BaseMapper
                 continue;
             }
 
+            // The property value is a related object, we handle it
+            if (is_object($object->$property)) {
+                $data = $response;
+
+                // Mapping of response data
+                if (is_object($key)) {
+                    $data = new \stdClass();
+
+                    foreach($key as $origin => $target) {
+                        $data->$target = $this->extractData($origin, $response);
+                    }
+                }
+
+                $object->$property = $this->mapObject($object->$property, $data);
+                continue;
+            }
+
+            // The property value is not an object (ie. previous if) ; we check that the key is not an object
+            if (is_object($key)) {
+                throw new RuntimeException(sprintf("The @copy annotation is an object, property %s have to be an object too", $property));
+            }
+
             $object->$property = $this->extractData($key, $response);
 
             $convert = $propertyAnnotation->get('convert');
@@ -64,6 +87,12 @@ class BaseMapper
             switch($convert) {
                 case 'boolean' :
                     $object->$property = $object->$property === "Y" || $object->$property === "y";
+                    break;
+                case 'float' :
+                    $object->$property = filter_var($object->$property, FILTER_VALIDATE_FLOAT);
+                    break;
+                case 'date' :
+                    $object->$property = new \DateTime($object->$property);
                     break;
             }
         }
@@ -78,10 +107,8 @@ class BaseMapper
      */
     protected function mapCollection(Collection $collection, $response)
     {
-        $object = $collection->createCollectionItem();
-
         foreach($response->result as $result) {
-            $collection->push($this->mapObject($object, $result));
+            $collection->push($this->mapObject($collection->createCollectionItem(), $result));
         }
 
         return $collection;
@@ -95,11 +122,11 @@ class BaseMapper
     protected function extractData($key, $response)
     {
         if (strpos($key, '.') === false) {
-            return $response->$key;
+            return isset($response->$key) ? $response->$key : null;
         }
 
         foreach(explode('.', $key) as $keyPart) {
-            $response = $response->$keyPart;
+            $response = isset($response->$keyPart) ? $response->$keyPart : null;
         }
 
         return $response;

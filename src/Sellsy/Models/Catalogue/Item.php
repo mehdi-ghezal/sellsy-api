@@ -2,6 +2,8 @@
 
 namespace Sellsy\Models\Catalogue;
 
+use Sellsy\Models\Staff\People;
+
 /**
  * Class Item
  * @package Sellsy\Models\Catalogue
@@ -29,18 +31,6 @@ class Item
     public $isEnabled;
 
     /**
-     * @var int
-     * @copy corpid
-     */
-    public $company;
-
-    /**
-     * @var int
-     * @copy ownerid
-     */
-    public $owner;
-
-    /**
      * @var string
      * @copy
      */
@@ -51,4 +41,20 @@ class Item
      * @copy
      */
     public $tradename;
+
+    /**
+     * @var People
+     * @copy {
+     *      "ownerid" : "id"
+     * }
+     */
+    public $owner;
+
+    /**
+     * Constructor : Initialize attributes
+     */
+    public function __construct()
+    {
+        $this->owner = new People();
+    }
 } 

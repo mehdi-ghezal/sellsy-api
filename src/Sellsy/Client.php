@@ -4,6 +4,7 @@ namespace Sellsy;
 
 use Sellsy\Adapters\BaseAdapter;
 use Sellsy\Clients\Catalogue;
+use Sellsy\Clients\Documents;
 use Sellsy\Models\ApiInfos;
 
 /**
@@ -51,5 +52,17 @@ class Client
         }
 
         return $clients['catalogue'];
+    }
+
+    /**
+     * @return Documents
+     */
+    public function documents()
+    {
+        if (! isset($clients['documents'])) {
+            $clients['documents'] = new Documents($this->adapter);
+        }
+
+        return $clients['documents'];
     }
 }

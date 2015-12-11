@@ -90,7 +90,7 @@ class BaseAdapter
     public function call(array $requestSettings)
     {
         try {
-            /** @var Response $result */
+            /** @var Response $httpResponse */
             $httpResponse = Request::post(self::API_ENDPOINT)
                 ->body(array(
                     'request' => 1,
@@ -155,7 +155,7 @@ class BaseAdapter
                 sprintf(
                     'An error occurred during the call of Sellsy API with message "%s". The response is "%s".',
                     $e->getMessage(),
-                    $result->raw_body
+                    isset($httpResponse) ? $httpResponse->raw_body : ""
                 ),
                 $e->getCode(),
                 $e
