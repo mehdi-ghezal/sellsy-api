@@ -3,7 +3,7 @@
 namespace Sellsy\Clients;
 
 use Sellsy\Adapters\BaseAdapter;
-use Sellsy\Clients\Documents\DocumentsSearchCriteria;
+use Sellsy\Criteria\Documents\DocumentsSearchCriteria;
 use Sellsy\Collections\Documents\DocumentCollection;
 
 /**

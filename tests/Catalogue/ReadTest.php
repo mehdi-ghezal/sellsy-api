@@ -2,8 +2,8 @@
 
 namespace Sellsy\Tests\Catalogue;
 
-use Sellsy\Clients\Catalogue\ItemCriteria;
-use Sellsy\Clients\Catalogue\ItemsSearchCriteria;
+use Sellsy\Criteria\Catalogue\ItemCriteria;
+use Sellsy\Criteria\Catalogue\ItemsSearchCriteria;
 use Sellsy\Clients\Catalogue;
 use Sellsy\Tests\Fixtures\Catalogue as CatalogueFixtures;
 use Sellsy\Tests\Fixtures\Clients;

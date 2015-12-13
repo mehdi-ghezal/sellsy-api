@@ -1,19 +1,24 @@
 <?php
 
-namespace Sellsy\Clients\Catalogue;
+namespace Sellsy\Criteria\Catalogue;
 
 use Sellsy\Interfaces\CriteriaInterface;
 
 /**
  * Class ItemsSearchCriteria
- * @package Sellsy\Clients\Catalogue
+ * @package Sellsy\Criteria\Catalogue
  */
 class ItemsSearchCriteria implements CriteriaInterface
 {
     /**
      * @var string
      */
-    public $name;
+    protected $name;
+
+    /**
+     * @var int
+     */
+    protected $category;
 
     /**
      * @var array
@@ -21,18 +26,72 @@ class ItemsSearchCriteria implements CriteriaInterface
     protected $tags;
 
     /**
-     * @var int
+     * @param string $name
      */
-    public $category;
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 
     /**
-     * @param $tag
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param int $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param string $tag
      * @return $this
      */
     public function addTag($tag)
     {
         $this->tags[] = $tag;
         return $this;
+    }
+
+    /**
+     * @param array $tags
+     * @return $this
+     */
+    public function setTags(array $tags)
+    {
+        $this->tags = $tags;
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function clearTags()
+    {
+        $this->tags = array();
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 
     /**

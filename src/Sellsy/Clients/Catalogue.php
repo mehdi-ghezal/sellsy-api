@@ -3,8 +3,8 @@
 namespace Sellsy\Clients;
 
 use Sellsy\Adapters\BaseAdapter;
-use Sellsy\Clients\Catalogue\ItemCriteria;
-use Sellsy\Clients\Catalogue\ItemsSearchCriteria;
+use Sellsy\Criteria\Catalogue\ItemCriteria;
+use Sellsy\Criteria\Catalogue\ItemsSearchCriteria;
 use Sellsy\Collections\Catalogue\ItemCollection;
 use Sellsy\Models\Catalogue\Item;
 

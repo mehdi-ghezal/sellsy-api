@@ -3,7 +3,7 @@
 namespace Sellsy\Tests\Documents;
 
 use Sellsy\Clients\Documents;
-use Sellsy\Clients\Documents\DocumentsSearchCriteria;
+use Sellsy\Criteria\Documents\DocumentsSearchCriteria;
 use Sellsy\Tests\Fixtures\Clients;
 use Sellsy\Tests\Generic\ClientTest;
 

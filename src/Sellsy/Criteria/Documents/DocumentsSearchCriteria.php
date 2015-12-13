@@ -1,13 +1,13 @@
 <?php
 
-namespace Sellsy\Clients\Documents;
+namespace Sellsy\Criteria\Documents;
 
 use Sellsy\Exception\RuntimeException;
 use Sellsy\Interfaces\CriteriaInterface;
 
 /**
  * Class DocumentsSearchCriteria
- * @package Sellsy\Clients\Catalogue
+ * @package Sellsy\Criteria\Documents
  */
 class DocumentsSearchCriteria implements CriteriaInterface
 {
