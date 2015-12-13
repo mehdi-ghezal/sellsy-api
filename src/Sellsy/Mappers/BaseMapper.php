@@ -10,7 +10,7 @@ use Sellsy\Exception\RuntimeException;
  * Class BaseMapper
  * @package Sellsy\Mappers
  */
-class BaseMapper
+class BaseMapper implements MapperInterface
 {
     /**
      * @var Reader
@@ -26,25 +26,12 @@ class BaseMapper
     }
 
     /**
-     * @param object $object The object or the collection to map
-     * @param object $response
-     * @return object The mapped object or collection
+     * @param $object
+     * @param $response
+     * @return mixed
+     * @throws RuntimeException
      */
-    public function map($object, $response)
-    {
-        if ($object instanceof Collection) {
-            return $this->mapCollection($object, $response);
-        }
-
-        return $this->mapObject($object, $response);
-    }
-
-    /**
-     * @param object $object
-     * @param object $response
-     * @return object The mapped object
-     */
-    protected function mapObject($object, $response)
+    public function mapObject($object, $response)
     {
         $class = get_class($object);
 
@@ -102,12 +89,12 @@ class BaseMapper
 
     /**
      * @param Collection $collection
-     * @param object $response
+     * @param object $results
      * @return object The mapped collection of objects
      */
-    protected function mapCollection(Collection $collection, $response)
+    public function mapCollection(Collection $collection, $results)
     {
-        foreach($response->result as $result) {
+        foreach($results as $result) {
             $collection->push($this->mapObject($collection->createCollectionItem(), $result));
         }
 

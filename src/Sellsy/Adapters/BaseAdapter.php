@@ -7,7 +7,7 @@ use Httpful\Request;
 use Httpful\Response;
 use Sellsy\Exception\RuntimeException;
 use Sellsy\Exception\ServerException;
-use Sellsy\Mappers\BaseMapper;
+use Sellsy\Mappers\MapperInterface;
 
 /**
  * Class BaseAdapter
@@ -21,12 +21,12 @@ class BaseAdapter
     const API_ENDPOINT = "https://apifeed.sellsy.com/0/";
 
     /**
-     * @var BaseMapper
+     * @var MapperInterface
      */
     protected $mapper;
 
     /**
-     * @var object
+     * @var mixed
      */
     protected $subject;
 
@@ -59,17 +59,17 @@ class BaseAdapter
     }
 
     /**
-     * @param BaseMapper $mapper
+     * @param MapperInterface $mapper
      */
-    public function setMapper(BaseMapper $mapper)
+    public function setMapper(MapperInterface $mapper)
     {
         $this->mapper = $mapper;
     }
 
     /**
-     * @param $object
+     * @param mixed $object
      * @return $this
-     * @throws \Sellsy\Exception\RuntimeException
+     * @throws RuntimeException
      */
     public function map($object)
     {
@@ -141,14 +141,19 @@ class BaseAdapter
                 throw new \Exception($message);
             }
 
-            $result = $apiResponse->response;
+            $apiResult = $apiResponse->response;
 
             if ($this->subject) {
-                $result = $this->mapper->map($this->subject, $result);
+                if (isset($apiResult->result)) {
+                    $apiResult = $this->mapper->mapCollection($this->subject, $apiResult->result);
+                } else {
+                    $apiResult = $this->mapper->mapObject($this->subject, $apiResult);
+                }
+
                 $this->subject = null;
             }
 
-            return $result;
+            return $apiResult;
         }
         catch(\Exception $e) {
             throw new ServerException(
