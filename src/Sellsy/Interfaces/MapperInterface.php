@@ -1,6 +1,6 @@
 <?php
 
-namespace Sellsy\Mappers;
+namespace Sellsy\Interfaces;
 
 use Sellsy\Collections\Collection;
 

@@ -7,7 +7,7 @@ use Httpful\Request;
 use Httpful\Response;
 use Sellsy\Exception\RuntimeException;
 use Sellsy\Exception\ServerException;
-use Sellsy\Mappers\MapperInterface;
+use Sellsy\Interfaces\MapperInterface;
 
 /**
  * Class BaseAdapter

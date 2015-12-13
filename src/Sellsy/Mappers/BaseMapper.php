@@ -5,6 +5,7 @@ namespace Sellsy\Mappers;
 use Minime\Annotations\Reader;
 use Sellsy\Collections\Collection;
 use Sellsy\Exception\RuntimeException;
+use Sellsy\Interfaces\MapperInterface;
 
 /**
  * Class BaseMapper
