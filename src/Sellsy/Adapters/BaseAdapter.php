@@ -21,6 +21,21 @@ class BaseAdapter
     const API_ENDPOINT = "https://apifeed.sellsy.com/0/";
 
     /**
+     * @var string
+     */
+    protected $oauthConsumerKey;
+
+    /**
+     * @var string
+     */
+    protected $oauthSignature;
+
+    /**
+     * @var string
+     */
+    protected $oauthToken;
+
+    /**
      * @var MapperInterface
      */
     protected $mapper;
@@ -38,24 +53,9 @@ class BaseAdapter
      */
     public function __construct($consumerToken, $consumerSecret, $userToken, $userSecret)
     {
-        $encodedKey = rawurlencode($consumerSecret).'&'.rawurlencode($userSecret);
-
-        $oauthHeader = sprintf(
-            "OAuth %s, %s, %s, %s, %s, %s, %s",
-            sprintf('oauth_consumer_key="%s"',      rawurlencode($consumerToken)),
-            sprintf('oauth_token="%s"',             rawurlencode($userToken)),
-            sprintf('oauth_nonce="%s"',             md5(time() + rand(0,1000))),
-            sprintf('oauth_timestamp="%s"',         time()),
-            sprintf('oauth_signature_method="%s"',  'PLAINTEXT'),
-            sprintf('oauth_signature="%s"',         rawurlencode($encodedKey)),
-            sprintf('oauth_version="%s"',           '1.0')
-        );
-
-        $template = Request::init()
-            ->contentType(Mime::FORM)
-            ->addHeader('Authorization', $oauthHeader);
-
-        Request::ini($template);
+        $this->oauthConsumerKey = rawurlencode($consumerToken);
+        $this->oauthToken = rawurlencode($userToken);
+        $this->oauthSignature = rawurlencode(rawurlencode($consumerSecret).'&'.rawurlencode($userSecret));
     }
 
     /**
@@ -92,6 +92,17 @@ class BaseAdapter
         try {
             /** @var Response $httpResponse */
             $httpResponse = Request::post(self::API_ENDPOINT)
+                ->addHeader('Authorization', sprintf(
+                    "OAuth %s, %s, %s, %s, %s, %s, %s",
+                    sprintf('oauth_consumer_key="%s"',      $this->oauthConsumerKey),
+                    sprintf('oauth_token="%s"',             $this->oauthToken),
+                    sprintf('oauth_nonce="%s"',             md5(time() + rand(0,1000))),
+                    sprintf('oauth_timestamp="%s"',         time()),
+                    sprintf('oauth_signature_method="%s"',  'PLAINTEXT'),
+                    sprintf('oauth_signature="%s"',         $this->oauthSignature),
+                    sprintf('oauth_version="%s"',           '1.0')
+                ))
+                ->contentType(Mime::FORM)
                 ->body(array(
                     'request' => 1,
                     'io_mode' => 'json',
