@@ -2,12 +2,9 @@
 
 namespace Sellsy\Adapters;
 
-use Httpful\Mime;
-use Httpful\Request;
-use Httpful\Response;
 use Sellsy\Exception\RuntimeException;
-use Sellsy\Exception\ServerException;
 use Sellsy\Interfaces\MapperInterface;
+use Sellsy\Interfaces\TransportInterface;
 
 /**
  * Class BaseAdapter
@@ -16,24 +13,9 @@ use Sellsy\Interfaces\MapperInterface;
 class BaseAdapter
 {
     /**
-     * @var string
+     * @var TransportInterface
      */
-    const API_ENDPOINT = "https://apifeed.sellsy.com/0/";
-
-    /**
-     * @var string
-     */
-    protected $oauthConsumerKey;
-
-    /**
-     * @var string
-     */
-    protected $oauthSignature;
-
-    /**
-     * @var string
-     */
-    protected $oauthToken;
+    protected $transport;
 
     /**
      * @var MapperInterface
@@ -46,16 +28,13 @@ class BaseAdapter
     protected $subject;
 
     /**
-     * @param string $consumerToken
-     * @param string $consumerSecret
-     * @param string $userToken
-     * @param string $userSecret
+     * BaseAdapter constructor.
+     *
+     * @param TransportInterface $transport
      */
-    public function __construct($consumerToken, $consumerSecret, $userToken, $userSecret)
+    public function __construct(TransportInterface $transport)
     {
-        $this->oauthConsumerKey = rawurlencode($consumerToken);
-        $this->oauthToken = rawurlencode($userToken);
-        $this->oauthSignature = rawurlencode(rawurlencode($consumerSecret).'&'.rawurlencode($userSecret));
+        $this->transport = $transport;
     }
 
     /**
@@ -84,98 +63,23 @@ class BaseAdapter
 
     /**
      * @param array $requestSettings
-     * @return mixed
+     * @return mixed|object
      * @throws \Sellsy\Exception\ServerException
      */
     public function call(array $requestSettings)
     {
-        try {
-            /** @var Response $httpResponse */
-            $httpResponse = Request::post(self::API_ENDPOINT)
-                ->addHeader('Authorization', sprintf(
-                    "OAuth %s, %s, %s, %s, %s, %s, %s",
-                    sprintf('oauth_consumer_key="%s"',      $this->oauthConsumerKey),
-                    sprintf('oauth_token="%s"',             $this->oauthToken),
-                    sprintf('oauth_nonce="%s"',             md5(time() + rand(0,1000))),
-                    sprintf('oauth_timestamp="%s"',         time()),
-                    sprintf('oauth_signature_method="%s"',  'PLAINTEXT'),
-                    sprintf('oauth_signature="%s"',         $this->oauthSignature),
-                    sprintf('oauth_version="%s"',           '1.0')
-                ))
-                ->contentType(Mime::FORM)
-                ->body(array(
-                    'request' => 1,
-                    'io_mode' => 'json',
-                    'do_in' => json_encode($requestSettings),
-                ))
-                ->send();
+        $apiResult = $this->transport->call($requestSettings);
 
-            //OAuth issue : Invalid signature
-            if (false !== strpos($httpResponse->body, 'oauth_problem=signature_invalid')) {
-                throw new \Exception("The oauth signature is invalid, please verify the authentication credentials provided");
+        if ($this->subject) {
+            if (isset($apiResult->response->result)) {
+                $apiResult = $this->mapper->mapCollection($this->subject, $apiResult->response->result);
+            } else {
+                $apiResult = $this->mapper->mapObject($this->subject, $apiResult->response);
             }
 
-            //OAuth issue : Consummer refused
-            if (false !== strpos($httpResponse->body, 'oauth_problem=consumer_key_refused)')) {
-                throw new \Exception("The consummer key has been refused, please verify it still valid");
-            }
-
-            $apiResponse = json_decode($httpResponse->body);
-
-            // Sometimes Sellsy send an empty response ; I suppose it append when an internal error append in Sellsy API
-            if (is_null($apiResponse)) {
-                throw new \Exception(sprintf(
-                    "An unexpected error occurred when contacting the Sellsy API, the response is null with HTTP Code %s",
-                    $httpResponse->code
-                ));
-            }
-
-            if ($apiResponse->status != 'success') {
-                $message = $apiResponse;
-
-                if (is_object($apiResponse)) {
-                    $message = $apiResponse->error;
-
-                    if (isset($apiResponse->more)) {
-                        $message .= ' | ' . $apiResponse->more;
-                    }
-
-                    if (is_object($apiResponse->error)) {
-                        $message = $apiResponse->error->message;
-
-                        if (isset($apiResponse->error->more)) {
-                            $message .= ' | ' . $apiResponse->error->more;
-                        }
-                    }
-                }
-
-                throw new \Exception($message);
-            }
-
-            $apiResult = $apiResponse->response;
-
-            if ($this->subject) {
-                if (isset($apiResult->result)) {
-                    $apiResult = $this->mapper->mapCollection($this->subject, $apiResult->result);
-                } else {
-                    $apiResult = $this->mapper->mapObject($this->subject, $apiResult);
-                }
-
-                $this->subject = null;
-            }
-
-            return $apiResult;
+            $this->subject = null;
         }
-        catch(\Exception $e) {
-            throw new ServerException(
-                sprintf(
-                    'An error occurred during the call of Sellsy API with message "%s". The response is "%s".',
-                    $e->getMessage(),
-                    isset($httpResponse) ? $httpResponse->raw_body : ""
-                ),
-                $e->getCode(),
-                $e
-            );
-        }
+
+        return $apiResult;
     }
 }

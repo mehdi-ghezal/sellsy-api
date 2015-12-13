@@ -26,7 +26,7 @@ class Client
     /**
      * @param BaseAdapter $adapter
      */
-    public function __construct($adapter)
+    public function __construct(BaseAdapter $adapter)
     {
         $this->adapter = $adapter;
     }
