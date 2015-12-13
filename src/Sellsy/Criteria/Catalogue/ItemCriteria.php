@@ -2,19 +2,14 @@
 
 namespace Sellsy\Criteria\Catalogue;
 
-use Sellsy\Interfaces\CriteriaInterface;
+use Sellsy\Criteria\Generic\GetOneCriteria;
 
 /**
  * Class ItemCriteria
  * @package Sellsy\Criteria\Catalogue
  */
-class ItemCriteria implements CriteriaInterface
+class ItemCriteria extends GetOneCriteria
 {
-    /**
-     * @var int
-     */
-    protected $itemIdentifier;
-
     /**
      * @var bool
      */
@@ -24,30 +19,6 @@ class ItemCriteria implements CriteriaInterface
      * @var bool
      */
     protected $includeRelatedItems = false;
-
-    /**
-     * @param int $itemIdentifier
-     */
-    public function __construct($itemIdentifier)
-    {
-        $this->itemIdentifier = $itemIdentifier;
-    }
-
-    /**
-     * @param int $itemIdentifier
-     */
-    public function setItemIdentifier($itemIdentifier)
-    {
-        $this->itemIdentifier = $itemIdentifier;
-    }
-
-    /**
-     * @return int
-     */
-    public function getItemIdentifier()
-    {
-        return $this->itemIdentifier;
-    }
 
     /**
      * @param boolean $includeDeclinaisons
@@ -88,7 +59,7 @@ class ItemCriteria implements CriteriaInterface
     {
         return array(
             'type' => 'item',
-            'id' => $this->itemIdentifier,
+            'id' => $this->id,
             'includeDecli' => $this->includeDeclinaisons,
             'includeAssociatedItems' => $this->includeRelatedItems
         );
