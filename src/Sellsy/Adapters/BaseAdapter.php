@@ -2,30 +2,19 @@
 
 namespace Sellsy\Adapters;
 
-use Sellsy\Exception\RuntimeException;
-use Sellsy\Interfaces\MapperInterface;
+use Sellsy\Interfaces\AdapterInterface;
 use Sellsy\Interfaces\TransportInterface;
 
 /**
  * Class BaseAdapter
  * @package Sellsy\Adapters
  */
-class BaseAdapter
+class BaseAdapter implements AdapterInterface
 {
     /**
      * @var TransportInterface
      */
     protected $transport;
-
-    /**
-     * @var MapperInterface
-     */
-    protected $mapper;
-
-    /**
-     * @var mixed
-     */
-    protected $subject;
 
     /**
      * BaseAdapter constructor.
@@ -38,48 +27,21 @@ class BaseAdapter
     }
 
     /**
-     * @param MapperInterface $mapper
-     */
-    public function setMapper(MapperInterface $mapper)
-    {
-        $this->mapper = $mapper;
-    }
-
-    /**
      * @param mixed $object
      * @return $this
-     * @throws RuntimeException
      */
     public function map($object)
     {
-        if (! $this->mapper) {
-            throw new RuntimeException("Map an object is available only if you bind a mapper with the setMapper method");
-        }
-
-        $this->subject = $object;
-
         return $this;
     }
 
     /**
      * @param array $requestSettings
-     * @return mixed|object
+     * @return array
      * @throws \Sellsy\Exception\ServerException
      */
     public function call(array $requestSettings)
     {
-        $apiResult = $this->transport->call($requestSettings);
-
-        if ($this->subject) {
-            if (isset($apiResult->response->result)) {
-                $apiResult = $this->mapper->mapCollection($this->subject, $apiResult->response->result);
-            } else {
-                $apiResult = $this->mapper->mapObject($this->subject, $apiResult->response);
-            }
-
-            $this->subject = null;
-        }
-
-        return $apiResult;
+        return $this->transport->call($requestSettings);
     }
 }

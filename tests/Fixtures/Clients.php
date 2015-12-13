@@ -5,9 +5,9 @@ namespace Sellsy\Tests\Fixtures;
 use Minime\Annotations\Cache\ArrayCache;
 use Minime\Annotations\Parser;
 use Minime\Annotations\Reader;
-use Sellsy\Adapters\BaseAdapter;
+use Sellsy\Adapters\MapperAdapter;
 use Sellsy\Transports\Httpful;
-use Sellsy\Mappers\BaseMapper;
+use Sellsy\Mappers\MinimeMapper;
 use Sellsy\Client;
 
 /**
@@ -28,14 +28,11 @@ class Clients
     {
         if (!self::$validClient) {
             $reader = new Reader(new Parser(), new ArrayCache());
-            $mapper = new BaseMapper($reader);
+            $mapper = new MinimeMapper($reader);
 
             $transport = new Httpful(Credentials::$consumerToken, Credentials::$consumerSecret, Credentials::$userToken, Credentials::$userSecret);
 
-            $adapter = new BaseAdapter($transport);
-            $adapter->setMapper($mapper);
-
-            self::$validClient = new Client($adapter);
+            self::$validClient = new Client(new MapperAdapter($transport, $mapper));
         }
 
         return self::$validClient;

@@ -2,9 +2,9 @@
 
 namespace Sellsy\Clients;
 
-use Sellsy\Adapters\BaseAdapter;
 use Sellsy\Criteria\Documents\DocumentsSearchCriteria;
 use Sellsy\Collections\Documents\DocumentCollection;
+use Sellsy\Interfaces\AdapterInterface;
 
 /**
  * Class Documents
@@ -13,14 +13,14 @@ use Sellsy\Collections\Documents\DocumentCollection;
 class Documents
 {
     /**
-     * @var BaseAdapter
+     * @var AdapterInterface
      */
     protected $adapter;
 
     /**
-     * @param BaseAdapter $adapter
+     * @param AdapterInterface $adapter
      */
-    public function __construct(BaseAdapter $adapter)
+    public function __construct(AdapterInterface $adapter)
     {
         $this->adapter = $adapter;
     }

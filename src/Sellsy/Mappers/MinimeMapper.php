@@ -8,10 +8,10 @@ use Sellsy\Exception\RuntimeException;
 use Sellsy\Interfaces\MapperInterface;
 
 /**
- * Class BaseMapper
+ * Class MinimeMapper
  * @package Sellsy\Mappers
  */
-class BaseMapper implements MapperInterface
+class MinimeMapper implements MapperInterface
 {
     /**
      * @var Reader

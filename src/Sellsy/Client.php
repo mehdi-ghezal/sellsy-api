@@ -2,9 +2,9 @@
 
 namespace Sellsy;
 
-use Sellsy\Adapters\BaseAdapter;
 use Sellsy\Clients\Catalogue;
 use Sellsy\Clients\Documents;
+use Sellsy\Interfaces\AdapterInterface;
 use Sellsy\Models\ApiInfos;
 
 /**
@@ -14,7 +14,7 @@ use Sellsy\Models\ApiInfos;
 class Client
 {
     /**
-     * @var BaseAdapter
+     * @var AdapterInterface
      */
     protected $adapter;
 
@@ -24,9 +24,9 @@ class Client
     protected $clients = array();
 
     /**
-     * @param BaseAdapter $adapter
+     * @param AdapterInterface $adapter
      */
-    public function __construct(BaseAdapter $adapter)
+    public function __construct(AdapterInterface $adapter)
     {
         $this->adapter = $adapter;
     }

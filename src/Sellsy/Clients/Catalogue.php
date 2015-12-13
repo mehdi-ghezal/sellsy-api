@@ -2,10 +2,10 @@
 
 namespace Sellsy\Clients;
 
-use Sellsy\Adapters\BaseAdapter;
 use Sellsy\Criteria\Catalogue\ItemCriteria;
 use Sellsy\Criteria\Catalogue\ItemsSearchCriteria;
 use Sellsy\Collections\Catalogue\ItemCollection;
+use Sellsy\Interfaces\AdapterInterface;
 use Sellsy\Models\Catalogue\Item;
 
 /**
@@ -15,14 +15,14 @@ use Sellsy\Models\Catalogue\Item;
 class Catalogue
 {
     /**
-     * @var BaseAdapter
+     * @var AdapterInterface
      */
     protected $adapter;
 
     /**
-     * @param BaseAdapter $adapter
+     * @param AdapterInterface $adapter
      */
-    public function __construct(BaseAdapter $adapter)
+    public function __construct(AdapterInterface $adapter)
     {
         $this->adapter = $adapter;
     }
