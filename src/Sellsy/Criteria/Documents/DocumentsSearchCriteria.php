@@ -11,19 +11,30 @@ use Sellsy\Interfaces\CriteriaInterface;
  */
 class DocumentsSearchCriteria implements CriteriaInterface
 {
+    /**
+     * @var string
+     */
     const TYPE_INVOICE = 'invoice';
+
+    /**
+     * @var string
+     */
     const TYPE_ESTIMATE = 'estimate';
+
+    /**
+     * @var string
+     */
     const TYPE_PROFORMA = 'proforma';
+
+    /**
+     * @var string
+     */
     const TYPE_DELIVERY = 'delivery';
+
+    /**
+     * @var string
+     */
     const TYPE_ORDER = 'order';
-
-    const ORDER_DIRECTION_ASC = 'ASC';
-    const ORDER_DIRECTION_DESC = 'DESC';
-
-    const ORDER_BY_IDENTIFIER = 'doc_ident';
-    const ORDER_BY_CUSTOMER_NAME = 'doc_thirdname';
-    const ORDER_BY_DISPLAY_DATE = 'doc_displayedDate';
-    const ORDER_BY_AMOUNT = 'doc_totalAmountTaxesFree';
 
     /**
      * @var string
@@ -49,26 +60,6 @@ class DocumentsSearchCriteria implements CriteriaInterface
      * @var \DateTime
      */
     protected $expirePeriodEnd;
-
-    /**
-     * @var string
-     */
-    protected $order = self::ORDER_BY_DISPLAY_DATE;
-
-    /**
-     * @var string
-     */
-    protected $orderDirection = self::ORDER_DIRECTION_ASC;
-
-    /**
-     * @var int
-     */
-    protected $resultsPerPage = 10;
-
-    /**
-     * @var int
-     */
-    protected $page = 1;
 
     /**
      * Constructor
@@ -172,89 +163,6 @@ class DocumentsSearchCriteria implements CriteriaInterface
     }
 
     /**
-     * @param $order
-     * @throws \Sellsy\Exception\RuntimeException
-     */
-    public function setOrder($order)
-    {
-        switch($order) {
-            case self::ORDER_BY_IDENTIFIER :
-            case self::ORDER_BY_CUSTOMER_NAME :
-            case self::ORDER_BY_DISPLAY_DATE :
-            case self::ORDER_BY_AMOUNT :
-                $this->order = $order;
-                break;
-            default :
-                throw new RuntimeException(sprintf('Invalid order "%s" provide ; please use ORDER_BY_* constant provide by class %s.', $order, __CLASS__));
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getOrder()
-    {
-        return $this->order;
-    }
-
-    /**
-     * @param $orderDirection
-     * @throws \Sellsy\Exception\RuntimeException
-     */
-    public function setOrderDirection($orderDirection)
-    {
-        switch($orderDirection) {
-            case self::ORDER_DIRECTION_ASC :
-            case self::ORDER_DIRECTION_DESC :
-                $this->orderDirection = $orderDirection;
-                break;
-            default :
-                throw new RuntimeException(sprintf('Invalid order direction "%s" provide ; please use ORDER_DIRECTION_* constant provide by class %s.', $orderDirection, __CLASS__));
-        }
-
-    }
-
-    /**
-     * @return string
-     */
-    public function getOrderDirection()
-    {
-        return $this->orderDirection;
-    }
-
-    /**
-     * @param int $page
-     */
-    public function setPage($page)
-    {
-        $this->page = $page;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPage()
-    {
-        return $this->page;
-    }
-
-    /**
-     * @param int $resultsPerPage
-     */
-    public function setResultsPerPage($resultsPerPage)
-    {
-        $this->resultsPerPage = $resultsPerPage;
-    }
-
-    /**
-     * @return int
-     */
-    public function getResultsPerPage()
-    {
-        return $this->resultsPerPage;
-    }
-
-    /**
      * @return array
      */
     public function getParameters()
@@ -262,14 +170,6 @@ class DocumentsSearchCriteria implements CriteriaInterface
         // Initialize parameters
         $parameters = array(
             'doctype' => $this->type,
-            'order' => array(
-                'order' => $this->order,
-                'direction' => $this->orderDirection
-            ),
-			'pagination' => array (
-                'nbperpage'	=> $this->resultsPerPage,
-				'pagenum' => $this->page
-            ),
             'search' => array()
         );
 

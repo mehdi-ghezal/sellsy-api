@@ -89,20 +89,6 @@ class MinimeMapper implements MapperInterface
     }
 
     /**
-     * @param Collection $collection
-     * @param object $results
-     * @return object The mapped collection of objects
-     */
-    public function mapCollection(Collection $collection, $results)
-    {
-        foreach($results as $result) {
-            $collection->push($this->mapObject($collection->createCollectionItem(), $result));
-        }
-
-        return $collection;
-    }
-
-    /**
      * @param $key
      * @param $response
      * @return mixed

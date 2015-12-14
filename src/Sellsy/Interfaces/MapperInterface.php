@@ -16,11 +16,4 @@ interface MapperInterface
      * @return mixed
      */
     public function mapObject($object, $response);
-
-    /**
-     * @param Collection $collection
-     * @param object $results
-     * @return object The mapped collection of objects
-     */
-    public function mapCollection(Collection $collection, $results);
 }

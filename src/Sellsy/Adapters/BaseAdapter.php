@@ -2,7 +2,10 @@
 
 namespace Sellsy\Adapters;
 
+use Sellsy\Criteria\Order;
+use Sellsy\Criteria\Paginator;
 use Sellsy\Interfaces\AdapterInterface;
+use Sellsy\Interfaces\CriteriaInterface;
 use Sellsy\Interfaces\TransportInterface;
 
 /**
@@ -36,12 +39,21 @@ class BaseAdapter implements AdapterInterface
     }
 
     /**
-     * @param array $requestSettings
-     * @return array
-     * @throws \Sellsy\Exception\ServerException
+     * @param $method
+     * @param CriteriaInterface|null $criteria
+     * @param Order|null $order
+     * @param Paginator|null $paginator
+     * @return mixed
      */
-    public function call(array $requestSettings)
+    public function call($method, CriteriaInterface $criteria = null, Order $order = null, Paginator $paginator = null)
     {
-        return $this->transport->call($requestSettings);
+        return $this->transport->call(array(
+            'method' => $method,
+            'params' => array_merge(
+                $criteria ? $criteria->getParameters() : array(),
+                $order ? $order->getParameters() : array(),
+                $paginator ? $paginator->getParameters() : array()
+            )
+        ));
     }
 }

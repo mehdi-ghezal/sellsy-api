@@ -2,6 +2,9 @@
 
 namespace Sellsy\Interfaces;
 
+use Sellsy\Criteria\Order;
+use Sellsy\Criteria\Paginator;
+
 /**
  * Interface AdapterInterface
  * @package Sellsy\Interfaces
@@ -15,8 +18,11 @@ interface AdapterInterface
     public function map($object);
 
     /**
-     * @param array $requestSettings
+     * @param $method
+     * @param CriteriaInterface|null $criteria
+     * @param Order|null $order
+     * @param Paginator|null $paginator
      * @return mixed
      */
-    public function call(array $requestSettings);
+    public function call($method, CriteriaInterface $criteria = null, Order $order = null , Paginator $paginator = null);
 }

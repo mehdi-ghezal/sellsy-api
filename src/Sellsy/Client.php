@@ -36,10 +36,7 @@ class Client
      */
     public function getApiInfos()
     {
-        return $this->adapter->map(new ApiInfos())->call(array(
-            'method' => 'Infos.getInfos',
-            'params' => array(),
-        ));
+        return $this->adapter->map(new ApiInfos())->call('Infos.getInfos');
     }
 
     /**
