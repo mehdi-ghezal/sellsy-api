@@ -1,4 +1,4 @@
-/vendor/
+vendor/
 .idea
 Credentials.php
 Catalogue.php
