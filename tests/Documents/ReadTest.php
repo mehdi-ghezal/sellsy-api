@@ -43,6 +43,7 @@ class ReadTest extends ClientTest
 
     /**
      * @param Documents $documents
+     * @return Documents|DocumentCollection
      * @depends testDocumentClient
      */
     public function testCollectionAutoloadOff(Documents $documents)

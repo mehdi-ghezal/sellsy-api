@@ -57,6 +57,13 @@ class Document
     public $profitMargins;
 
     /**
+     * @var float
+     * @copy
+     * @convert float
+     */
+    public $dueAmount;
+
+    /**
      * @var People
      * @copy {
      *      "ownerid" : "id",
