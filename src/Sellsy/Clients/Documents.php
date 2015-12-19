@@ -2,7 +2,7 @@
 
 namespace Sellsy\Clients;
 
-use Sellsy\Criteria\Documents\DocumentsSearchCriteria;
+use Sellsy\Criteria\Documents\SearchCriteria;
 use Sellsy\Collections\Documents\DocumentCollection;
 use Sellsy\Criteria\Order;
 use Sellsy\Criteria\Paginator;
@@ -28,12 +28,12 @@ class Documents
     }
 
     /**
-     * @param DocumentsSearchCriteria $criteria
+     * @param SearchCriteria $criteria
      * @param Order|null $order
      * @param Paginator|null $paginator
      * @return DocumentCollection
      */
-    public function searchDocuments(DocumentsSearchCriteria $criteria, Order $order = null, Paginator $paginator = null)
+    public function searchDocuments(SearchCriteria $criteria, Order $order = null, Paginator $paginator = null)
     {
         return $this->adapter->map(new DocumentCollection())->call('Document.getList', $criteria, $order, $paginator);
     }

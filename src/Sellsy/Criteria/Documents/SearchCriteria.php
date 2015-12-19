@@ -2,45 +2,15 @@
 
 namespace Sellsy\Criteria\Documents;
 
+use Sellsy\Criteria\Generic\GetListCriteria;
 use Sellsy\Exception\RuntimeException;
-use Sellsy\Interfaces\CriteriaInterface;
 
 /**
- * Class DocumentsSearchCriteria
+ * Class SearchCriteria
  * @package Sellsy\Criteria\Documents
  */
-class DocumentsSearchCriteria implements CriteriaInterface
+abstract class SearchCriteria extends GetListCriteria
 {
-    /**
-     * @var string
-     */
-    const TYPE_INVOICE = 'invoice';
-
-    /**
-     * @var string
-     */
-    const TYPE_ESTIMATE = 'estimate';
-
-    /**
-     * @var string
-     */
-    const TYPE_PROFORMA = 'proforma';
-
-    /**
-     * @var string
-     */
-    const TYPE_DELIVERY = 'delivery';
-
-    /**
-     * @var string
-     */
-    const TYPE_ORDER = 'order';
-
-    /**
-     * @var string
-     */
-    protected $type;
-
     /**
      * @var \DateTime
      */
@@ -62,41 +32,19 @@ class DocumentsSearchCriteria implements CriteriaInterface
     protected $expirePeriodEnd;
 
     /**
-     * Constructor
-     *
-     * @param $type
+     * @var array
      */
-    public function __construct($type)
-    {
-        $this->setType($type);
-    }
-
-    /**
-     * @param $type
-     * @throws \Sellsy\Exception\RuntimeException
-     */
-    public function setType($type)
-    {
-        switch($type) {
-            case self::TYPE_INVOICE :
-            case self::TYPE_ESTIMATE :
-            case self::TYPE_PROFORMA :
-            case self::TYPE_DELIVERY :
-            case self::TYPE_ORDER :
-                $this->type = $type;
-                break;
-            default :
-                throw new RuntimeException(sprintf('Invalid type "%s" provide ; please use TYPE_* constant provide by class %s.', $type, __CLASS__));
-        }
-    }
+    protected $steps;
 
     /**
      * @return string
      */
-    public function getType()
-    {
-        return $this->type;
-    }
+    abstract protected function getType();
+
+    /**
+     * @return array
+     */
+    abstract protected function getValidSteps();
 
     /**
      * @param \DateTime $createPeriodStart
@@ -163,13 +111,60 @@ class DocumentsSearchCriteria implements CriteriaInterface
     }
 
     /**
+     * @param $step
+     * @return $this
+     * @throws RuntimeException
+     */
+    public function addStep($step)
+    {
+        if (! in_array($step, $this->getValidSteps())) {
+            throw new RuntimeException(sprintf('Invalid type "%s" provide ; please use TYPE_* constant provide by class %s.', $type, __CLASS__));
+        }
+
+        $this->steps[] = $step;
+        return $this;
+    }
+
+    /**
+     * @param array $steps
+     * @return $this
+     */
+    public function setSteps(array $steps)
+    {
+        $this->clearSteps();
+
+        foreach($steps as $step) {
+            $this->addStep($step);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function clearSteps()
+    {
+        $this->steps = array();
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSteps()
+    {
+        return $this->steps;
+    }
+
+    /**
      * @return array
      */
     public function getParameters()
     {
         // Initialize parameters
         $parameters = array(
-            'doctype' => $this->type,
+            'doctype' => $this->getType(),
             'search' => array()
         );
 
@@ -181,6 +176,7 @@ class DocumentsSearchCriteria implements CriteriaInterface
         if ($this->createPeriodEnd) {
             $parameters['search']['periodecreated_end'] = $this->createPeriodEnd->getTimestamp();
         }
+
         if ($this->expirePeriodStart) {
             $parameters['search']['periodeexpired_start'] = $this->expirePeriodStart->getTimestamp();
         }
@@ -189,15 +185,13 @@ class DocumentsSearchCriteria implements CriteriaInterface
             $parameters['search']['periodeexpired_end'] = $this->expirePeriodEnd->getTimestamp();
         }
 
-        /*
-        'includePayments' => {{includePayments}}
-        'search' => array(
-            'ident'		=>	{{ident}},
-            'steps'		=>	{{steps}},
-            'thirds'	=>	{{thirds}},
-            'tags'		=>	{{tags}}
-        )
-        */
+        if ($this->tags) {
+            $parameters['search']['tags'] = implode(',', $this->tags);
+        }
+
+        if ($this->tags) {
+            $parameters['search']['steps'] = implode(',', $this->steps);
+        }
 
         // Cleaning parameters
         if (! count($parameters['search'])) {
@@ -206,4 +200,4 @@ class DocumentsSearchCriteria implements CriteriaInterface
 
         return $parameters;
     }
-} 
+}

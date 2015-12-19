@@ -4,7 +4,12 @@ namespace Sellsy\Tests\Documents;
 
 use Sellsy\Clients\Documents;
 use Sellsy\Collections\Documents\DocumentCollection;
-use Sellsy\Criteria\Documents\DocumentsSearchCriteria;
+use Sellsy\Criteria\Documents\SearchCriteria\DeliverySearchCriteria;
+use Sellsy\Criteria\Documents\SearchCriteria\EstimateSearchCriteria;
+use Sellsy\Criteria\Documents\SearchCriteria\InvoiceSearchCriteria;
+use Sellsy\Criteria\Documents\SearchCriteria\OrderSearchCriteria;
+use Sellsy\Criteria\Documents\SearchCriteria\ProformaSearchCriteria;
+use Sellsy\Criteria\Paginator;
 use Sellsy\Models\Documents\Document;
 use Sellsy\Tests\Fixtures\Clients;
 use Sellsy\Tests\Generic\ClientTest;
@@ -26,17 +31,51 @@ class ReadTest extends ClientTest
      */
     public function testSearchEstimates(Documents $documents)
     {
-        $createPeriodStart = new \DateTime();
-        $createPeriodStart->setTime(0, 0, 0);
+        $documents = $documents->searchDocuments(new EstimateSearchCriteria());
 
-        $createPeriodEnd = new \DateTime();
-        $createPeriodEnd->setTime(23, 59, 59);
+        $this->assertInstanceOf('Sellsy\Collections\Documents\DocumentCollection', $documents);
+    }
 
-        $criteria = new DocumentsSearchCriteria(DocumentsSearchCriteria::TYPE_ESTIMATE);
-        $criteria->setCreatePeriodStart($createPeriodStart);
-        $criteria->setCreatePeriodEnd($createPeriodEnd);
+    /**
+     * @param Documents $documents
+     * @depends testDocumentClient
+     */
+    public function testSearchInvoices(Documents $documents)
+    {
+        $documents = $documents->searchDocuments(new InvoiceSearchCriteria());
 
-        $documents = $documents->searchDocuments($criteria);
+        $this->assertInstanceOf('Sellsy\Collections\Documents\DocumentCollection', $documents);
+    }
+
+    /**
+     * @param Documents $documents
+     * @depends testDocumentClient
+     */
+    public function testSearchDeliveries(Documents $documents)
+    {
+        $documents = $documents->searchDocuments(new DeliverySearchCriteria());
+
+        $this->assertInstanceOf('Sellsy\Collections\Documents\DocumentCollection', $documents);
+    }
+
+    /**
+     * @param Documents $documents
+     * @depends testDocumentClient
+     */
+    public function testSearchOrders(Documents $documents)
+    {
+        $documents = $documents->searchDocuments(new OrderSearchCriteria());
+
+        $this->assertInstanceOf('Sellsy\Collections\Documents\DocumentCollection', $documents);
+    }
+
+    /**
+     * @param Documents $documents
+     * @depends testDocumentClient
+     */
+    public function testSearchProforma(Documents $documents)
+    {
+        $documents = $documents->searchDocuments(new ProformaSearchCriteria());
 
         $this->assertInstanceOf('Sellsy\Collections\Documents\DocumentCollection', $documents);
     }
@@ -55,11 +94,15 @@ class ReadTest extends ClientTest
         $createPeriodEnd = new \DateTime();
         $createPeriodEnd->setTime(23, 59, 59);
 
-        $criteria = new DocumentsSearchCriteria(DocumentsSearchCriteria::TYPE_ESTIMATE);
+        $criteria = new EstimateSearchCriteria();
         $criteria->setCreatePeriodStart($createPeriodStart);
         $criteria->setCreatePeriodEnd($createPeriodEnd);
 
-        $documents = $documents->searchDocuments($criteria);
+        $paginator = new Paginator();
+        $paginator->setNumberPerPage(10);
+        $paginator->setPageNumber(1);
+
+        $documents = $documents->searchDocuments($criteria, null, $paginator);
         $documentsCount = 0;
 
         /** @var Document $document */

@@ -2,13 +2,13 @@
 
 namespace Sellsy\Criteria\Catalogue;
 
-use Sellsy\Interfaces\CriteriaInterface;
+use Sellsy\Criteria\Generic\GetListCriteria;
 
 /**
  * Class ItemsSearchCriteria
  * @package Sellsy\Criteria\Catalogue
  */
-class ItemsSearchCriteria implements CriteriaInterface
+class ItemsSearchCriteria extends GetListCriteria
 {
     /**
      * @var string
@@ -19,11 +19,6 @@ class ItemsSearchCriteria implements CriteriaInterface
      * @var int
      */
     protected $category;
-
-    /**
-     * @var array
-     */
-    protected $tags;
 
     /**
      * @param string $name
@@ -55,43 +50,6 @@ class ItemsSearchCriteria implements CriteriaInterface
     public function getCategory()
     {
         return $this->category;
-    }
-
-    /**
-     * @param string $tag
-     * @return $this
-     */
-    public function addTag($tag)
-    {
-        $this->tags[] = $tag;
-        return $this;
-    }
-
-    /**
-     * @param array $tags
-     * @return $this
-     */
-    public function setTags(array $tags)
-    {
-        $this->tags = $tags;
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function clearTags()
-    {
-        $this->tags = array();
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getTags()
-    {
-        return $this->tags;
     }
 
     /**
