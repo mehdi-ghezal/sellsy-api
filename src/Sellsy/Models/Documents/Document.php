@@ -73,7 +73,7 @@ class Document
     public $owner;
 
     /**
-     * Constructor : Initialize attributes
+     * Document constructor: Initialize attributes
      */
     public function __construct()
     {

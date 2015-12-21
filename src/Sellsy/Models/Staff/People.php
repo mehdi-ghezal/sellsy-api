@@ -18,5 +18,23 @@ class People
      * @var string
      * @copy
      */
+    public $firstName;
+
+    /**
+     * @var string
+     * @copy
+     */
+    public $lastName;
+
+    /**
+     * @var string
+     * @copy
+     */
+    public $email;
+
+    /**
+     * @var string
+     * @copy
+     */
     public $fullName;
 }

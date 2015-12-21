@@ -2,8 +2,6 @@
 
 namespace Sellsy\Models\Catalogue;
 
-use Sellsy\Models\Staff\People;
-
 /**
  * Class Item
  * @package Sellsy\Models\Catalogue
@@ -41,20 +39,4 @@ class Item
      * @copy
      */
     public $tradename;
-
-    /**
-     * @var People
-     * @copy {
-     *      "ownerid" : "id"
-     * }
-     */
-    public $owner;
-
-    /**
-     * Constructor : Initialize attributes
-     */
-    public function __construct()
-    {
-        $this->owner = new People();
-    }
 } 
