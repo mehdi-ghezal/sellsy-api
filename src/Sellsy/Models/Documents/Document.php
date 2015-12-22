@@ -2,6 +2,7 @@
 
 namespace Sellsy\Models\Documents;
 
+use Sellsy\Models\Documents\Document\Step;
 use Sellsy\Models\Staff\People;
 
 /**
@@ -24,9 +25,16 @@ class Document
 
     /**
      * @var string
-     * @copy currencysymbol
+     * @copy
      */
-    public $currencySymbol;
+    public $note;
+
+    /**
+     * @var \DateTime
+     * @copy created
+     * @convert date
+     */
+    public $createdDate;
 
     /**
      * @var \DateTime
@@ -36,32 +44,13 @@ class Document
     public $displayDate;
 
     /**
-     * @var float
-     * @copy totalAmountTaxesFree
-     * @convert float
+     * @var Step
+     * @copy {
+     *      "step_id" : "id",
+     *      "step": "name"
+     * }
      */
-    public $amountWithoutTaxes;
-
-    /**
-     * @var float
-     * @copy taxesAmountSum
-     * @convert float
-     */
-    public $taxes;
-
-    /**
-     * @var float
-     * @copy marge
-     * @convert float
-     */
-    public $profitMargins;
-
-    /**
-     * @var float
-     * @copy
-     * @convert float
-     */
-    public $dueAmount;
+    public $step;
 
     /**
      * @var People
@@ -78,5 +67,6 @@ class Document
     public function __construct()
     {
         $this->owner = new People();
+        $this->step = new Step();
     }
 } 
