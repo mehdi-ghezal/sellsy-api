@@ -32,7 +32,7 @@ class Client
     }
 
     /**
-     * @return mixed
+     * @return ApiInfos
      */
     public function getApiInfos()
     {

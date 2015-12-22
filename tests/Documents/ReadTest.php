@@ -3,14 +3,19 @@
 namespace Sellsy\Tests\Documents;
 
 use Sellsy\Clients\Documents;
-use Sellsy\Collections\Documents\DocumentCollection;
+use Sellsy\Collections\Documents\EstimateCollection;
 use Sellsy\Criteria\Documents\SearchCriteria\DeliverySearchCriteria;
 use Sellsy\Criteria\Documents\SearchCriteria\EstimateSearchCriteria;
 use Sellsy\Criteria\Documents\SearchCriteria\InvoiceSearchCriteria;
 use Sellsy\Criteria\Documents\SearchCriteria\OrderSearchCriteria;
 use Sellsy\Criteria\Documents\SearchCriteria\ProformaSearchCriteria;
 use Sellsy\Criteria\Paginator;
+use Sellsy\Models\Documents\Delivery;
 use Sellsy\Models\Documents\Document;
+use Sellsy\Models\Documents\Estimate;
+use Sellsy\Models\Documents\Invoice;
+use Sellsy\Models\Documents\Order;
+use Sellsy\Models\Documents\Proforma;
 use Sellsy\Tests\Fixtures\Clients;
 use Sellsy\Tests\Generic\ClientTest;
 
@@ -27,62 +32,125 @@ class ReadTest extends ClientTest
 
     /**
      * @param Documents $documents
+     * @return Estimate
      * @depends testDocumentClient
      */
     public function testSearchEstimates(Documents $documents)
     {
-        $documents = $documents->searchDocuments(new EstimateSearchCriteria());
+        $estimates = $documents->searchEstimates(new EstimateSearchCriteria());
 
-        $this->assertInstanceOf('Sellsy\Collections\Documents\DocumentCollection', $documents);
+        $this->assertInstanceOf('Sellsy\Collections\Documents\EstimateCollection', $estimates);
+
+        return $estimates->current();
+    }
+
+    /**
+     * @param Estimate $estimate
+     * @depends testSearchEstimates
+     */
+    public function testEstimateMapping(Estimate $estimate)
+    {
+        $this->assertGreaterThan(10, $estimate->id);
+        $this->assertGreaterThan(10, $estimate->amountWithoutTaxes);
+        $this->assertNotEmpty($estimate->currencySymbol);
+        $this->assertInstanceOf('\DateTime', $estimate->displayDate);
     }
 
     /**
      * @param Documents $documents
+     * @return Invoice
      * @depends testDocumentClient
      */
     public function testSearchInvoices(Documents $documents)
     {
-        $documents = $documents->searchDocuments(new InvoiceSearchCriteria());
+        $invoices = $documents->searchInvoices(new InvoiceSearchCriteria());
 
-        $this->assertInstanceOf('Sellsy\Collections\Documents\DocumentCollection', $documents);
+        $this->assertInstanceOf('Sellsy\Collections\Documents\InvoiceCollection', $invoices);
+
+        return $invoices->current();
+    }
+
+    /**
+     * @param Invoice $invoice
+     * @depends testSearchInvoices
+     */
+    public function testInvoiceMapping(Invoice $invoice)
+    {
+
     }
 
     /**
      * @param Documents $documents
+     * @return Delivery
      * @depends testDocumentClient
      */
     public function testSearchDeliveries(Documents $documents)
     {
-        $documents = $documents->searchDocuments(new DeliverySearchCriteria());
+        $deliveries = $documents->searchDelivery(new DeliverySearchCriteria());
 
-        $this->assertInstanceOf('Sellsy\Collections\Documents\DocumentCollection', $documents);
+        $this->assertInstanceOf('Sellsy\Collections\Documents\DeliveryCollection', $deliveries);
+
+        return $deliveries->current();
+    }
+
+    /**
+     * @param Delivery $delivery
+     * @depends testSearchDeliveries
+     */
+    public function testDeliveryMapping(Delivery $delivery)
+    {
+
     }
 
     /**
      * @param Documents $documents
+     * @return Order
      * @depends testDocumentClient
      */
     public function testSearchOrders(Documents $documents)
     {
-        $documents = $documents->searchDocuments(new OrderSearchCriteria());
+        $orders = $documents->searchOrders(new OrderSearchCriteria());
 
-        $this->assertInstanceOf('Sellsy\Collections\Documents\DocumentCollection', $documents);
+        $this->assertInstanceOf('Sellsy\Collections\Documents\OrderCollection', $orders);
+
+        return $orders->current();
+    }
+
+    /**
+     * @param Order $order
+     * @depends testSearchOrders
+     */
+    public function testOrderMapping(Order $order)
+    {
+
     }
 
     /**
      * @param Documents $documents
+     * @return Proforma
      * @depends testDocumentClient
      */
     public function testSearchProforma(Documents $documents)
     {
-        $documents = $documents->searchDocuments(new ProformaSearchCriteria());
+        $proforma = $documents->searchProforma(new ProformaSearchCriteria());
 
-        $this->assertInstanceOf('Sellsy\Collections\Documents\DocumentCollection', $documents);
+        $this->assertInstanceOf('Sellsy\Collections\Documents\ProformaCollection', $proforma);
+
+        return $proforma->current();
+    }
+
+    /**
+     * @param Proforma $proforma
+     * @depends testSearchProforma
+     */
+    public function testProformaMapping(Proforma $proforma)
+    {
+
     }
 
     /**
      * @param Documents $documents
-     * @return Documents|DocumentCollection
+     * @return EstimateCollection
      * @depends testDocumentClient
      */
     public function testCollectionAutoloadOff(Documents $documents)
@@ -102,32 +170,32 @@ class ReadTest extends ClientTest
         $paginator->setNumberPerPage(10);
         $paginator->setPageNumber(1);
 
-        $documents = $documents->searchDocuments($criteria, null, $paginator);
-        $documentsCount = 0;
+        $estimates = $documents->searchEstimates($criteria, null, $paginator);
+        $estimatesCount = 0;
 
-        /** @var Document $document */
-        foreach($documents as $document) {
-            $documentsCount++;
+        /** @var Estimate $estimates */
+        foreach($estimates as $estimate) {
+            $estimatesCount++;
         }
 
-        $this->assertEquals(10, $documentsCount);
+        $this->assertEquals(10, $estimatesCount);
 
-        return $documents;
+        return $estimates;
     }
 
     /**
-     * @param DocumentCollection $documents
+     * @param EstimateCollection $estimates
      * @depends testCollectionAutoloadOff
      */
-    public function testCollectionAutoloadOn(DocumentCollection $documents)
+    public function testCollectionAutoloadOn(EstimateCollection $estimates)
     {
-        $documentsCount = 0;
+        $estimatesCount = 0;
 
         /** @var Document $document */
-        foreach($documents->autoload() as $document) {
-            $documentsCount++;
+        foreach($estimates->autoload() as $estimate) {
+            $estimatesCount++;
         }
 
-        $this->assertGreaterThan(10, $documentsCount);
+        $this->assertGreaterThan(10, $estimatesCount);
     }
 }

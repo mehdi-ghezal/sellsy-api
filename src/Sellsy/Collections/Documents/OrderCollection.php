@@ -3,19 +3,19 @@
 namespace Sellsy\Collections\Documents;
 
 use Sellsy\Collections\Collection;
-use Sellsy\Models\Documents\Document;
+use Sellsy\Models\Documents\Order;
 
 /**
- * Class DocumentCollection
- * @package Sellsy\Collections\Catalogue
+ * Class OrderCollection
+ * @package Sellsy\Collections\Documents
  */
-class DocumentCollection extends Collection
+class OrderCollection extends Collection
 {
     /**
      * Create a new item related to the collection type
      */
     public function createCollectionItem()
     {
-        return new Document();
+        return new Order();
     }
 }
