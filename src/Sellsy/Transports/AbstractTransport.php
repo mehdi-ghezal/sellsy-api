@@ -14,7 +14,7 @@ abstract class AbstractTransport implements TransportInterface
     /**
      * @param string $httpResponseBody
      * @param int $httpResponseStatusCode
-     * @return mixed
+     * @return array
      * @throws ServerException
      */
     public function convertResponseBody($httpResponseBody, $httpResponseStatusCode)
@@ -29,7 +29,7 @@ abstract class AbstractTransport implements TransportInterface
                 throw new \Exception("The consummer key has been refused, please verify it still valid");
             }
 
-            $apiResponse = json_decode($httpResponseBody);
+            $apiResponse = json_decode($httpResponseBody, true);
 
             // Sometimes Sellsy send an empty response ; I suppose it append when an internal error append in Sellsy API
             if (is_null($apiResponse)) {
@@ -39,23 +39,24 @@ abstract class AbstractTransport implements TransportInterface
                 ));
             }
 
-            if ($apiResponse->status != 'success') {
-                $message = $apiResponse;
+            if ($apiResponse['status'] != 'success') {
+                $message = 'No message';
 
-                if (is_object($apiResponse)) {
-                    $message = $apiResponse->error;
+                if (isset($apiResponse['error']['message'])) {
+                    $message = $apiResponse['error']['message'];
 
-                    if (isset($apiResponse->more)) {
-                        $message .= ' | ' . $apiResponse->more;
+                    if (isset($apiResponse['error']['code'])) {
+                        $message = sprintf('%s (%s)', $message, $apiResponse['error']['code']);
                     }
 
-                    if (is_object($apiResponse->error)) {
-                        $message = $apiResponse->error->message;
-
-                        if (isset($apiResponse->error->more)) {
-                            $message .= ' | ' . $apiResponse->error->more;
-                        }
+                    if (isset($apiResponse['error']['more'])) {
+                        $message = sprintf('%s, %s', $message, $apiResponse['error']['more']);
                     }
+                }
+
+                // Sometimes, $apiResponse['error'] is a string in Sellsy response
+                elseif (isset($apiResponse['error']) && is_string($apiResponse['error'])) {
+                    $message = $apiResponse['error'];
                 }
 
                 throw new \Exception($message);

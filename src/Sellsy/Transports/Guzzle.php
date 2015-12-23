@@ -58,7 +58,7 @@ class Guzzle extends AbstractTransport
 
     /**
      * @param array $requestSettings
-     * @return mixed
+     * @return array
      * @throws \Sellsy\Exception\ServerException
      */
     public function call(array $requestSettings)

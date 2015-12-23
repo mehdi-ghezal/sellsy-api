@@ -83,16 +83,16 @@ class MapperAdapter implements AdapterInterface
             ));
 
             // API Call that return a collection
-            if (isset($apiResult->response->result)) {
+            if (isset($apiResult['response']['result'])) {
                 if (! $this->subject instanceof Collection) {
                     throw new RuntimeException('Subject mapped with "map" method have to be of type "\Sellsy\Collections\Collection"');
                 }
 
                 // Update paginator from API Response
                 $paginator = $paginator ?: new Paginator();
-                $paginator->setPageNumber($apiResult->response->infos->pagenum);
-                $paginator->setNumberPerPage($apiResult->response->infos->nbperpage);
-                $paginator->setNumberOfPages($apiResult->response->infos->nbpages);
+                $paginator->setPageNumber($apiResult['response']['infos']['pagenum']);
+                $paginator->setNumberPerPage($apiResult['response']['infos']['nbperpage']);
+                $paginator->setNumberOfPages($apiResult['response']['infos']['nbpages']);
 
                 /** @var Collection $result */
                 $result = $this->subject;
@@ -101,7 +101,7 @@ class MapperAdapter implements AdapterInterface
                 $items = array();
 
                 // Map objects
-                foreach($apiResult->response->result as $value) {
+                foreach($apiResult['response']['result'] as $value) {
                     $items[] = $this->mapper->mapObject($result->createCollectionItem(), $value);
                 }
 
@@ -118,7 +118,7 @@ class MapperAdapter implements AdapterInterface
 
             // API Call that return an object
             else {
-                $result = $this->mapper->mapObject($this->subject, $apiResult->response);
+                $result = $this->mapper->mapObject($this->subject, $apiResult['response']);
             }
         }
 

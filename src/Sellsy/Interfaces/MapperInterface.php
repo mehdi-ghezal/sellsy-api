@@ -2,8 +2,6 @@
 
 namespace Sellsy\Interfaces;
 
-use Sellsy\Collections\Collection;
-
 /**
  * Interface MapperInterface
  * @package Sellsy\Mappers
@@ -12,8 +10,8 @@ interface MapperInterface
 {
     /**
      * @param $object
-     * @param $response
+     * @param array $data
      * @return mixed
      */
-    public function mapObject($object, $response);
+    public function mapObject($object, array $data);
 }

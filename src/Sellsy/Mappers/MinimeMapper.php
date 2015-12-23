@@ -3,8 +3,6 @@
 namespace Sellsy\Mappers;
 
 use Minime\Annotations\Reader;
-use Sellsy\Collections\Collection;
-use Sellsy\Exception\RuntimeException;
 use Sellsy\Interfaces\MapperInterface;
 
 /**
@@ -28,60 +26,84 @@ class MinimeMapper implements MapperInterface
 
     /**
      * @param $object
-     * @param $response
+     * @param array $data
      * @return mixed
-     * @throws RuntimeException
      */
-    public function mapObject($object, $response)
+    public function mapObject($object, array $data)
     {
-        $class = get_class($object);
+        $objectReflection = new \ReflectionObject($object);
 
-        foreach(array_keys(get_class_vars($class)) as $property) {
-            $propertyAnnotation = $this->reader->getPropertyAnnotations($class, $property);
+        foreach($objectReflection->getProperties() as $property) {
+            $propertyAnnotation = $this->reader->getPropertyAnnotations($objectReflection->getName(), $property->getName());
 
-            $key = $propertyAnnotation->get('copy');
-            $key = $key === true ? $property : $key;
-
-            if (! $key) {
+            // Skip static property
+            if ($property->isStatic()) {
                 continue;
             }
 
-            // The property value is a related object, we handle it
-            if (is_object($object->$property)) {
-                $data = $response;
+            // Unlock property if need
+            if ($property->isPrivate() || $property->isProtected()) {
+                $property->setAccessible(true);
+            }
 
-                // Mapping of response data
-                if (is_object($key)) {
-                    $data = new \stdClass();
+            $translations = $propertyAnnotation->get('copy');
+            $translations = $translations === true ? $property->getName() : $translations;
 
-                    foreach($key as $origin => $target) {
-                        $data->$target = $this->extractData($origin, $response);
-                    }
+            // Case 1: Copy of scalar value inside the property
+            if (is_scalar($translations)) {
+                $property->setValue($object, $this->extractData($data, $translations));
+                continue;
+            }
+
+            // Get the type of target property
+            $type = $propertyAnnotation->get('var');
+
+            // Case 2: Copy of many attributes inside the property as an associative array
+            if (is_object($translations) && strtolower($type) == 'array') {
+                $propertyValue = array();
+
+                foreach($translations as $origin => $target) {
+                    $propertyValue[$target] = $this->extractData($data, $origin);
                 }
 
-                $object->$property = $this->mapObject($object->$property, $data);
+                $property->setValue($object, $propertyValue);
                 continue;
             }
 
-            // The property value is not an object (ie. previous if) ; we check that the key is not an object
-            if (is_object($key)) {
-                throw new RuntimeException(sprintf("The @copy annotation is an object, property %s have to be an object too", $property));
+            // Case 3: Copy of many attributes inside the property as a collection of objects
+            if (is_object($translations) && strpos($type, '[]') !== false) {
+                $reflectionClass = new \ReflectionClass(str_replace('[]', '', $type));
+                $propertyValues = array();
+
+                // Extract collection translations and data
+                $collectionOrigin = key($translations);
+                $collectionTranslations = current($translations);
+                $collectionDataList = $this->extractData($data, $collectionOrigin);
+
+                foreach($collectionDataList as $collectionData) {
+                    $newInstance = $reflectionClass->newInstanceWithoutConstructor();
+                    $newInstanceData = $this->extractDataObject($collectionData, $collectionTranslations);
+
+                    $propertyValues[] = $this->mapObject($newInstance, $newInstanceData);
+                }
+
+                $property->setValue($object, $propertyValues);
+                continue;
             }
 
-            $object->$property = $this->extractData($key, $response);
+            // Case 4: Copy of many attributes inside the property as an object
+            if (is_object($translations)) {
+                // Create an instance of our property
+                $reflectionClass = new \ReflectionClass($type);
+                $propertyValue = $reflectionClass->newInstanceWithoutConstructor();
 
-            $convert = $propertyAnnotation->get('convert');
+                // Map our property, ie. the new instance just created
+                $dataForProperty = $this->extractDataObject($data, $translations);
+                $propertyValue = $this->mapObject($propertyValue, $dataForProperty);
 
-            switch($convert) {
-                case 'boolean' :
-                    $object->$property = $object->$property === "Y" || $object->$property === "y";
-                    break;
-                case 'float' :
-                    $object->$property = filter_var($object->$property, FILTER_VALIDATE_FLOAT);
-                    break;
-                case 'date' :
-                    $object->$property = new \DateTime($object->$property);
-                    break;
+                // Set the property
+                $property->setValue($object, $propertyValue);
+                continue;
             }
         }
 
@@ -89,20 +111,34 @@ class MinimeMapper implements MapperInterface
     }
 
     /**
-     * @param $key
-     * @param $response
+     * @param array $data
+     * @param $path
      * @return mixed
      */
-    protected function extractData($key, $response)
+    protected function extractData(array $data, $path)
     {
-        if (strpos($key, '.') === false) {
-            return isset($response->$key) ? $response->$key : null;
+        $extractedData = null;
+
+        foreach(explode('.', $path) as $keyPart) {
+            $extractedData = isset($data[$keyPart]) ? $data[$keyPart] : null;
         }
 
-        foreach(explode('.', $key) as $keyPart) {
-            $response = isset($response->$keyPart) ? $response->$keyPart : null;
+        return $extractedData;
+    }
+
+    /**
+     * @param array $data
+     * @param $translations
+     * @return array
+     */
+    protected function extractDataObject(array $data, $translations)
+    {
+        $targetData = array();
+
+        foreach($translations as $origin => $target) {
+            $targetData[$target] = $this->extractData($data, $origin);
         }
 
-        return $response;
+        return $targetData;
     }
 }

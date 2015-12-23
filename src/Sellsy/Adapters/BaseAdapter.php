@@ -43,7 +43,7 @@ class BaseAdapter implements AdapterInterface
      * @param CriteriaInterface|null $criteria
      * @param Order|null $order
      * @param Paginator|null $paginator
-     * @return mixed
+     * @return array
      */
     public function call($method, CriteriaInterface $criteria = null, Order $order = null, Paginator $paginator = null)
     {
