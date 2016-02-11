@@ -2,8 +2,7 @@
 
 namespace Sellsy\Models\Documents;
 
-use Sellsy\Models\Documents\Document\Step;
-use Sellsy\Models\Staff\People;
+use Sellsy\Models\CustomFields\CustomFieldTrait;
 
 /**
  * Class Document
@@ -11,6 +10,8 @@ use Sellsy\Models\Staff\People;
  */
 class Document
 {
+    use CustomFieldTrait;
+
     /**
      * @var int
      * @copy
@@ -44,16 +45,71 @@ class Document
     public $displayDate;
 
     /**
-     * @var Step
+     * @var string
+     * @copy
+     */
+    public $analyticsCode;
+
+    /**
+     * @var float
+     * @copy totalAmountTaxesFree
+     */
+    public $amountWithoutTaxes;
+
+    /**
+     * @var float
+     * @copy taxesAmountSum
+     */
+    public $taxes;
+
+    /**
+     * @var float
+     * @copy
+     */
+    public $packagingsAmount;
+
+    /**
+     * @var float
+     * @copy
+     */
+    public $shippingsAmount;
+
+    /**
+     * @var float
+     * @copy
+     */
+    public $discountPercent;
+
+    /**
+     * @var float
+     * @copy
+     */
+    public $discountAmount;
+
+    /**
+     * @var \Sellsy\Models\Documents\Document\Step
      * @copy {
      *      "step_id" : "id",
-     *      "step": "name"
+     *      "step": "name",
+     *      "step_label": "label"
      * }
      */
     public $step;
 
     /**
-     * @var People
+     * @var \Sellsy\Models\SmartTags\Tag[]
+     * @copy {
+     *      "tags": {
+     *          "id" : "id",
+     *          "word": "word",
+     *          "category": "category"
+     *      }
+     * }
+     */
+    public $tags;
+
+    /**
+     * @var \Sellsy\Models\Staff\People
      * @copy {
      *      "ownerid" : "id",
      *      "ownerFullName": "fullName"
@@ -62,11 +118,32 @@ class Document
     public $owner;
 
     /**
-     * Document constructor: Initialize attributes
+     * @var \Sellsy\Models\Accounting\Currency
+     * @copy {
+     *      "currencyid" : "id",
+     *      "currencysymbol": "symbol"
+     * }
      */
-    public function __construct()
-    {
-        $this->owner = new People();
-        $this->step = new Step();
-    }
-} 
+    public $currency;
+
+    /**
+     * @var \Sellsy\Models\Client\Customer
+     * @copy {
+     *      "thirdid" : "id",
+     *      "thirdname": "name",
+     *      "thirdemail": "email",
+     *      "thirdtel": "phoneNumber"
+     *      "thirdmobile": "mobileNumber"
+     * }
+     */
+    public $customer;
+
+    /**
+     * @var \Sellsy\Models\Client\Contact
+     * @copy {
+     *      "contactId" : "id",
+     *      "contactName": "fullName"
+     * }
+     */
+    public $contact;
+}

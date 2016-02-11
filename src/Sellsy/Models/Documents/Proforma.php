@@ -8,5 +8,10 @@ namespace Sellsy\Models\Documents;
  */
 class Proforma extends Document
 {
-
+    /**
+     * @var \DateTime
+     * @copy
+     * @convert date
+     */
+    public $expireDate;
 }

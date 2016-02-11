@@ -8,5 +8,10 @@ namespace Sellsy\Models\Documents;
  */
 class Order extends Document
 {
-
+    /**
+     * @var \DateTime
+     * @copy
+     * @convert date
+     */
+    public $expireDate;
 }

@@ -19,4 +19,10 @@ class Step
      * @copy
      */
     public $name;
+
+    /**
+     * @var string
+     * @copy
+     */
+    public $label;
 } 
