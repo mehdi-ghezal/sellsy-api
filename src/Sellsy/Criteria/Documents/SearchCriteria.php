@@ -118,7 +118,7 @@ abstract class SearchCriteria extends GetListCriteria
     public function addStep($step)
     {
         if (! in_array($step, $this->getValidSteps())) {
-            throw new RuntimeException(sprintf('Invalid type "%s" provide ; please use TYPE_* constant provide by class %s.', $type, __CLASS__));
+            throw new RuntimeException(sprintf('Invalid step "%s" provide ; please use STEP_* constant provide by class %s.', $step, static::class));
         }
 
         $this->steps[] = $step;
@@ -189,8 +189,8 @@ abstract class SearchCriteria extends GetListCriteria
             $parameters['search']['tags'] = implode(',', $this->tags);
         }
 
-        if ($this->tags) {
-            $parameters['search']['steps'] = implode(',', $this->steps);
+        if ($this->steps) {
+            $parameters['search']['steps'] = $this->steps;
         }
 
         // Cleaning parameters

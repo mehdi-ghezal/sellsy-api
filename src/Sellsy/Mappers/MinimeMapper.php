@@ -81,10 +81,12 @@ class MinimeMapper implements MapperInterface
                 $collectionDataList = $this->extractData($data, $collectionOrigin);
 
                 foreach($collectionDataList as $collectionData) {
-                    $newInstance = $reflectionClass->newInstanceWithoutConstructor();
-                    $newInstanceData = $this->extractDataObject($collectionData, $collectionTranslations);
+                    if (is_array($collectionData)) {
+                        $newInstance = $reflectionClass->newInstanceWithoutConstructor();
+                        $newInstanceData = $this->extractDataObject($collectionData, $collectionTranslations);
 
-                    $propertyValues[] = $this->mapObject($newInstance, $newInstanceData);
+                        $propertyValues[] = $this->mapObject($newInstance, $newInstanceData);
+                    }
                 }
 
                 $property->setValue($object, $propertyValues);
@@ -123,7 +125,36 @@ class MinimeMapper implements MapperInterface
             $extractedData = isset($data[$keyPart]) ? $data[$keyPart] : null;
         }
 
-        return $extractedData;
+        return $this->castData($extractedData);
+    }
+
+    /**
+     * @param mixed $data
+     * @return mixed
+     */
+    protected function castData($data)
+    {
+        if (! is_scalar($data)) {
+            return $data;
+        }
+
+        if ($data === 'Y') {
+            return true;
+        }
+
+        if ($data === 'N') {
+            return false;
+        }
+
+        if (is_numeric($data)) {
+            return $data + 0;
+        }
+
+        if (strtotime($data)) {
+            return new \DateTime($data);
+        }
+
+        return $data;
     }
 
     /**

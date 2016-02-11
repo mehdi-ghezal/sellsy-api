@@ -2,8 +2,6 @@
 
 namespace Sellsy\Models;
 
-use Sellsy\Models\Staff\People;
-
 /**
  * Class ApiInfos
  * @package Sellsy\Models
@@ -23,7 +21,7 @@ class ApiInfos
     public $status;
 
     /**
-     * @var People
+     * @var \Sellsy\Models\Staff\People
      * @copy {
      *      "userdatas.staffId" : "id",
      *      "userdatas.forename": "firstName",
@@ -33,12 +31,4 @@ class ApiInfos
      * }
      */
     public $account;
-
-    /**
-     * ApiInfos constructor: Initialize attributes
-     */
-    public function __construct()
-    {
-        $this->account = new People();
-    }
 } 

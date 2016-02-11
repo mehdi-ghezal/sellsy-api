@@ -26,6 +26,16 @@ class DeliverySearchCriteria extends SearchCriteria
     const STEP_READ = 'read';
 
     /**
+     * @var string
+     */
+    const STEP_INVOICED_PARTIALLY = 'partialinvoiced';
+
+    /**
+     * @var string
+     */
+    const STEP_INVOICED = 'invoiced';
+
+    /**
      * @return string
      */
     protected function getType()
@@ -41,7 +51,9 @@ class DeliverySearchCriteria extends SearchCriteria
         return array(
             self::STEP_DRAFT,
             self::STEP_SENT,
-            self::STEP_READ
+            self::STEP_READ,
+            self::STEP_INVOICED_PARTIALLY,
+            self::STEP_INVOICED
         );
     }
 }
