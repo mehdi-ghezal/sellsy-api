@@ -123,6 +123,7 @@ class MinimeMapper implements MapperInterface
 
         foreach(explode('.', $path) as $keyPart) {
             $extractedData = isset($data[$keyPart]) ? $data[$keyPart] : null;
+            $data = $extractedData;
         }
 
         return $this->castData($extractedData);
