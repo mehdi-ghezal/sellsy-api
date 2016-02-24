@@ -10,8 +10,8 @@ class Order extends Document
 {
     /**
      * @var \DateTime
-     * @copy
+     * @copy expireDate
      * @convert date
      */
-    public $expireDate;
+    public $expireAt;
 }

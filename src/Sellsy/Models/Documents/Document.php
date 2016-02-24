@@ -35,7 +35,7 @@ class Document
      * @copy created
      * @convert date
      */
-    public $createdDate;
+    public $createAt;
 
     /**
      * @var \DateTime
@@ -54,13 +54,13 @@ class Document
      * @var float
      * @copy totalAmountTaxesFree
      */
-    public $amountWithoutTaxes;
+    public $amountWithoutTax;
 
     /**
      * @var float
      * @copy taxesAmountSum
      */
-    public $taxes;
+    public $taxAmount;
 
     /**
      * @var float

@@ -164,7 +164,7 @@ class ReadTest extends ClientTest
     {
         $createPeriodStart = new \DateTime();
         $createPeriodStart->setTime(0, 0, 0);
-        $createPeriodStart->sub(new \DateInterval('P3D'));
+        $createPeriodStart->sub(new \DateInterval('P2D'));
 
         $createPeriodEnd = new \DateTime();
         $createPeriodEnd->setTime(23, 59, 59);
