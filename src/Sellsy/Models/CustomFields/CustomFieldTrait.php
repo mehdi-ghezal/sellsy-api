@@ -13,6 +13,7 @@ trait CustomFieldTrait
      * @copy {
      *      "customfields": {
      *          "id": "id",
+     *          "cfid": "cfid",
      *          "type": "type",
      *          "textval": "textval",
      *          "boolval": "boolval",

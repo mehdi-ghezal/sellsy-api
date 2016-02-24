@@ -15,6 +15,12 @@ class CustomField
     public $id;
 
     /**
+     * @var int
+     * @copy cfid
+     */
+    public $fieldId;
+
+    /**
      * @var string
      * @copy
      */
