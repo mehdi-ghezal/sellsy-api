@@ -2,12 +2,16 @@
 
 namespace Sellsy\Models\Catalogue;
 
+use Sellsy\Models\CustomFields\CustomFieldTrait;
+
 /**
  * Class Item
  * @package Sellsy\Models\Catalogue
  */
 class Item
 {
+    use CustomFieldTrait;
+
     /**
      * @var int
      * @copy
