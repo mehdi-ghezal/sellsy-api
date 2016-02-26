@@ -4,8 +4,8 @@ namespace Sellsy;
 
 use Sellsy\Clients\Catalogue;
 use Sellsy\Clients\Documents;
-use Sellsy\Interfaces\AdapterInterface;
-use Sellsy\Models\ApiInfos;
+use Sellsy\Adapters\AdapterInterface;
+use Sellsy\Models\ApiInfosInterface;
 
 /**
  * Class Client
@@ -32,11 +32,11 @@ class Client
     }
 
     /**
-     * @return ApiInfos
+     * @return ApiInfosInterface
      */
     public function getApiInfos()
     {
-        return $this->adapter->map(new ApiInfos())->call('Infos.getInfos');
+        return $this->adapter->map(ApiInfosInterface::class)->call('Infos.getInfos');
     }
 
     /**

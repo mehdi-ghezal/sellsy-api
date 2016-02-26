@@ -6,7 +6,7 @@ namespace Sellsy\Models\Documents\Document;
  * Class Step
  * @package Sellsy\Models\Documents\Document
  */
-class Step
+class Step implements StepInterface
 {
     /**
      * @var int

@@ -8,7 +8,7 @@ use Sellsy\Models\CustomFields\CustomFieldTrait;
  * Class Document
  * @package Sellsy\Models\Documents
  */
-class Document
+class Document implements DocumentInterface
 {
     use CustomFieldTrait;
 
@@ -87,7 +87,7 @@ class Document
     public $discountAmount;
 
     /**
-     * @var \Sellsy\Models\Documents\Document\Step
+     * @var \Sellsy\Models\Documents\Document\StepInterface
      * @copy {
      *      "step_id" : "id",
      *      "step": "name",
@@ -97,7 +97,7 @@ class Document
     public $step;
 
     /**
-     * @var \Sellsy\Models\SmartTags\Tag[]
+     * @var \Sellsy\Models\SmartTags\TagInterface[]
      * @copy {
      *      "tags": {
      *          "id" : "id",
@@ -109,7 +109,7 @@ class Document
     public $tags;
 
     /**
-     * @var \Sellsy\Models\Staff\People
+     * @var \Sellsy\Models\Staff\PeopleInterface
      * @copy {
      *      "ownerid" : "id",
      *      "ownerFullName": "fullName"
@@ -118,7 +118,7 @@ class Document
     public $owner;
 
     /**
-     * @var \Sellsy\Models\Accounting\Currency
+     * @var \Sellsy\Models\Accounting\CurrencyInterface
      * @copy {
      *      "currencyid" : "id",
      *      "currencysymbol": "symbol"
@@ -127,7 +127,7 @@ class Document
     public $currency;
 
     /**
-     * @var \Sellsy\Models\Client\Customer
+     * @var \Sellsy\Models\Client\CustomerInterface
      * @copy {
      *      "thirdid" : "id",
      *      "thirdname": "name",
@@ -139,7 +139,7 @@ class Document
     public $customer;
 
     /**
-     * @var \Sellsy\Models\Client\Contact
+     * @var \Sellsy\Models\Client\ContactInterface
      * @copy {
      *      "contactId" : "id",
      *      "contactName": "fullName"

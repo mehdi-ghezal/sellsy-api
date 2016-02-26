@@ -6,7 +6,7 @@ namespace Sellsy\Models\Client;
  * Class Customer
  * @package Sellsy\Models\Customer
  */
-class Customer
+class Customer implements CustomerInterface
 {
     /**
      * @var int

@@ -8,7 +8,7 @@ use Sellsy\Models\CustomFields\CustomFieldTrait;
  * Class Item
  * @package Sellsy\Models\Catalogue
  */
-class Item
+class Item implements ItemInterface
 {
     use CustomFieldTrait;
 

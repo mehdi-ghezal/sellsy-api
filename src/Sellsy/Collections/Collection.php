@@ -6,13 +6,13 @@ use Sellsy\Adapters\MapperAdapter;
 use Sellsy\Criteria\Order;
 use Sellsy\Criteria\Paginator;
 use Sellsy\Exception\RuntimeException;
-use Sellsy\Interfaces\CriteriaInterface;
+use Sellsy\Criteria\CriteriaInterface;
 
 /**
  * Class Collection
  * @package Sellsy\Collections
  */
- abstract class Collection implements \Iterator
+class Collection implements \Iterator
 {
     /**
      * The iterator for the results actually loaded in the collection.
@@ -30,6 +30,11 @@ use Sellsy\Interfaces\CriteriaInterface;
      * @var string
      */
     private $method;
+
+    /**
+     * @var string
+     */
+    private $subject;
 
     /**
      * @var Paginator
@@ -71,7 +76,7 @@ use Sellsy\Interfaces\CriteriaInterface;
     {
         if ($this->autoloadEnabled && $this->paginator->getPageNumber() > 1) {
             $this->paginator->setPageNumber(1);
-            $this->adapter->map($this)->call($this->method, $this->criteria, $this->order, $this->paginator);
+            $this->adapter->map($this->subject)->call($this->method, $this->criteria, $this->order, $this->paginator);
         }
 
         $this->iterator->rewind();
@@ -89,7 +94,7 @@ use Sellsy\Interfaces\CriteriaInterface;
 
         if ($this->autoloadEnabled  && ! $this->iterator->valid() && $this->paginator->hasMorePage()) {
             $this->paginator->incrPageNumber();
-            $this->adapter->map($this)->call($this->method, $this->criteria, $this->order, $this->paginator);
+            $this->adapter->map($this->subject)->call($this->method, $this->criteria, $this->order, $this->paginator);
 
             $this->iterator->rewind();
         }
@@ -157,9 +162,14 @@ use Sellsy\Interfaces\CriteriaInterface;
             throw new RuntimeException('Option "items" is required and must be an array');
         }
 
+        if (! isset($options['subject'])) {
+            throw new RuntimeException('Option "subject" is required and must be an Interface ClassName');
+        }
+
         $this->adapter = $options['adapter'];
         $this->paginator = $options['paginator'];
         $this->method = $options['method'];
+        $this->subject = $options['subject'];
 
         $this->criteria = isset($options['criteria']) ? $options['criteria'] : null;
         $this->order = isset($options['order']) ? $options['order'] : null;
@@ -176,9 +186,4 @@ use Sellsy\Interfaces\CriteriaInterface;
 
         return $this;
     }
-
-    /**
-     * Create a new item related to the collection type
-     */
-    abstract public function createCollectionItem();
  }

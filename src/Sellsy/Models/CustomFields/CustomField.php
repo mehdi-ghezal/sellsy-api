@@ -6,7 +6,7 @@ namespace Sellsy\Models\CustomFields;
  * Class CustomField
  * @package Sellsy\Models\CustomFields
  */
-class CustomField
+class CustomField implements CustomFieldInterface
 {
     /**
      * @var int

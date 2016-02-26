@@ -3,10 +3,11 @@
 namespace Sellsy\Models\Documents;
 
 /**
- * Class Delivery
+ * Interface EstimateInterface
+ *
  * @package Sellsy\Models\Documents
  */
-class Delivery extends Document implements DeliveryInterface
+interface EstimateInterface extends DocumentInterface
 {
 
 }

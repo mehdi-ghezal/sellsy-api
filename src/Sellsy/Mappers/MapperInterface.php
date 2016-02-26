@@ -1,6 +1,6 @@
 <?php
 
-namespace Sellsy\Interfaces;
+namespace Sellsy\Mappers;
 
 /**
  * Interface MapperInterface
@@ -9,9 +9,9 @@ namespace Sellsy\Interfaces;
 interface MapperInterface
 {
     /**
-     * @param $object
+     * @param $interface
      * @param array $data
      * @return mixed
      */
-    public function mapObject($object, array $data);
+    public function mapObject($interface, array $data);
 }

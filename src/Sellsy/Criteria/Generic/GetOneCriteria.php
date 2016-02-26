@@ -2,7 +2,7 @@
 
 namespace Sellsy\Criteria\Generic;
 
-use Sellsy\Interfaces\CriteriaInterface;
+use Sellsy\Criteria\CriteriaInterface;
 
 /**
  * Class GetOne

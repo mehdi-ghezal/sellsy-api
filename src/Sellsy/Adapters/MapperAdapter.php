@@ -6,10 +6,9 @@ use Sellsy\Collections\Collection;
 use Sellsy\Criteria\Order;
 use Sellsy\Criteria\Paginator;
 use Sellsy\Exception\RuntimeException;
-use Sellsy\Interfaces\AdapterInterface;
-use Sellsy\Interfaces\CriteriaInterface;
-use Sellsy\Interfaces\MapperInterface;
-use Sellsy\Interfaces\TransportInterface;
+use Sellsy\Criteria\CriteriaInterface;
+use Sellsy\Mappers\MapperInterface;
+use Sellsy\Transports\TransportInterface;
 
 /**
  * Class MapperAdapter
@@ -84,10 +83,6 @@ class MapperAdapter implements AdapterInterface
 
             // API Call that return a collection
             if (isset($apiResult['response']['result'])) {
-                if (! $this->subject instanceof Collection) {
-                    throw new RuntimeException('Subject mapped with "map" method have to be of type "\Sellsy\Collections\Collection"');
-                }
-
                 // Update paginator from API Response
                 $paginator = $paginator ?: new Paginator();
                 $paginator->setPageNumber($apiResult['response']['infos']['pagenum']);
@@ -95,14 +90,14 @@ class MapperAdapter implements AdapterInterface
                 $paginator->setNumberOfPages($apiResult['response']['infos']['nbpages']);
 
                 /** @var Collection $result */
-                $result = $this->subject;
+                $result = new Collection();
 
                 // Initialize items
                 $items = array();
 
                 // Map objects
                 foreach($apiResult['response']['result'] as $value) {
-                    $items[] = $this->mapper->mapObject($result->createCollectionItem(), $value);
+                    $items[] = $this->mapper->mapObject($this->subject, $value);
                 }
 
                 // Bind collection for autoload
@@ -110,6 +105,7 @@ class MapperAdapter implements AdapterInterface
                     'items' => $items,
                     'adapter' => $this,
                     'method' => $method,
+                    'subject' => $this->subject,
                     'paginator' => $paginator,
                     'criteria' => $criteria,
                     'order' => $order

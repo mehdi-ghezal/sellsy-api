@@ -2,8 +2,6 @@
 
 namespace Sellsy\Criteria;
 
-use Sellsy\Interfaces\CriteriaInterface;
-
 /**
  * Class Paginator
  * @package Sellsy\Criteria

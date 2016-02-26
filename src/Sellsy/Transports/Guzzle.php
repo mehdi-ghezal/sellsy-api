@@ -3,7 +3,6 @@
 namespace Sellsy\Transports;
 
 use GuzzleHttp\Client;
-use Sellsy\Interfaces\TransportInterface;
 
 /**
  * Class Guzzle

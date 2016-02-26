@@ -3,7 +3,7 @@
 namespace Sellsy\Tests\Documents;
 
 use Sellsy\Clients\Documents;
-use Sellsy\Collections\Documents\EstimateCollection;
+use Sellsy\Collections\Collection;
 use Sellsy\Criteria\Documents\SearchCriteria\DeliverySearchCriteria;
 use Sellsy\Criteria\Documents\SearchCriteria\EstimateSearchCriteria;
 use Sellsy\Criteria\Documents\SearchCriteria\InvoiceSearchCriteria;
@@ -47,7 +47,8 @@ class ReadTest extends ClientTest
     {
         $estimates = $documents->searchEstimates(new EstimateSearchCriteria());
 
-        $this->assertInstanceOf('Sellsy\Collections\Documents\EstimateCollection', $estimates);
+        $this->assertInstanceOf('Sellsy\Collections\Collection', $estimates);
+        $this->assertInstanceOf('Sellsy\Models\Documents\EstimateInterface', $estimates->current());
 
         return $estimates->current();
     }
@@ -70,7 +71,8 @@ class ReadTest extends ClientTest
     {
         $invoices = $documents->searchInvoices(new InvoiceSearchCriteria());
 
-        $this->assertInstanceOf('Sellsy\Collections\Documents\InvoiceCollection', $invoices);
+        $this->assertInstanceOf('Sellsy\Collections\Collection', $invoices);
+        $this->assertInstanceOf('Sellsy\Models\Documents\InvoiceInterface', $invoices->current());
 
         return $invoices->current();
     }
@@ -93,7 +95,8 @@ class ReadTest extends ClientTest
     {
         $deliveries = $documents->searchDelivery(new DeliverySearchCriteria());
 
-        $this->assertInstanceOf('Sellsy\Collections\Documents\DeliveryCollection', $deliveries);
+        $this->assertInstanceOf('Sellsy\Collections\Collection', $deliveries);
+        $this->assertInstanceOf('Sellsy\Models\Documents\DeliveryInterface', $deliveries->current());
 
         return $deliveries->current();
     }
@@ -118,7 +121,8 @@ class ReadTest extends ClientTest
 
         $orders = $documents->searchOrders($criteria);
 
-        $this->assertInstanceOf('Sellsy\Collections\Documents\OrderCollection', $orders);
+        $this->assertInstanceOf('Sellsy\Collections\Collection', $orders);
+        $this->assertInstanceOf('Sellsy\Models\Documents\OrderInterface', $orders->current());
 
         return $orders->current();
     }
@@ -141,7 +145,8 @@ class ReadTest extends ClientTest
     {
         $proforma = $documents->searchProforma(new ProformaSearchCriteria());
 
-        $this->assertInstanceOf('Sellsy\Collections\Documents\ProformaCollection', $proforma);
+        $this->assertInstanceOf('Sellsy\Collections\Collection', $proforma);
+        $this->assertInstanceOf('Sellsy\Models\Documents\ProformaInterface', $proforma->current());
 
         return $proforma->current();
     }
@@ -156,8 +161,6 @@ class ReadTest extends ClientTest
     }
 
     /**
-     * @param Documents $documents
-     * @return EstimateCollection
      * @depends testDocumentClient
      */
     public function testCollectionAutoloadOff(Documents $documents)
@@ -191,10 +194,10 @@ class ReadTest extends ClientTest
     }
 
     /**
-     * @param EstimateCollection $estimates
+     * @param Collection $estimates
      * @depends testCollectionAutoloadOff
      */
-    public function testCollectionAutoloadOn(EstimateCollection $estimates)
+    public function testCollectionAutoloadOn(Collection $estimates)
     {
         $estimatesCount = 0;
 

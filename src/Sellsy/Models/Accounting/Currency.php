@@ -6,7 +6,7 @@ namespace Sellsy\Models\Accounting;
  * Class Currency
  * @package Sellsy\Models\Accounting
  */
-class Currency
+class Currency implements CurrencyInterface
 {
     /**
      * @var int

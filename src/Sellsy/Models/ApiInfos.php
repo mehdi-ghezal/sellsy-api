@@ -6,7 +6,7 @@ namespace Sellsy\Models;
  * Class ApiInfos
  * @package Sellsy\Models
  */
-class ApiInfos
+class ApiInfos implements ApiInfosInterface
 {
     /**
      * @var string
@@ -21,7 +21,7 @@ class ApiInfos
     public $status;
 
     /**
-     * @var \Sellsy\Models\Staff\People
+     * @var \Sellsy\Models\Staff\PeopleInterface
      * @copy {
      *      "userdatas.staffId" : "id",
      *      "userdatas.forename": "firstName",

@@ -13,6 +13,7 @@ use Sellsy\Adapters\MapperAdapter;
 use Sellsy\Transports\Guzzle;
 use Sellsy\Mappers\MinimeMapper;
 use Sellsy\Client;
+use Sellsy\Models\Catalogue\ItemInterface;
 
 /**
  * Class Clients
@@ -33,6 +34,7 @@ class Clients
         if (!self::$validClient) {
             $reader = new Reader(new Parser(), new ArrayCache());
             $mapper = new MinimeMapper($reader);
+            $mapper->setInterfaceMapping(ItemInterface::class, NewItem::class);
 
             $stream = new StreamHandler(sprintf(dirname(__DIR__) . '/Logs/%s.log', date(DATE_ATOM)));
             $stream->setFormatter(new LineFormatter("[%datetime%] %channel%.%level_name%: %message% \n\n", null, true));
@@ -64,6 +66,7 @@ class Clients
             $transport->registerMiddleware($middlewareLogger);
 
             self::$validClient = new Client(new MapperAdapter($transport, $mapper));
+
         }
 
         return self::$validClient;

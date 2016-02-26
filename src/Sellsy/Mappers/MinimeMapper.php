@@ -3,7 +3,35 @@
 namespace Sellsy\Mappers;
 
 use Minime\Annotations\Reader;
-use Sellsy\Interfaces\MapperInterface;
+use phpDocumentor\Reflection\DocBlock\Tag;
+use Sellsy\Exception\RuntimeException;
+use Sellsy\Models\Accounting\Currency;
+use Sellsy\Models\Accounting\CurrencyInterface;
+use Sellsy\Models\ApiInfos;
+use Sellsy\Models\ApiInfosInterface;
+use Sellsy\Models\Catalogue\Item;
+use Sellsy\Models\Catalogue\ItemInterface;
+use Sellsy\Models\Client\Contact;
+use Sellsy\Models\Client\ContactInterface;
+use Sellsy\Models\Client\Customer;
+use Sellsy\Models\Client\CustomerInterface;
+use Sellsy\Models\CustomFields\CustomField;
+use Sellsy\Models\CustomFields\CustomFieldInterface;
+use Sellsy\Models\Documents\Delivery;
+use Sellsy\Models\Documents\DeliveryInterface;
+use Sellsy\Models\Documents\Document\Step;
+use Sellsy\Models\Documents\Document\StepInterface;
+use Sellsy\Models\Documents\Estimate;
+use Sellsy\Models\Documents\EstimateInterface;
+use Sellsy\Models\Documents\Invoice;
+use Sellsy\Models\Documents\InvoiceInterface;
+use Sellsy\Models\Documents\Order;
+use Sellsy\Models\Documents\OrderInterface;
+use Sellsy\Models\Documents\Proforma;
+use Sellsy\Models\Documents\ProformaInterface;
+use Sellsy\Models\SmartTags\TagInterface;
+use Sellsy\Models\Staff\People;
+use Sellsy\Models\Staff\PeopleInterface;
 
 /**
  * Class MinimeMapper
@@ -17,20 +45,73 @@ class MinimeMapper implements MapperInterface
     protected $reader;
 
     /**
-     * @param Reader $reader
+     * @var array
      */
-    public function __construct(Reader $reader)
+    protected $interfacesMappings;
+
+    /**
+     * MinimeMapper constructor.
+     *
+     * @param Reader $reader
+     * @param array $interfacesMappings
+     */
+    public function __construct(Reader $reader, array $interfacesMappings = array())
     {
         $this->reader = $reader;
+        $this->interfacesMappings = $this->getDefaultInterfacesMappings();
+
+        foreach($interfacesMappings as $interface => $class) {
+            $this->setInterfaceMapping($interface, $class);
+        }
     }
 
     /**
-     * @param $object
+     * @param $interface
+     * @param $class
+     * @throws RuntimeException
+     */
+    public function setInterfaceMapping($interface, $class)
+    {
+        if (! isset($this->interfacesMappings[$interface])) {
+            throw new RuntimeException(sprintf("Unable to set a mapping for unknown interface %s", $interface));
+        }
+
+        $this->interfacesMappings[$interface] = $class;
+    }
+
+    /**
+     * @param null $interface
+     * @return bool
+     */
+    public function resetInterfaceMapping($interface = null)
+    {
+        if (!$interface) {
+            $this->interfacesMappings = $this->getDefaultInterfacesMappings();
+
+            return true;
+        }
+
+        if (isset($this->interfacesMappings[$interface])) {
+            $this->interfacesMappings[$interface] = $this->getDefaultInterfacesMappings()[$interface];
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $interface
      * @param array $data
      * @return mixed
      */
-    public function mapObject($object, array $data)
+    public function mapObject($interface, array $data)
     {
+        $interface = ltrim($interface, '\\');
+
+        $objectFactory = new \ReflectionClass($this->interfacesMappings[$interface]);
+        $object = $objectFactory->newInstanceWithoutConstructor();
+
         $objectReflection = new \ReflectionObject($object);
 
         foreach($objectReflection->getProperties() as $property) {
@@ -72,7 +153,6 @@ class MinimeMapper implements MapperInterface
 
             // Case 3: Copy of many attributes inside the property as a collection of objects
             if (is_object($translations) && strpos($type, '[]') !== false) {
-                $reflectionClass = new \ReflectionClass(str_replace('[]', '', $type));
                 $propertyValues = array();
 
                 // Extract collection translations and data
@@ -82,10 +162,9 @@ class MinimeMapper implements MapperInterface
 
                 foreach($collectionDataList as $collectionData) {
                     if (is_array($collectionData)) {
-                        $newInstance = $reflectionClass->newInstanceWithoutConstructor();
                         $newInstanceData = $this->extractDataObject($collectionData, $collectionTranslations);
 
-                        $propertyValues[] = $this->mapObject($newInstance, $newInstanceData);
+                        $propertyValues[] = $this->mapObject(str_replace('[]', '', $type), $newInstanceData);
                     }
                 }
 
@@ -95,13 +174,9 @@ class MinimeMapper implements MapperInterface
 
             // Case 4: Copy of many attributes inside the property as an object
             if (is_object($translations)) {
-                // Create an instance of our property
-                $reflectionClass = new \ReflectionClass($type);
-                $propertyValue = $reflectionClass->newInstanceWithoutConstructor();
-
                 // Map our property, ie. the new instance just created
                 $dataForProperty = $this->extractDataObject($data, $translations);
-                $propertyValue = $this->mapObject($propertyValue, $dataForProperty);
+                $propertyValue = $this->mapObject($type, $dataForProperty);
 
                 // Set the property
                 $property->setValue($object, $propertyValue);
@@ -172,5 +247,28 @@ class MinimeMapper implements MapperInterface
         }
 
         return $targetData;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultInterfacesMappings()
+    {
+        return array(
+            ApiInfosInterface::class => ApiInfos::class,
+            CurrencyInterface::class => Currency::class,
+            ItemInterface::class => Item::class,
+            ContactInterface::class => Contact::class,
+            CustomerInterface::class => Customer::class,
+            CustomFieldInterface::class => CustomField::class,
+            DeliveryInterface::class => Delivery::class,
+            EstimateInterface::class => Estimate::class,
+            InvoiceInterface::class => Invoice::class,
+            OrderInterface::class => Order::class,
+            ProformaInterface::class => Proforma::class,
+            StepInterface::class => Step::class,
+            TagInterface::class => Tag::class,
+            PeopleInterface::class => People::class,
+        );
     }
 }

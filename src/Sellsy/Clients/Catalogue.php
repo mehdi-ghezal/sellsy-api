@@ -2,13 +2,13 @@
 
 namespace Sellsy\Clients;
 
+use Sellsy\Collections\Collection;
 use Sellsy\Criteria\Catalogue\ItemCriteria;
 use Sellsy\Criteria\Catalogue\ItemsSearchCriteria;
-use Sellsy\Collections\Catalogue\ItemCollection;
 use Sellsy\Criteria\Order;
 use Sellsy\Criteria\Paginator;
-use Sellsy\Interfaces\AdapterInterface;
-use Sellsy\Models\Catalogue\Item;
+use Sellsy\Adapters\AdapterInterface;
+use Sellsy\Models\Catalogue\ItemInterface;
 
 /**
  * Class Catalogue
@@ -31,21 +31,21 @@ class Catalogue
 
     /**
      * @param ItemCriteria $criteria
-     * @return Item
+     * @return ItemInterface
      */
     public function getItem(ItemCriteria $criteria)
     {
-        return $this->adapter->map(new Item())->call('Catalogue.getOne', $criteria);
+        return $this->adapter->map(ItemInterface::class)->call('Catalogue.getOne', $criteria);
     }
 
     /**
      * @param ItemsSearchCriteria $criteria
      * @param Order|null $order
      * @param Paginator|null $paginator
-     * @return mixed
+     * @return Collection
      */
     public function searchItems(ItemsSearchCriteria $criteria, Order $order = null, Paginator $paginator = null)
     {
-        return $this->adapter->map(new ItemCollection())->call('Catalogue.getList', $criteria, $order, $paginator);
+        return $this->adapter->map(ItemInterface::class)->call('Catalogue.getList', $criteria, $order, $paginator);
     }
 } 

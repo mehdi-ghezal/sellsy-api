@@ -6,7 +6,7 @@ namespace Sellsy\Models\Staff;
  * Class People
  * @package Sellsy\Models\Staff
  */
-class People
+class People implements PeopleInterface
 {
     /**
      * @var int

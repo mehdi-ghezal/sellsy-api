@@ -5,7 +5,6 @@ namespace Sellsy\Transports;
 use Httpful\Mime;
 use Httpful\Request;
 use Httpful\Response;
-use Sellsy\Interfaces\TransportInterface;
 
 /**
  * Class Httpful

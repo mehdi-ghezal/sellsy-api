@@ -1,8 +1,8 @@
 <?php
 
 namespace Sellsy\Criteria;
+
 use Sellsy\Exception\RuntimeException;
-use Sellsy\Interfaces\CriteriaInterface;
 
 /**
  * Class Order

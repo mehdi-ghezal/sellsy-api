@@ -9,7 +9,7 @@ namespace Sellsy\Models\CustomFields;
 trait CustomFieldTrait
 {
     /**
-     * @var \Sellsy\Models\CustomFields\CustomField[]
+     * @var \Sellsy\Models\CustomFields\CustomFieldInterface[]
      * @copy {
      *      "customfields": {
      *          "id": "id",

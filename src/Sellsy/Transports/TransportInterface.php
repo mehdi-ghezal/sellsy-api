@@ -1,10 +1,10 @@
 <?php
 
-namespace Sellsy\Interfaces;
+namespace Sellsy\Transports;
 
 /**
  * Interface TransportInterface
- * @package Sellsy\Interfaces
+ * @package Sellsy\Transports
  */
 interface TransportInterface
 {

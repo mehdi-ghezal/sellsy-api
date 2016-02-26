@@ -6,7 +6,7 @@ namespace Sellsy\Models\Documents;
  * Class Invoice
  * @package Sellsy\Models\Documents
  */
-class Invoice extends Document
+class Invoice extends Document implements InvoiceInterface
 {
     /**
      * @var float

@@ -3,7 +3,6 @@
 namespace Sellsy\Transports;
 
 use Sellsy\Exception\ServerException;
-use Sellsy\Interfaces\TransportInterface;
 
 /**
  * Class AbstractTransport

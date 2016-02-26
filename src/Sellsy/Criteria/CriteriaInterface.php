@@ -1,10 +1,10 @@
 <?php
 
-namespace Sellsy\Interfaces;
+namespace Sellsy\Criteria;
 
 /**
  * Interface CriteriaInterface
- * @package Sellsy\Interfaces
+ * @package Sellsy\Criteria
  */
 interface CriteriaInterface
 {

@@ -1,13 +1,14 @@
 <?php
 
-namespace Sellsy\Interfaces;
+namespace Sellsy\Adapters;
 
+use Sellsy\Criteria\CriteriaInterface;
 use Sellsy\Criteria\Order;
 use Sellsy\Criteria\Paginator;
 
 /**
  * Interface AdapterInterface
- * @package Sellsy\Interfaces
+ * @package Sellsy\Adapters
  */
 interface AdapterInterface
 {

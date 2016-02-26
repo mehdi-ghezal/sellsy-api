@@ -6,7 +6,7 @@ namespace Sellsy\Models\SmartTags;
  * Class Tag
  * @package Sellsy\Models\SmartTags
  */
-class Tag
+class Tag implements TagInterface
 {
     /**
      * @var int

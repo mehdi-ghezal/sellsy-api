@@ -4,9 +4,8 @@ namespace Sellsy\Adapters;
 
 use Sellsy\Criteria\Order;
 use Sellsy\Criteria\Paginator;
-use Sellsy\Interfaces\AdapterInterface;
-use Sellsy\Interfaces\CriteriaInterface;
-use Sellsy\Interfaces\TransportInterface;
+use Sellsy\Criteria\CriteriaInterface;
+use Sellsy\Transports\TransportInterface;
 
 /**
  * Class BaseAdapter
