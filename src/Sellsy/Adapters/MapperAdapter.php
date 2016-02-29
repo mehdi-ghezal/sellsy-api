@@ -88,9 +88,7 @@ class MapperAdapter implements AdapterInterface
                 $paginator->setPageNumber($apiResult['response']['infos']['pagenum']);
                 $paginator->setNumberPerPage($apiResult['response']['infos']['nbperpage']);
                 $paginator->setNumberOfPages($apiResult['response']['infos']['nbpages']);
-
-                /** @var Collection $result */
-                $result = new Collection();
+                $paginator->setNumberOfResults($apiResult['response']['infos']['nbtotal']);
 
                 // Initialize items
                 $items = array();
@@ -100,8 +98,7 @@ class MapperAdapter implements AdapterInterface
                     $items[] = $this->mapper->mapObject($this->subject, $value);
                 }
 
-                // Bind collection for autoload
-                $result->bind(array(
+                $result = new Collection(array(
                     'items' => $items,
                     'adapter' => $this,
                     'method' => $method,

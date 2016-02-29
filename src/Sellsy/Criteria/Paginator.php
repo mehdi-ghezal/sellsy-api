@@ -24,6 +24,11 @@ class Paginator implements CriteriaInterface
     protected $numberPerPage = 10;
 
     /**
+     * @var int
+     */
+    protected $numberOfResults;
+
+    /**
      * @param int $pageNumber
      */
     public function setPageNumber($pageNumber)
@@ -82,6 +87,22 @@ class Paginator implements CriteriaInterface
     public function getNumberPerPage()
     {
         return $this->numberPerPage;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumberOfResults()
+    {
+        return $this->numberOfResults;
+    }
+
+    /**
+     * @param int $numberOfResults
+     */
+    public function setNumberOfResults($numberOfResults)
+    {
+        $this->numberOfResults = $numberOfResults;
     }
 
     /**
