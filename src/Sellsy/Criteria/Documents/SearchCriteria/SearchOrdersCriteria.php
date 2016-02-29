@@ -5,10 +5,10 @@ namespace Sellsy\Criteria\Documents\SearchCriteria;
 use Sellsy\Criteria\Documents\SearchCriteria;
 
 /**
- * Class ProformaSearchCriteria
+ * Class SearchOrdersCriteria
  * @package Sellsy\Criteria\Documents\SearchCriteria
  */
-class ProformaSearchCriteria extends SearchCriteria
+class SearchOrdersCriteria extends SearchCriteria
 {
     /**
      * @var string
@@ -50,7 +50,7 @@ class ProformaSearchCriteria extends SearchCriteria
      */
     protected function getType()
     {
-        return 'proforma';
+        return 'order';
     }
 
     /**

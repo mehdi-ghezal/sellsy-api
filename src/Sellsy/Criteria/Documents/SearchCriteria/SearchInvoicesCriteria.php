@@ -5,10 +5,10 @@ namespace Sellsy\Criteria\Documents\SearchCriteria;
 use Sellsy\Criteria\Documents\SearchCriteria;
 
 /**
- * Class InvoiceSearchCriteria
+ * Class SearchInvoicesCriteria
  * @package Sellsy\Criteria\Documents\SearchCriteria
  */
-class InvoiceSearchCriteria extends SearchCriteria
+class SearchInvoicesCriteria extends SearchCriteria
 {
     /**
      * @var string

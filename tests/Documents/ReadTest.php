@@ -4,11 +4,11 @@ namespace Sellsy\Tests\Documents;
 
 use Sellsy\Clients\Documents;
 use Sellsy\Collections\Collection;
-use Sellsy\Criteria\Documents\SearchCriteria\DeliverySearchCriteria;
-use Sellsy\Criteria\Documents\SearchCriteria\EstimateSearchCriteria;
-use Sellsy\Criteria\Documents\SearchCriteria\InvoiceSearchCriteria;
-use Sellsy\Criteria\Documents\SearchCriteria\OrderSearchCriteria;
-use Sellsy\Criteria\Documents\SearchCriteria\ProformaSearchCriteria;
+use Sellsy\Criteria\Documents\SearchCriteria\SearchDeliveriesCriteria;
+use Sellsy\Criteria\Documents\SearchCriteria\SearchEstimatesCriteria;
+use Sellsy\Criteria\Documents\SearchCriteria\SearchInvoicesCriteria;
+use Sellsy\Criteria\Documents\SearchCriteria\SearchOrdersCriteria;
+use Sellsy\Criteria\Documents\SearchCriteria\SearchProformaCriteria;
 use Sellsy\Criteria\Paginator;
 use Sellsy\Models\Documents\Delivery;
 use Sellsy\Models\Documents\Document;
@@ -45,7 +45,7 @@ class ReadTest extends ClientTest
      */
     public function testSearchEstimates(Documents $documents)
     {
-        $estimates = $documents->searchEstimates(new EstimateSearchCriteria());
+        $estimates = $documents->searchEstimates(new SearchEstimatesCriteria());
 
         $this->assertInstanceOf('Sellsy\Collections\Collection', $estimates);
         $this->assertInstanceOf('Sellsy\Models\Documents\EstimateInterface', $estimates->current());
@@ -69,7 +69,7 @@ class ReadTest extends ClientTest
      */
     public function testSearchInvoices(Documents $documents)
     {
-        $invoices = $documents->searchInvoices(new InvoiceSearchCriteria());
+        $invoices = $documents->searchInvoices(new SearchInvoicesCriteria());
 
         $this->assertInstanceOf('Sellsy\Collections\Collection', $invoices);
         $this->assertInstanceOf('Sellsy\Models\Documents\InvoiceInterface', $invoices->current());
@@ -93,7 +93,7 @@ class ReadTest extends ClientTest
      */
     public function testSearchDeliveries(Documents $documents)
     {
-        $deliveries = $documents->searchDelivery(new DeliverySearchCriteria());
+        $deliveries = $documents->searchDelivery(new SearchDeliveriesCriteria());
 
         $this->assertInstanceOf('Sellsy\Collections\Collection', $deliveries);
         $this->assertInstanceOf('Sellsy\Models\Documents\DeliveryInterface', $deliveries->current());
@@ -117,7 +117,7 @@ class ReadTest extends ClientTest
      */
     public function testSearchOrders(Documents $documents)
     {
-        $criteria = new OrderSearchCriteria();
+        $criteria = new SearchOrdersCriteria();
 
         $orders = $documents->searchOrders($criteria);
 
@@ -143,7 +143,7 @@ class ReadTest extends ClientTest
      */
     public function testSearchProforma(Documents $documents)
     {
-        $proforma = $documents->searchProforma(new ProformaSearchCriteria());
+        $proforma = $documents->searchProforma(new SearchProformaCriteria());
 
         $this->assertInstanceOf('Sellsy\Collections\Collection', $proforma);
         $this->assertInstanceOf('Sellsy\Models\Documents\ProformaInterface', $proforma->current());
@@ -172,7 +172,7 @@ class ReadTest extends ClientTest
         $createPeriodEnd = new \DateTime();
         $createPeriodEnd->setTime(23, 59, 59);
 
-        $criteria = new EstimateSearchCriteria();
+        $criteria = new SearchEstimatesCriteria();
         $criteria->setCreatePeriodStart($createPeriodStart);
         $criteria->setCreatePeriodEnd($createPeriodEnd);
 

@@ -5,10 +5,10 @@ namespace Sellsy\Criteria\Catalogue;
 use Sellsy\Criteria\Generic\GetListCriteria;
 
 /**
- * Class ItemsSearchCriteria
+ * Class SearchItemsCriteria
  * @package Sellsy\Criteria\Catalogue
  */
-class ItemsSearchCriteria extends GetListCriteria
+class SearchItemsCriteria extends GetListCriteria
 {
     /**
      * @var string
