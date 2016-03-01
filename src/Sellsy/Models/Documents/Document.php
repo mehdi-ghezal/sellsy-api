@@ -33,14 +33,12 @@ class Document implements DocumentInterface
     /**
      * @var \DateTime
      * @copy created
-     * @convert date
      */
     public $createAt;
 
     /**
      * @var \DateTime
      * @copy displayedDate
-     * @convert date
      */
     public $displayDate;
 
@@ -132,7 +130,7 @@ class Document implements DocumentInterface
      *      "thirdid" : "id",
      *      "thirdname": "name",
      *      "thirdemail": "email",
-     *      "thirdtel": "phoneNumber"
+     *      "thirdtel": "phoneNumber",
      *      "thirdmobile": "mobileNumber"
      * }
      */

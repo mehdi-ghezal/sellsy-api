@@ -3,9 +3,9 @@
 namespace Sellsy\Mappers;
 
 use Minime\Annotations\Reader;
-use phpDocumentor\Reflection\DocBlock\Tag;
 use Sellsy\Exception\RuntimeException;
-
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Symfony\Component\ExpressionLanguage\SyntaxError;
 use Sellsy\Models\Accounting\Currency;
 use Sellsy\Models\Accounting\CurrencyInterface;
 use Sellsy\Models\ApiInfos;
@@ -30,6 +30,7 @@ use Sellsy\Models\Documents\Order;
 use Sellsy\Models\Documents\OrderInterface;
 use Sellsy\Models\Documents\Proforma;
 use Sellsy\Models\Documents\ProformaInterface;
+use Sellsy\Models\SmartTags\Tag;
 use Sellsy\Models\SmartTags\TagInterface;
 use Sellsy\Models\Staff\People;
 use Sellsy\Models\Staff\PeopleInterface;
@@ -53,6 +54,11 @@ class MinimeMapper implements MapperInterface
     protected $interfacesMappings;
 
     /**
+     * @var ExpressionLanguage
+     */
+    protected $expressionLanguage;
+
+    /**
      * MinimeMapper constructor.
      *
      * @param Reader $reader
@@ -66,6 +72,8 @@ class MinimeMapper implements MapperInterface
         foreach($interfacesMappings as $interface => $class) {
             $this->setInterfaceMapping($interface, $class);
         }
+
+        $this->expressionLanguage = new ExpressionLanguage();
     }
 
     /**
@@ -106,7 +114,8 @@ class MinimeMapper implements MapperInterface
     /**
      * @param $interface
      * @param array $data
-     * @return mixed
+     * @return object
+     * @throws RuntimeException
      */
     public function mapObject($interface, array $data)
     {
@@ -117,6 +126,9 @@ class MinimeMapper implements MapperInterface
 
         $objectReflection = new \ReflectionObject($object);
 
+        $data = $this->prepareData($data);
+
+        /** @var \ReflectionProperty $property */
         foreach($objectReflection->getProperties() as $property) {
             $propertyAnnotation = $this->reader->getPropertyAnnotations($objectReflection->getName(), $property->getName());
 
@@ -135,7 +147,7 @@ class MinimeMapper implements MapperInterface
 
             // Case 1: Copy of scalar value inside the property
             if (is_scalar($translations)) {
-                $property->setValue($object, $this->extractData($data, $translations));
+                $property->setValue($object, $this->extractData($translations, $data));
                 continue;
             }
 
@@ -147,7 +159,7 @@ class MinimeMapper implements MapperInterface
                 $propertyValue = array();
 
                 foreach($translations as $origin => $target) {
-                    $propertyValue[$target] = $this->extractData($data, $origin);
+                    $propertyValue[$target] = $this->extractData($origin, $data);
                 }
 
                 $property->setValue($object, $propertyValue);
@@ -161,7 +173,7 @@ class MinimeMapper implements MapperInterface
                 // Extract collection translations and data
                 $collectionOrigin = key($translations);
                 $collectionTranslations = current($translations);
-                $collectionDataList = $this->extractData($data, $collectionOrigin);
+                $collectionDataList = $this->extractData($collectionOrigin, $data);
 
                 foreach($collectionDataList as $collectionData) {
                     if (is_array($collectionData)) {
@@ -185,55 +197,48 @@ class MinimeMapper implements MapperInterface
                 $property->setValue($object, $propertyValue);
                 continue;
             }
+
+            throw new RuntimeException(sprintf('Unable to map property %s', $property->getName()));
         }
 
         return $object;
     }
 
     /**
+     * @param $expression
      * @param array $data
-     * @param $path
-     * @return mixed
+     * @return array|bool|\DateTime|int|null|string
      */
-    protected function extractData(array $data, $path)
+    protected function extractData($expression, array $data)
     {
-        $extractedData = null;
+        try {
+            $data = $this->expressionLanguage->evaluate($expression, $data);
 
-        foreach(explode('.', $path) as $keyPart) {
-            $extractedData = isset($data[$keyPart]) ? $data[$keyPart] : null;
-            $data = $extractedData;
-        }
+            if (! is_scalar($data)) {
+                return $data;
+            }
 
-        return $this->castData($extractedData);
-    }
+            if ($data === 'Y') {
+                return true;
+            }
 
-    /**
-     * @param mixed $data
-     * @return mixed
-     */
-    protected function castData($data)
-    {
-        if (! is_scalar($data)) {
+            if ($data === 'N') {
+                return false;
+            }
+
+            if (is_numeric($data)) {
+                return $data + 0;
+            }
+
+            if (strtotime($data)) {
+                return new \DateTime($data);
+            }
+
             return $data;
         }
+        catch(SyntaxError $e) {}
 
-        if ($data === 'Y') {
-            return true;
-        }
-
-        if ($data === 'N') {
-            return false;
-        }
-
-        if (is_numeric($data)) {
-            return $data + 0;
-        }
-
-        if (strtotime($data)) {
-            return new \DateTime($data);
-        }
-
-        return $data;
+        return null;
     }
 
     /**
@@ -246,10 +251,27 @@ class MinimeMapper implements MapperInterface
         $targetData = array();
 
         foreach($translations as $origin => $target) {
-            $targetData[$target] = $this->extractData($data, $origin);
+            $targetData[$target] = $this->extractData($origin, $data);
         }
 
         return $targetData;
+    }
+
+    /**
+     * Convert full array of array of object
+     *
+     * @param array $data
+     * @return array
+     */
+    protected function prepareData(array $data)
+    {
+        foreach($data as $key => $value) {
+            if (is_array($value)) {
+                $data[$key] = json_decode(json_encode($value));
+            }
+        }
+
+        return $data;
     }
 
     /**

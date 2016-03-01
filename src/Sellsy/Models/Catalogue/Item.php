@@ -21,7 +21,6 @@ class Item implements ItemInterface
     /**
      * @var boolean
      * @copy actif
-     * @convert boolean
      */
     public $isActive;
 
@@ -34,7 +33,6 @@ class Item implements ItemInterface
     /**
      * @var boolean
      * @copy
-     * @convert boolean
      */
     public $isEnabled;
 
@@ -63,6 +61,30 @@ class Item implements ItemInterface
     public $description;
 
     /**
+     * @var float
+     * @copy unitAmount
+     */
+    public $saleUnitAmountWithoutTax;
+
+    /**
+     * @var float
+     * @copy unitAmountTaxesInc - unitAmount
+     */
+    public $saleUnitTaxAmount;
+
+    /**
+     * @var float
+     * @copy purchaseAmount
+     */
+    public $purchaseUnitAmountWithoutTax;
+
+    /**
+     * @var float
+     * @copy purchaseAmountTaxesInc - purchaseAmount
+     */
+    public $purchaseUnitTaxAmount;
+
+    /**
      * @var string
      * @copy
      */
@@ -77,14 +99,12 @@ class Item implements ItemInterface
     /**
      * @var \DateTime
      * @copy createdAt
-     * @convert date
      */
     public $createAt;
 
     /**
      * @var \DateTime
      * @copy updatedAt
-     * @convert date
      */
     public $updateAt;
 
@@ -109,3 +129,8 @@ class Item implements ItemInterface
      */
     public $packaging;
 }
+/*
+
+
+
+ */

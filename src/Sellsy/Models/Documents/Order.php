@@ -11,7 +11,6 @@ class Order extends Document implements OrderInterface
     /**
      * @var \DateTime
      * @copy expireDate
-     * @convert date
      */
     public $expireAt;
 }

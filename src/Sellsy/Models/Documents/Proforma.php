@@ -11,7 +11,6 @@ class Proforma extends Document implements ProformaInterface
     /**
      * @var \DateTime
      * @copy expireDate
-     * @convert date
      */
     public $expireAt;
 }

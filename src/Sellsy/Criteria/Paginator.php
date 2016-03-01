@@ -112,8 +112,8 @@ class Paginator implements CriteriaInterface
     {
         return array(
             'pagination' => array(
-                'pagenum' => $this->pageNumber,
-                'nbperpage' => $this->numberPerPage
+                'nbperpage' => $this->numberPerPage,
+                'pagenum' => $this->pageNumber
             )
 		);
     }

@@ -29,7 +29,6 @@ class Estimate extends Document implements EstimateInterface
     /**
      * @var \DateTime
      * @copy expireDate
-     * @convert date
      */
     public $expireAt;
 }
