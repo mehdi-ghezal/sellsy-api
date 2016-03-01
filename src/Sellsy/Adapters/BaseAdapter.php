@@ -2,6 +2,7 @@
 
 namespace Sellsy\Adapters;
 
+use Sellsy\Collections\Collection;
 use Sellsy\Criteria\Order;
 use Sellsy\Criteria\Paginator;
 use Sellsy\Criteria\CriteriaInterface;
@@ -46,7 +47,7 @@ class BaseAdapter implements AdapterInterface
      */
     public function call($method, CriteriaInterface $criteria = null, Order $order = null, Paginator $paginator = null)
     {
-        return $this->transport->call(array(
+        $result = $this->transport->call(array(
             'method' => $method,
             'params' => array_merge(
                 $criteria ? $criteria->getParameters() : array(),
@@ -54,5 +55,34 @@ class BaseAdapter implements AdapterInterface
                 $paginator ? $paginator->getParameters() : array()
             )
         ));
+
+        // API Call that return a collection
+        if (isset($result['response']['result'])) {
+            // Update paginator from API Response
+            $paginator = $paginator ?: new Paginator();
+            $paginator->setPageNumber($result['response']['infos']['pagenum']);
+            $paginator->setNumberPerPage($result['response']['infos']['nbperpage']);
+            $paginator->setNumberOfPages($result['response']['infos']['nbpages']);
+            $paginator->setNumberOfResults($result['response']['infos']['nbtotal']);
+
+            // Initialize items
+            $items = array();
+
+            // Map objects
+            foreach($result['response']['result'] as $value) {
+                $items[] = $value;
+            }
+
+            $result = new Collection(array(
+                'items' => $items,
+                'adapter' => $this,
+                'method' => $method,
+                'paginator' => $paginator,
+                'criteria' => $criteria,
+                'order' => $order
+            ));
+        }
+
+        return $result;
     }
 }
