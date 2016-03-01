@@ -6,15 +6,16 @@ use Sellsy\Criteria\Catalogue\GetItemCriteria;
 use Sellsy\Criteria\Catalogue\SearchItemsCriteria;
 use Sellsy\Clients\Catalogue;
 use Sellsy\Tests\Fixtures\Catalogue as CatalogueFixtures;
-use Sellsy\Tests\Fixtures\Clients;
+use Sellsy\Tests\Fixtures\Components;
 use Sellsy\Tests\Generic\ClientTest;
 use Sellsy\Models\Catalogue\ItemInterface;
+use Sellsy\Tests\Fixtures\NewItem;
 
 class ReadTest extends ClientTest
 {
     public function testCatalogueClient()
     {
-        $catalogue = Clients::getValidClient()->catalogue();
+        $catalogue = Components::getClient()->catalogue();
 
         $this->assertInstanceOf('Sellsy\Clients\Catalogue', $catalogue);
 
@@ -26,7 +27,7 @@ class ReadTest extends ClientTest
      */
     public function testGetItem(Catalogue $catalogue)
     {
-        $item = $catalogue->getItem(new GetItemCriteria(CatalogueFixtures::$catalogueItem));
+        $item = $catalogue->getItem(new GetItemCriteria(CATALOGUE_ITEM_ID));
 
         $this->assertInstanceOf('Sellsy\Models\Catalogue\ItemInterface', $item);
     }
@@ -36,6 +37,8 @@ class ReadTest extends ClientTest
      */
     public function testSearchItems(Catalogue $catalogue)
     {
+        Components::getMapper()->setInterfaceMapping(ItemInterface::class, NewItem::class);
+
         $items = $catalogue->searchItems(new SearchItemsCriteria());
 
         $this->assertInstanceOf('Sellsy\Collections\Collection', $items);

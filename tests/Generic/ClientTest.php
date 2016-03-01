@@ -3,13 +3,13 @@
 namespace Sellsy\Tests\Generic;
 
 use Sellsy\Client;
-use Sellsy\Tests\Fixtures\Clients;
+use Sellsy\Tests\Fixtures\Components;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
     public function testNewClient()
     {
-        $client = Clients::getValidClient();
+        $client = Components::getClient();
 
         $this->assertInstanceOf('Sellsy\Client', $client);
 

@@ -16,7 +16,7 @@ use Sellsy\Models\Documents\Estimate;
 use Sellsy\Models\Documents\Invoice;
 use Sellsy\Models\Documents\Order;
 use Sellsy\Models\Documents\Proforma;
-use Sellsy\Tests\Fixtures\Clients;
+use Sellsy\Tests\Fixtures\Components;
 use Sellsy\Tests\Generic\ClientTest;
 
 /**
@@ -31,7 +31,7 @@ class ReadTest extends ClientTest
      */
     public function testDocumentClient()
     {
-        $documents = Clients::getValidClient()->documents();
+        $documents = Components::getClient()->documents();
 
         $this->assertInstanceOf('Sellsy\Clients\Documents', $documents);
 

@@ -8,7 +8,19 @@
         convertWarningsToExceptions="true"
         stopOnFailure="false"
         bootstrap="tests/bootstrap.php"
-        verbose="true">
+        verbose="true"
+>
+    <php>
+        <ini name="error_reporting" value="-1" />
+
+        <const name="SELLSY_CONSUMER_TOKEN" value="" />
+        <const name="SELLSY_CONSUMER_SECRET" value="" />
+        <const name="SELLSY_USER_TOKEN" value="" />
+        <const name="SELLSY_USER_SECRET" value="" />
+
+        <const name="CATALOGUE_ITEM_ID" value="1825031" />
+    </php>
+
     <testsuites>
         <testsuite name="Sellsy API : Generic">
             <directory>./tests/Generic</directory>

@@ -2,3 +2,4 @@ vendor/
 .idea
 Credentials.php
 Catalogue.php
+phpunit.xml
