@@ -26,6 +26,12 @@ class Item implements ItemInterface
     public $isActive;
 
     /**
+     * @var string
+     * @copy
+     */
+    public $analyticsCode;
+
+    /**
      * @var boolean
      * @copy
      * @convert boolean
@@ -42,5 +48,64 @@ class Item implements ItemInterface
      * @var string
      * @copy
      */
+    public $slug;
+
+    /**
+     * @var string
+     * @copy
+     */
     public $tradename;
-} 
+
+    /**
+     * @var string
+     * @copy notes
+     */
+    public $description;
+
+    /**
+     * @var string
+     * @copy
+     */
+    public $unit;
+
+    /**
+     * @var float
+     * @copy qt
+     */
+    public $quantity;
+
+    /**
+     * @var \DateTime
+     * @copy createdAt
+     * @convert date
+     */
+    public $createAt;
+
+    /**
+     * @var \DateTime
+     * @copy updatedAt
+     * @convert date
+     */
+    public $updateAt;
+
+    /**
+     * @var string
+     * @copy defaultImage.file.public_path
+     */
+    public $images;
+
+    /**
+     * @var \Sellsy\Models\Catalogue\Item\PackagingInterface
+     * @copy {
+     *      "characteristics": {
+     *          "width" : "width",
+     *          "deepth" : "deepth",
+     *          "length" : "length",
+     *          "height" : "height",
+     *          "weight" : "weight",
+     *          "packing" : "packing",
+     *      }
+     * }
+     */
+    public $packaging;
+}

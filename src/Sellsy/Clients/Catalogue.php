@@ -31,7 +31,7 @@ class Catalogue
 
     /**
      * @param GetItemCriteria $criteria
-     * @return ItemInterface
+     * @return ItemInterface|array
      */
     public function getItem(GetItemCriteria $criteria)
     {

@@ -5,6 +5,7 @@ namespace Sellsy\Mappers;
 use Minime\Annotations\Reader;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use Sellsy\Exception\RuntimeException;
+
 use Sellsy\Models\Accounting\Currency;
 use Sellsy\Models\Accounting\CurrencyInterface;
 use Sellsy\Models\ApiInfos;
@@ -32,6 +33,8 @@ use Sellsy\Models\Documents\ProformaInterface;
 use Sellsy\Models\SmartTags\TagInterface;
 use Sellsy\Models\Staff\People;
 use Sellsy\Models\Staff\PeopleInterface;
+use Sellsy\Models\Catalogue\Item\Packaging;
+use Sellsy\Models\Catalogue\Item\PackagingInterface;
 
 /**
  * Class MinimeMapper
@@ -269,6 +272,7 @@ class MinimeMapper implements MapperInterface
             StepInterface::class => Step::class,
             TagInterface::class => Tag::class,
             PeopleInterface::class => People::class,
+            PackagingInterface::class => Packaging::class,
         );
     }
 }
