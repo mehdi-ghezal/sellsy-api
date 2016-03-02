@@ -102,7 +102,7 @@ class YmlMapper extends AbstractMapper
                     return $value + 0;
                 }
 
-                if (strtotime($value)) {
+                if (strtotime($value) > 0 && preg_match('/^20[0-9]{2}/', $value)) {
                     return new \DateTime($value);
                 }
 
