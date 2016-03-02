@@ -15,7 +15,7 @@ Sellsy\Models\Catalogue\ItemInterface:
     quantity: qt
     createAt: createdAt
     updateAt: updatedAt
-    image: defaultImage.file.public_path
+    image: '"https://www\.sellsy\.fr/"~defaultImage.file.public_path'
     packaging:
         type: Sellsy\Models\Catalogue\Item\PackagingInterface
         mappings:

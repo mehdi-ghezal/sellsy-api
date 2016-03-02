@@ -54,7 +54,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('analyticsCode_value', $item->analyticsCode);
         $this->assertEquals('notes_value', $item->description);
-        $this->assertEquals('public_path_value', $item->image);
+        $this->assertEquals('https://www.sellsy.com/public_path_value', $item->image);
         $this->assertEquals('name_value', $item->name);
         $this->assertEquals('tradename_value', $item->tradename);
         $this->assertEquals('slug_value', $item->slug);

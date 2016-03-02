@@ -67,6 +67,8 @@ class MappingsParser
                 $value = $key;
             }
 
+            $value = str_replace('\.', '####____####', $value);
+
             if (strpos($value, '.') !== false) {
                 $value = explode('.', $value);
                 $value = join("']['", $value);
@@ -74,6 +76,8 @@ class MappingsParser
 
                 $value = substr_replace($value, '', strpos($value, ']') - 1, 2);
             }
+
+            $value = str_replace('####____####', '.', $value);
         });
 
         // Manage use and attributes statements
