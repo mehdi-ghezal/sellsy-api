@@ -44,7 +44,7 @@ class Components
     public static function getMapper()
     {
         if (! self::$mapper) {
-            self::$mapper = new YmlMapper(realpath(dirname(dirname(__DIR__)) . '/src/Resources/Mappings/'));
+            self::$mapper = new YmlMapper();
         }
 
         return self::$mapper;

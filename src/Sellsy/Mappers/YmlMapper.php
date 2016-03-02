@@ -29,11 +29,13 @@ class YmlMapper extends AbstractMapper
     /**
      * YmlMapper constructor.
      *
-     * @param string $path Path of file or directory containing mappings information in YAML
+     * @param string|null $path Optional. Path of file or directory containing mappings information in YAML
      */
-    public function __construct($path)
+    public function __construct($path = null)
     {
         $parser = new MappingsParser();
+
+        $path = $path ? $path : realpath(dirname(__DIR__) . '/Mappings');
 
         $this->mappings = $parser->parse($path);
         $this->expressionLanguage = new ExpressionLanguage();
