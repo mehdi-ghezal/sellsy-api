@@ -3,7 +3,6 @@
 namespace Sellsy\Adapters;
 
 use Sellsy\Collections\Collection;
-use Sellsy\Criteria\Order;
 use Sellsy\Criteria\Paginator;
 use Sellsy\Criteria\CriteriaInterface;
 use Sellsy\Transports\TransportInterface;
@@ -41,17 +40,15 @@ class BaseAdapter implements AdapterInterface
     /**
      * @param $method
      * @param CriteriaInterface|null $criteria
-     * @param Order|null $order
      * @param Paginator|null $paginator
      * @return array
      */
-    public function call($method, CriteriaInterface $criteria = null, Order $order = null, Paginator $paginator = null)
+    public function call($method, CriteriaInterface $criteria = null, Paginator $paginator = null)
     {
         $result = $this->transport->call(array(
             'method' => $method,
             'params' => array_merge(
                 $criteria ? $criteria->getParameters() : array(),
-                $order ? $order->getParameters() : array(),
                 $paginator ? $paginator->getParameters() : array()
             )
         ));
@@ -78,8 +75,7 @@ class BaseAdapter implements AdapterInterface
                 'adapter' => $this,
                 'method' => $method,
                 'paginator' => $paginator,
-                'criteria' => $criteria,
-                'order' => $order
+                'criteria' => $criteria
             ));
         }
 

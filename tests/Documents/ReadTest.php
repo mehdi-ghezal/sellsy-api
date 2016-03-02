@@ -180,7 +180,7 @@ class ReadTest extends ClientTest
         $paginator->setNumberPerPage(10);
         $paginator->setPageNumber(1);
 
-        $estimates = $documents->searchEstimates($criteria, null, $paginator);
+        $estimates = $documents->searchEstimates($criteria, $paginator);
         $estimatesCount = 0;
 
         /** @var Estimate $estimates */

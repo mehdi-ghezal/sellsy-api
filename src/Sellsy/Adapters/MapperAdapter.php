@@ -3,7 +3,6 @@
 namespace Sellsy\Adapters;
 
 use Sellsy\Collections\Collection;
-use Sellsy\Criteria\Order;
 use Sellsy\Criteria\Paginator;
 use Sellsy\Exception\RuntimeException;
 use Sellsy\Criteria\CriteriaInterface;
@@ -56,13 +55,12 @@ class MapperAdapter implements AdapterInterface
     /**
      * @param $method
      * @param CriteriaInterface|null $criteria
-     * @param Order|null $order
      * @param Paginator|null $paginator
      * @return mixed
      * @throws \Sellsy\Exception\RuntimeException
      * @throws \Exception
      */
-    public function call($method, CriteriaInterface $criteria = null, Order $order = null, Paginator $paginator = null)
+    public function call($method, CriteriaInterface $criteria = null, Paginator $paginator = null)
     {
         // Ensure to clean subject, @see finally
         try {
@@ -76,7 +74,6 @@ class MapperAdapter implements AdapterInterface
                 'method' => $method,
                 'params' => array_merge(
                     $criteria ? $criteria->getParameters() : array(),
-                    $order ? $order->getParameters() : array(),
                     $paginator ? $paginator->getParameters() : array()
                 )
             ));
@@ -104,8 +101,7 @@ class MapperAdapter implements AdapterInterface
                     'method' => $method,
                     'subject' => $this->subject,
                     'paginator' => $paginator,
-                    'criteria' => $criteria,
-                    'order' => $order
+                    'criteria' => $criteria
                 ));
             }
 

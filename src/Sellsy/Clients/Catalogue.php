@@ -5,7 +5,6 @@ namespace Sellsy\Clients;
 use Sellsy\Collections\Collection;
 use Sellsy\Criteria\Catalogue\GetItemCriteria;
 use Sellsy\Criteria\Catalogue\SearchItemsCriteria;
-use Sellsy\Criteria\Order;
 use Sellsy\Criteria\Paginator;
 use Sellsy\Adapters\AdapterInterface;
 use Sellsy\Models\Catalogue\ItemInterface;
@@ -40,12 +39,11 @@ class Catalogue
 
     /**
      * @param SearchItemsCriteria $criteria
-     * @param Order|null $order
      * @param Paginator|null $paginator
      * @return Collection
      */
-    public function searchItems(SearchItemsCriteria $criteria, Order $order = null, Paginator $paginator = null)
+    public function searchItems(SearchItemsCriteria $criteria, Paginator $paginator = null)
     {
-        return $this->adapter->map(ItemInterface::class)->call('Catalogue.getList', $criteria, $order, $paginator);
+        return $this->adapter->map(ItemInterface::class)->call('Catalogue.getList', $criteria, $paginator);
     }
 } 

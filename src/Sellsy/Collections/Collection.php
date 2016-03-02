@@ -3,7 +3,6 @@
 namespace Sellsy\Collections;
 
 use Sellsy\Adapters\AdapterInterface;
-use Sellsy\Criteria\Order;
 use Sellsy\Criteria\Paginator;
 use Sellsy\Exception\RuntimeException;
 use Sellsy\Criteria\CriteriaInterface;
@@ -47,11 +46,6 @@ class Collection implements \Iterator, \ArrayAccess, \SeekableIterator, \Countab
     private $criteria;
 
     /**
-     * @var Order
-     */
-    private $order;
-
-    /**
      * Flag for autoloading
      *
      * @var bool
@@ -88,7 +82,6 @@ class Collection implements \Iterator, \ArrayAccess, \SeekableIterator, \Countab
 
         $this->subject = isset($options['subject']) ? $options['subject'] : null;
         $this->criteria = isset($options['criteria']) ? $options['criteria'] : null;
-        $this->order = isset($options['order']) ? $options['order'] : null;
 
         $this->iterator = new \ArrayIterator($options['items']);
     }
@@ -100,7 +93,7 @@ class Collection implements \Iterator, \ArrayAccess, \SeekableIterator, \Countab
     {
         if ($this->autoloadEnabled && $this->paginator->getPageNumber() > 1) {
             $this->paginator->setPageNumber(1);
-            $this->adapter->map($this->subject)->call($this->method, $this->criteria, $this->order, $this->paginator);
+            $this->adapter->map($this->subject)->call($this->method, $this->criteria, $this->paginator);
         }
 
         $this->iterator->rewind();
@@ -115,7 +108,7 @@ class Collection implements \Iterator, \ArrayAccess, \SeekableIterator, \Countab
 
         if ($this->autoloadEnabled  && ! $this->iterator->valid() && $this->paginator->hasMorePage()) {
             $this->paginator->incrPageNumber();
-            $this->adapter->map($this->subject)->call($this->method, $this->criteria, $this->order, $this->paginator);
+            $this->adapter->map($this->subject)->call($this->method, $this->criteria, $this->paginator);
 
             $this->iterator->rewind();
         }
