@@ -24,6 +24,8 @@ class Client
     protected $clients = array();
 
     /**
+     * Client constructor.
+     *
      * @param AdapterInterface $adapter
      */
     public function __construct(AdapterInterface $adapter)

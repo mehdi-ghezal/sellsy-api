@@ -46,7 +46,23 @@ abstract class AbstractMapper implements MapperInterface
     /**
      * @var array
      */
-    protected $interfacesMappings;
+    protected $interfacesMappings = array(
+        ApiInfosInterface::class => ApiInfos::class,
+        CurrencyInterface::class => Currency::class,
+        ItemInterface::class => Item::class,
+        ContactInterface::class => Contact::class,
+        CustomerInterface::class => Customer::class,
+        CustomFieldInterface::class => CustomField::class,
+        DeliveryInterface::class => Delivery::class,
+        EstimateInterface::class => Estimate::class,
+        InvoiceInterface::class => Invoice::class,
+        OrderInterface::class => Order::class,
+        ProformaInterface::class => Proforma::class,
+        StepInterface::class => Step::class,
+        TagInterface::class => Tag::class,
+        PeopleInterface::class => People::class,
+        PackagingInterface::class => Packaging::class,
+    );
 
     /**
      * @var array
@@ -73,12 +89,6 @@ abstract class AbstractMapper implements MapperInterface
      */
     public function resetInterfaceMapping($interface = null)
     {
-        if (!$interface) {
-            $this->interfacesMappings = $this->getDefaultInterfacesMappings();
-
-            return true;
-        }
-
         if (isset($this->interfacesMappings[$interface])) {
             $this->interfacesMappings[$interface] = $this->getDefaultInterfacesMappings()[$interface];
 
@@ -119,10 +129,6 @@ abstract class AbstractMapper implements MapperInterface
      */
     protected function getObjectInstance($interface)
     {
-        if (!$this->interfacesMappings) {
-            $this->interfacesMappings = $this->getDefaultInterfacesMappings();
-        }
-
         if (! isset($this->interfacesMappings[$interface])) {
             throw new RuntimeException("Unable to find a mapping class for interface " . $interface);
         }
