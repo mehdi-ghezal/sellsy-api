@@ -17,11 +17,17 @@ class MappingsParser
     protected $parser;
 
     /**
+     * @var array
+     */
+    protected $useToProcess;
+
+    /**
      * Parser constructor.
      */
     public function __construct()
     {
         $this->parser = new Yaml();
+        $this->useToProcess = array();
     }
 
     public function parse($path)
@@ -44,7 +50,7 @@ class MappingsParser
             $mappings = array_merge($mappings, $this->parseFile($file->getPathname()));
         }
 
-        return $mappings;
+        return $this->postProcessUse($mappings);
     }
 
     /**
@@ -69,6 +75,41 @@ class MappingsParser
                 $value = substr_replace($value, '', strpos($value, ']') - 1, 2);
             }
         });
+
+        // Manage use and attributes statements
+        foreach($mappings as $interface => &$mapping) {
+            if (isset($mapping['use'])) {
+                $this->useToProcess[$interface] = array();
+
+                foreach($mapping['use'] as $useInterface) {
+                    $this->useToProcess[$interface][] = $useInterface;
+                }
+
+                unset($mapping['use']);
+            }
+
+            if (isset($mapping['attributes'])) {
+                $attributes = $mapping['attributes'];
+                unset($mapping['attributes']);
+                $mapping = $attributes;
+            }
+        }
+
+        return $mappings;
+    }
+
+    /**
+     * @param array $mappings
+     * @return array
+     */
+    protected function postProcessUse(array $mappings)
+    {
+        foreach($this->useToProcess as $baseInterface => $useInterfaces) {
+            foreach($useInterfaces as $useInterface) {
+                $mergedMapping = array_replace_recursive($mappings[$useInterface], $mappings[$baseInterface]);
+                $mappings[$baseInterface] = $mergedMapping;
+            }
+        }
 
         return $mappings;
     }

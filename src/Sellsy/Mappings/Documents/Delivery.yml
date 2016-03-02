@@ -1,0 +1,4 @@
+Sellsy\Models\Documents\DeliveryInterface:
+    use:
+        - Sellsy\Models\Documents\DocumentInterface
+

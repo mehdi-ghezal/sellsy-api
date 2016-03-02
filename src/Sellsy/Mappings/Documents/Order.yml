@@ -1,0 +1,5 @@
+Sellsy\Models\Documents\OrderInterface:
+    use:
+        - Sellsy\Models\Documents\DocumentInterface
+    attributes:
+        expireAt: expireDate

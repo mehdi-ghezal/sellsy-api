@@ -1,0 +1,5 @@
+Sellsy\Models\Documents\ProformaInterface:
+    use:
+        - Sellsy\Models\Documents\DocumentInterface
+    attributes:
+        expireAt: expireDate

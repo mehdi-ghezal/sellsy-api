@@ -1,0 +1,66 @@
+Sellsy\Models\Documents\DocumentInterface:
+    id: ~
+    reference: ident
+    note: ~
+    createAt: createdAt
+    displayDate: displayedDate
+    analyticsCode: ~
+    amountWithoutTax: totalAmountTaxesFree
+    taxAmount: taxesAmountSum
+    packagingsAmount: ~
+    shippingsAmount: ~
+    discountPercent: ~
+    discountAmount: ~
+    step:
+        type: Sellsy\Models\Documents\Document\StepInterface
+        mappings:
+            id: step_id
+            name: step
+            label: step_label
+    owner:
+        type: Sellsy\Models\Staff\PeopleInterface
+        mappings:
+            id: ownerid
+            fullName: ownerFullName
+    currency:
+        type: Sellsy\Models\Accounting\CurrencyInterface
+        mappings:
+            id: currencyid
+            symbol: currencysymbol
+    customer:
+        type: Sellsy\Models\Client\CustomerInterface
+        mappings:
+            id: thirdid
+            name: thirdname
+            email: thirdemail
+            phoneNumber: thirdtel
+            mobileNumber: thirdmobile
+    contact:
+        type: Sellsy\Models\Client\ContactInterface
+        mappings:
+            id: contactId
+            fullName: contactName
+    tags:
+        type: Sellsy\Models\SmartTags\TagInterface
+        collection: true
+        origin: tags
+        mappings:
+            id: ~
+            name: word
+            category: ~
+    customFields:
+        type: Sellsy\Models\CustomFields\CustomFieldInterface
+        collection: true
+        origin: customfields
+        mappings:
+            id: ~
+            fieldId: cfid
+            type: ~
+            textValue: textval
+            boolValue: boolval
+            timestampValue: timestampval
+            decimalValue: decimalval
+            numericValue: numericval
+            stringValue: stringval
+            formattedValue: formatted_value
+
