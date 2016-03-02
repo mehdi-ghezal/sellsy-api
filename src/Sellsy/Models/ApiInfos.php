@@ -2,33 +2,75 @@
 
 namespace Sellsy\Models;
 
+use Sellsy\Models\Staff\PeopleInterface;
+
 /**
  * Class ApiInfos
+ *
  * @package Sellsy\Models
  */
 class ApiInfos implements ApiInfosInterface
 {
     /**
      * @var string
-     * @copy apidatas.version
      */
-    public $version;
+    protected $version;
 
     /**
      * @var string
-     * @copy apidatas.status
      */
-    public $status;
+    protected $status;
 
     /**
-     * @var \Sellsy\Models\Staff\PeopleInterface
-     * @copy {
-     *      "userdatas.staffId" : "id",
-     *      "userdatas.forename": "firstName",
-     *      "userdatas.name": "lastName",
-     *      "userdatas.fullName": "fullName",
-     *      "userdatas.mail": "email"
-     * }
+     * @var PeopleInterface
      */
-    public $account;
+    protected $account;
+
+    /**
+     * @inheritdoc
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAccount()
+    {
+        return $this->account;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setAccount(PeopleInterface $account)
+    {
+        $this->account = $account;
+    }
 } 

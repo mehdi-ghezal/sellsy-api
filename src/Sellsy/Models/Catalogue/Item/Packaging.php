@@ -11,37 +11,127 @@ class Packaging implements PackagingInterface
 {
     /**
      * @var string
-     * @copy
      */
-    public $width;
+    protected $width;
 
     /**
      * @var string
-     * @copy
      */
-    public $deepth;
+    protected $deepth;
 
     /**
      * @var string
-     * @copy
      */
-    public $length;
+    protected $length;
 
     /**
      * @var string
-     * @copy
      */
-    public $height;
+    protected $height;
 
     /**
      * @var string
-     * @copy
      */
-    public $weight;
+    protected $weight;
 
     /**
      * @var string
-     * @copy
      */
-    public $packing;
+    protected $packing;
+
+    /**
+     * @inheritdoc
+     */
+    public function getWidth()
+    {
+        return $this->width;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setWidth($width)
+    {
+        $this->width = $width;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDeepth()
+    {
+        return $this->deepth;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setDeepth($deepth)
+    {
+        $this->deepth = $deepth;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getLength()
+    {
+        return $this->length;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setLength($length)
+    {
+        $this->length = $length;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setHeight($height)
+    {
+        $this->height = $height;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPacking()
+    {
+        return $this->packing;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setPacking($packing)
+    {
+        $this->packing = $packing;
+    }
 }

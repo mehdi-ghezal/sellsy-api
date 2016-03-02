@@ -4,37 +4,113 @@ namespace Sellsy\Models\Client;
 
 /**
  * Class Customer
- * @package Sellsy\Models\Customer
+ *
+ * @package Sellsy\Models\Client
  */
 class Customer implements CustomerInterface
 {
     /**
      * @var int
-     * @copy
      */
-    public $id;
+    protected $id;
 
     /**
      * @var string
-     * @copy
      */
-    public $name;
+    protected $name;
 
     /**
      * @var string
-     * @copy
      */
-    public $email;
+    protected $email;
 
     /**
      * @var string
-     * @copy
      */
-    public $phoneNumber;
+    protected $phoneNumber;
 
     /**
      * @var string
-     * @copy
      */
-    public $mobileNumber;
+    protected $mobileNumber;
+
+    /**
+     * @inheritdoc
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMobileNumber()
+    {
+        return $this->mobileNumber;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setMobileNumber($mobileNumber)
+    {
+        $this->mobileNumber = $mobileNumber;
+    }
 }

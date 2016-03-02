@@ -4,31 +4,92 @@ namespace Sellsy\Models\Documents;
 
 /**
  * Class Estimate
+ *
  * @package Sellsy\Models\Documents
  */
 class Estimate extends Document implements EstimateInterface
 {
     /**
      * @var float
-     * @copy marge
      */
-    public $marginAmount;
+    protected $marginAmount;
 
     /**
      * @var float
-     * @copy marge_tauxMarge
      */
-    public $marginRate;
+    protected $marginRate;
 
     /**
      * @var float
-     * @copy marge_tauxMarque
      */
-    public $markupRate;
+    protected $markupRate;
 
     /**
      * @var \DateTime
-     * @copy expireDate
      */
-    public $expireAt;
+    protected $expireAt;
+
+    /**
+     * @inheritdoc
+     */
+    public function getMarginAmount()
+    {
+        return $this->marginAmount;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setMarginAmount($marginAmount)
+    {
+        $this->marginAmount = $marginAmount;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMarginRate()
+    {
+        return $this->marginRate;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setMarginRate($marginRate)
+    {
+        $this->marginRate = $marginRate;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMarkupRate()
+    {
+        return $this->markupRate;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setMarkupRate($markupRate)
+    {
+        $this->markupRate = $markupRate;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getExpireAt()
+    {
+        return $this->expireAt;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setExpireAt(\DateTime $expireAt)
+    {
+        $this->expireAt = $expireAt;
+    }
 }

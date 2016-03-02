@@ -5,9 +5,18 @@ namespace Sellsy\Tests\Generic;
 use Sellsy\Client;
 use Sellsy\Models\ApiInfos;
 use Sellsy\Tests\Fixtures\Components;
+use Sellsy\Models\ApiInfosInterface;
 
+/**
+ * Class ClientTest
+ *
+ * @package Sellsy\Tests\Generic
+ */
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @return Client
+     */
     public function testNewClient()
     {
         $client = Components::getClient();
@@ -18,30 +27,32 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param Client $client
+     * @return ApiInfosInterface
      * @depends testNewClient
      */
     public function testGetApiInfos(Client $client)
     {
         $infos = $client->getApiInfos();
 
-        $this->assertInstanceOf('Sellsy\Models\ApiInfos', $infos);
+        $this->assertInstanceOf('Sellsy\Models\ApiInfosInterface', $infos);
 
         return $infos;
     }
 
     /**
-     * @param ApiInfos $infos
+     * @param ApiInfosInterface $infos
      * @depends testGetApiInfos
      */
-    public function testApiInfosMapping(ApiInfos $infos)
+    public function testApiInfosMapping(ApiInfosInterface $infos)
     {
-        $this->assertEquals("status_value", $infos->status);
-        $this->assertEquals("version_value", $infos->version);
+        $this->assertEquals("status_value", $infos->getStatus());
+        $this->assertEquals("version_value", $infos->getVersion());
 
-        $this->assertGreaterThan(1, $infos->account->id);
-        $this->assertEquals("forename_value", $infos->account->firstName);
-        $this->assertEquals("name_value", $infos->account->lastName);
-        $this->assertEquals("mail_value", $infos->account->email);
-        $this->assertEquals("fullName_value", $infos->account->fullName);
+        $this->assertGreaterThan(1, $infos->getAccount()->getId());
+        $this->assertEquals("forename_value", $infos->getAccount()->getFirstName());
+        $this->assertEquals("name_value", $infos->getAccount()->getLastName());
+        $this->assertEquals("mail_value", $infos->getAccount()->getEmail());
+        $this->assertEquals("fullName_value", $infos->getAccount()->getFullName());
     }
 }

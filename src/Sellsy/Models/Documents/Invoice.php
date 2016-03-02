@@ -4,31 +4,92 @@ namespace Sellsy\Models\Documents;
 
 /**
  * Class Invoice
+ *
  * @package Sellsy\Models\Documents
  */
 class Invoice extends Document implements InvoiceInterface
 {
     /**
      * @var float
-     * @copy
      */
-    public $dueAmount;
+    protected $dueAmount;
 
     /**
      * @var float
-     * @copy marge
      */
-    public $marginAmount;
+    protected $marginAmount;
 
     /**
      * @var float
-     * @copy marge_tauxMarge
      */
-    public $marginRate;
+    protected $marginRate;
 
     /**
      * @var float
-     * @copy marge_tauxMarque
      */
-    public $markupRate;
+    protected $markupRate;
+
+    /**
+     * @inheritdoc
+     */
+    public function getDueAmount()
+    {
+        return $this->dueAmount;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setDueAmount($dueAmount)
+    {
+        $this->dueAmount = $dueAmount;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMarginAmount()
+    {
+        return $this->marginAmount;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setMarginAmount($marginAmount)
+    {
+        $this->marginAmount = $marginAmount;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMarginRate()
+    {
+        return $this->marginRate;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setMarginRate($marginRate)
+    {
+        $this->marginRate = $marginRate;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMarkupRate()
+    {
+        return $this->markupRate;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setMarkupRate($markupRate)
+    {
+        $this->markupRate = $markupRate;
+    }
 }

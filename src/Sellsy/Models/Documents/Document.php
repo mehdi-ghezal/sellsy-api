@@ -2,11 +2,17 @@
 
 namespace Sellsy\Models\Documents;
 
+use Sellsy\Models\Accounting\CurrencyInterface;
+use Sellsy\Models\Client\ContactInterface;
+use Sellsy\Models\Client\CustomerInterface;
 use Sellsy\Models\CustomFields\CustomFieldTrait;
+use Sellsy\Models\Documents\Document\StepInterface;
 use Sellsy\Models\SmartTags\TagTrait;
+use Sellsy\Models\Staff\PeopleInterface;
 
 /**
  * Class Document
+ *
  * @package Sellsy\Models\Documents
  */
 class Document implements DocumentInterface
@@ -16,122 +22,358 @@ class Document implements DocumentInterface
 
     /**
      * @var int
-     * @copy
      */
-    public $id;
+    protected $id;
 
     /**
      * @var string
-     * @copy ident
      */
-    public $reference;
+    protected $reference;
 
     /**
      * @var string
-     * @copy
      */
-    public $note;
+    protected $note;
 
     /**
      * @var \DateTime
-     * @copy created
      */
-    public $createAt;
+    protected $createAt;
 
     /**
      * @var \DateTime
-     * @copy displayedDate
      */
-    public $displayDate;
+    protected $displayDate;
 
     /**
      * @var string
-     * @copy
      */
-    public $analyticsCode;
+    protected $analyticsCode;
 
     /**
      * @var float
-     * @copy totalAmountTaxesFree
      */
-    public $amountWithoutTax;
+    protected $amountWithoutTax;
 
     /**
      * @var float
-     * @copy taxesAmountSum
      */
-    public $taxAmount;
+    protected $taxAmount;
 
     /**
      * @var float
-     * @copy
      */
-    public $packagingsAmount;
+    protected $packagingsAmount;
 
     /**
      * @var float
-     * @copy
      */
-    public $shippingsAmount;
+    protected $shippingsAmount;
 
     /**
      * @var float
-     * @copy
      */
-    public $discountPercent;
+    protected $discountPercent;
 
     /**
      * @var float
-     * @copy
      */
-    public $discountAmount;
+    protected $discountAmount;
 
     /**
-     * @var \Sellsy\Models\Documents\Document\StepInterface
-     * @copy {
-     *      "step_id" : "id",
-     *      "step": "name",
-     *      "step_label": "label"
-     * }
+     * @var StepInterface
      */
-    public $step;
+     protected $step;
 
     /**
-     * @var \Sellsy\Models\Staff\PeopleInterface
-     * @copy {
-     *      "ownerid" : "id",
-     *      "ownerFullName": "fullName"
-     * }
+     * @var PeopleInterface
      */
-    public $owner;
+    protected $owner;
 
     /**
-     * @var \Sellsy\Models\Accounting\CurrencyInterface
-     * @copy {
-     *      "currencyid" : "id",
-     *      "currencysymbol": "symbol"
-     * }
+     * @var CurrencyInterface
      */
-    public $currency;
+    protected $currency;
 
     /**
-     * @var \Sellsy\Models\Client\CustomerInterface
-     * @copy {
-     *      "thirdid" : "id",
-     *      "thirdname": "name",
-     *      "thirdemail": "email",
-     *      "thirdtel": "phoneNumber",
-     *      "thirdmobile": "mobileNumber"
-     * }
+     * @var CustomerInterface
      */
-    public $customer;
+    protected $customer;
 
     /**
-     * @var \Sellsy\Models\Client\ContactInterface
-     * @copy {
-     *      "contactId" : "id",
-     *      "contactName": "fullName"
-     * }
+     * @var ContactInterface
      */
-    public $contact;
+    protected $contact;
+
+    /**
+     * @inheritdoc
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getReference()
+    {
+        return $this->reference;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setReference($reference)
+    {
+        $this->reference = $reference;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCreateAt()
+    {
+        return $this->createAt;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setCreateAt(\DateTime $createAt)
+    {
+        $this->createAt = $createAt;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDisplayDate()
+    {
+        return $this->displayDate;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setDisplayDate(\DateTime $displayDate)
+    {
+        $this->displayDate = $displayDate;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAnalyticsCode()
+    {
+        return $this->analyticsCode;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setAnalyticsCode($analyticsCode)
+    {
+        $this->analyticsCode = $analyticsCode;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAmountWithoutTax()
+    {
+        return $this->amountWithoutTax;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setAmountWithoutTax($amountWithoutTax)
+    {
+        $this->amountWithoutTax = $amountWithoutTax;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getTaxAmount()
+    {
+        return $this->taxAmount;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setTaxAmount($taxAmount)
+    {
+        $this->taxAmount = $taxAmount;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPackagingsAmount()
+    {
+        return $this->packagingsAmount;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setPackagingsAmount($packagingsAmount)
+    {
+        $this->packagingsAmount = $packagingsAmount;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getShippingsAmount()
+    {
+        return $this->shippingsAmount;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setShippingsAmount($shippingsAmount)
+    {
+        $this->shippingsAmount = $shippingsAmount;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDiscountPercent()
+    {
+        return $this->discountPercent;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setDiscountPercent($discountPercent)
+    {
+        $this->discountPercent = $discountPercent;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDiscountAmount()
+    {
+        return $this->discountAmount;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setDiscountAmount($discountAmount)
+    {
+        $this->discountAmount = $discountAmount;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getStep()
+    {
+        return $this->step;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setStep(StepInterface $step)
+    {
+        $this->step = $step;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setOwner(PeopleInterface $owner)
+    {
+        $this->owner = $owner;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setCurrency(CurrencyInterface $currency)
+    {
+        $this->currency = $currency;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setCustomer(CustomerInterface $customer)
+    {
+        $this->customer = $customer;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getContact()
+    {
+        return $this->contact;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setContact(ContactInterface $contact)
+    {
+        $this->contact = $contact;
+    }
 }

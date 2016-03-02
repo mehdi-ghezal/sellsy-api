@@ -4,26 +4,56 @@ namespace Sellsy\Models\CustomFields;
 
 /**
  * Class CustomFieldTrait
+ *
  * @package Sellsy\Models\CustomFields
  */
 trait CustomFieldTrait
 {
     /**
-     * @var \Sellsy\Models\CustomFields\CustomFieldInterface[]
-     * @copy {
-     *      "customfields": {
-     *          "id": "id",
-     *          "cfid": "cfid",
-     *          "type": "type",
-     *          "textval": "textval",
-     *          "boolval": "boolval",
-     *          "timestampval": "timestampval",
-     *          "decimalval": "decimalval",
-     *          "numericval": "numericval",
-     *          "stringval": "stringval",
-     *          "formatted_value": "formatted_value"
-     *      }
-     * }
+     * @var CustomFieldInterface[]
      */
-    public $customFields;
+    protected $customFields;
+
+    /**
+     * @return CustomFieldInterface[]
+     */
+    public function getCustomFields()
+    {
+        return $this->customFields;
+    }
+
+    /**
+     * @param \Closure $closure
+     * @return null|CustomFieldInterface
+     */
+    public function getCustomField(\Closure $closure)
+    {
+        foreach($this->customFields as $customField) {
+            if ($closure($customField)) {
+                return $customField;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param CustomFieldInterface[] $customFields
+     */
+    public function setCustomFields(array $customFields)
+    {
+        $this->customFields = $customFields;
+    }
+
+    /**
+     * @param CustomFieldInterface $customField
+     */
+    public function addCustomFields($customField)
+    {
+        if (! $this->customFields) {
+            $this->customFields = array();
+        }
+
+        $this->customFields[] = $customField;
+    }
 }

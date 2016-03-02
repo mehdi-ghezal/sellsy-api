@@ -2,11 +2,13 @@
 
 namespace Sellsy\Models\Catalogue;
 
+use Sellsy\Models\Catalogue\Item\PackagingInterface;
 use Sellsy\Models\CustomFields\CustomFieldTrait;
 use Sellsy\Models\SmartTags\TagTrait;
 
 /**
  * Class Item
+ *
  * @package Sellsy\Models\Catalogue
  */
 class Item implements ItemInterface
@@ -16,116 +18,379 @@ class Item implements ItemInterface
 
     /**
      * @var int
-     * @copy
      */
-    public $id;
+    protected $id;
 
     /**
      * @var boolean
-     * @copy actif
      */
-    public $isActive;
+    protected $isActive;
 
     /**
      * @var string
-     * @copy
      */
-    public $analyticsCode;
+    protected $analyticsCode;
 
     /**
      * @var boolean
-     * @copy
      */
-    public $isEnabled;
+    protected $isEnabled;
 
     /**
      * @var string
-     * @copy
      */
-    public $name;
+    protected $name;
 
     /**
      * @var string
-     * @copy
      */
-    public $slug;
+    protected $slug;
 
     /**
      * @var string
-     * @copy
      */
-    public $tradename;
+    protected $tradename;
 
     /**
      * @var string
-     * @copy notes
      */
-    public $description;
+    protected $description;
 
     /**
      * @var float
-     * @copy unitAmount
      */
-    public $saleUnitAmountWithoutTax;
+    protected $saleUnitAmountWithoutTax;
 
     /**
      * @var float
-     * @copy unitAmountTaxesInc - unitAmount
      */
-    public $saleUnitTaxAmount;
+    protected $saleUnitTaxAmount;
 
     /**
      * @var float
-     * @copy purchaseAmount
      */
-    public $purchaseUnitAmountWithoutTax;
+    protected $purchaseUnitAmountWithoutTax;
 
     /**
      * @var float
-     * @copy purchaseAmountTaxesInc - purchaseAmount
      */
-    public $purchaseUnitTaxAmount;
+    protected $purchaseUnitTaxAmount;
 
     /**
      * @var string
-     * @copy
      */
-    public $unit;
+    protected $unit;
 
     /**
      * @var float
-     * @copy qt
      */
-    public $quantity;
+    protected $quantity;
 
     /**
      * @var \DateTime
-     * @copy createdAt
      */
-    public $createAt;
+    protected $createAt;
 
     /**
      * @var \DateTime
-     * @copy updatedAt
      */
-    public $updateAt;
+    protected $updateAt;
 
     /**
      * @var string
-     * @copy defaultImage.file.public_path
      */
-    public $image;
+    protected $image;
 
     /**
-     * @var \Sellsy\Models\Catalogue\Item\PackagingInterface
-     * @copy {
-     *      "characteristics.width" : "width",
-     *      "characteristics.deepth": "deepth",
-     *      "characteristics.length": "length",
-     *      "characteristics.height": "height",
-     *      "characteristics.weight": "weight",
-     *      "characteristics.packing": "packing"
-     * }
+     * @var PackagingInterface
      */
-    public $packaging;
+    protected $packaging;
+
+    /**
+     * @inheritdoc
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAnalyticsCode()
+    {
+        return $this->analyticsCode;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setAnalyticsCode($analyticsCode)
+    {
+        $this->analyticsCode = $analyticsCode;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isEnabled()
+    {
+        return $this->isEnabled;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setIsEnabled($isEnabled)
+    {
+        $this->isEnabled = $isEnabled;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getTradename()
+    {
+        return $this->tradename;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setTradename($tradename)
+    {
+        $this->tradename = $tradename;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSaleUnitAmountWithoutTax()
+    {
+        return $this->saleUnitAmountWithoutTax;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setSaleUnitAmountWithoutTax($saleUnitAmountWithoutTax)
+    {
+        $this->saleUnitAmountWithoutTax = $saleUnitAmountWithoutTax;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSaleUnitTaxAmount()
+    {
+        return $this->saleUnitTaxAmount;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setSaleUnitTaxAmount($saleUnitTaxAmount)
+    {
+        $this->saleUnitTaxAmount = $saleUnitTaxAmount;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPurchaseUnitAmountWithoutTax()
+    {
+        return $this->purchaseUnitAmountWithoutTax;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setPurchaseUnitAmountWithoutTax($purchaseUnitAmountWithoutTax)
+    {
+        $this->purchaseUnitAmountWithoutTax = $purchaseUnitAmountWithoutTax;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPurchaseUnitTaxAmount()
+    {
+        return $this->purchaseUnitTaxAmount;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setPurchaseUnitTaxAmount($purchaseUnitTaxAmount)
+    {
+        $this->purchaseUnitTaxAmount = $purchaseUnitTaxAmount;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getUnit()
+    {
+        return $this->unit;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setUnit($unit)
+    {
+        $this->unit = $unit;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCreateAt()
+    {
+        return $this->createAt;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setCreateAt(\DateTime $createAt)
+    {
+        $this->createAt = $createAt;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getUpdateAt()
+    {
+        return $this->updateAt;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setUpdateAt(\DateTime $updateAt)
+    {
+        $this->updateAt = $updateAt;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPackaging()
+    {
+        return $this->packaging;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setPackaging(PackagingInterface $packaging)
+    {
+        $this->packaging = $packaging;
+    }
 }

@@ -5,15 +5,21 @@ namespace Sellsy\Tests\Catalogue;
 use Sellsy\Criteria\Catalogue\GetItemCriteria;
 use Sellsy\Criteria\Catalogue\SearchItemsCriteria;
 use Sellsy\Clients\Catalogue;
-use Sellsy\Models\Catalogue\Item;
 use Sellsy\Tests\Fixtures\Catalogue as CatalogueFixtures;
 use Sellsy\Tests\Fixtures\Components;
-use Sellsy\Tests\Generic\ClientTest;
 use Sellsy\Models\Catalogue\ItemInterface;
 use Sellsy\Tests\Fixtures\NewItem;
 
+/**
+ * Class ReadTest
+ *
+ * @package Sellsy\Tests\Catalogue
+ */
 class ReadTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @return Catalogue
+     */
     public function testCatalogueClient()
     {
         $catalogue = Components::getClient()->catalogue();
@@ -24,6 +30,8 @@ class ReadTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param Catalogue $catalogue
+     * @return ItemInterface
      * @depends testCatalogueClient
      */
     public function testGetItem(Catalogue $catalogue)
@@ -36,46 +44,48 @@ class ReadTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param Item $item
+     * @param ItemInterface $item
      * @depends testGetItem
      */
-    public function testItemMappings(Item $item)
+    public function testItemMappings(ItemInterface $item)
     {
-        $this->assertInternalType('integer', $item->id);
-        $this->assertInternalType('float', $item->saleUnitAmountWithoutTax);
-        $this->assertInternalType('float', $item->saleUnitTaxAmount);
-        $this->assertInternalType('float', $item->purchaseUnitAmountWithoutTax);
-        $this->assertInternalType('float', $item->purchaseUnitTaxAmount);
-        $this->assertInternalType('float', $item->quantity);
-        $this->assertInternalType('bool', $item->isActive);
+        $this->assertInternalType('integer', $item->getId());
+        $this->assertInternalType('float', $item->getSaleUnitAmountWithoutTax());
+        $this->assertInternalType('float', $item->getSaleUnitTaxAmount());
+        $this->assertInternalType('float', $item->getPurchaseUnitAmountWithoutTax());
+        $this->assertInternalType('float', $item->getPurchaseUnitTaxAmount());
+        $this->assertInternalType('float', $item->getQuantity());
+        $this->assertInternalType('bool', $item->isActive());
 
-        $this->assertInstanceOf('\DateTime', $item->createAt);
-        $this->assertInstanceOf('\DateTime', $item->updateAt);
+        $this->assertInstanceOf('\DateTime', $item->getCreateAt());
+        $this->assertInstanceOf('\DateTime', $item->getUpdateAt());
 
-        $this->assertEquals('analyticsCode_value', $item->analyticsCode);
-        $this->assertEquals('notes_value', $item->description);
-        $this->assertEquals('https://www.sellsy.com/public_path_value', $item->image);
-        $this->assertEquals('name_value', $item->name);
-        $this->assertEquals('tradename_value', $item->tradename);
-        $this->assertEquals('slug_value', $item->slug);
-        $this->assertEquals('unit_value', $item->unit);
+        $this->assertEquals('analyticsCode_value', $item->getAnalyticsCode());
+        $this->assertEquals('notes_value', $item->getDescription());
+        $this->assertEquals('https://www.sellsy.fr/public_path_value', $item->getImage());
+        $this->assertEquals('name_value', $item->getName());
+        $this->assertEquals('tradename_value', $item->getTradename());
+        $this->assertEquals('slug_value', $item->getSlug());
+        $this->assertEquals('unit_value', $item->getUnit());
 
-        $this->assertInstanceOf('\Sellsy\Models\Catalogue\Item\Packaging', $item->packaging);
-        $this->assertEquals('width_value', $item->packaging->width);
-        $this->assertEquals('deepth_value', $item->packaging->deepth);
-        $this->assertEquals('length_value', $item->packaging->length);
-        $this->assertEquals('height_value', $item->packaging->height);
-        $this->assertEquals('weight_value', $item->packaging->weight);
-        $this->assertEquals('packing_value', $item->packaging->packing);
+        $this->assertInstanceOf('\Sellsy\Models\Catalogue\Item\Packaging', $item->getPackaging());
+        $this->assertEquals('width_value', $item->getPackaging()->getWidth());
+        $this->assertEquals('deepth_value', $item->getPackaging()->getDeepth());
+        $this->assertEquals('length_value', $item->getPackaging()->getLength());
+        $this->assertEquals('height_value', $item->getPackaging()->getHeight());
+        $this->assertEquals('weight_value', $item->getPackaging()->getWeight());
+        $this->assertEquals('packing_value', $item->getPackaging()->getPacking());
 
-        $this->assertInternalType('array', $item->tags);
-        $this->assertGreaterThan(0, count($item->tags));
+        $this->assertInternalType('array', $item->getTags());
+        $this->assertGreaterThan(0, count($item->getTags()));
 
-        $this->assertInternalType('array', $item->customFields);
-        $this->assertGreaterThan(0, count($item->customFields));
+        $this->assertInternalType('array', $item->getCustomFields());
+        $this->assertGreaterThan(0, count($item->getCustomFields()));
     }
 
     /**
+     * @param Catalogue $catalogue
+     * @return ItemInterface
      * @depends testCatalogueClient
      */
     public function testSearchItems(Catalogue $catalogue)
@@ -91,6 +101,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param ItemInterface $item
      * @depends testSearchItems
      */
     public function testInterfacesMappings(ItemInterface $item)

@@ -10,12 +10,12 @@ use Sellsy\Criteria\Documents\SearchCriteria\SearchInvoicesCriteria;
 use Sellsy\Criteria\Documents\SearchCriteria\SearchOrdersCriteria;
 use Sellsy\Criteria\Documents\SearchCriteria\SearchProformaCriteria;
 use Sellsy\Criteria\Paginator;
-use Sellsy\Models\Documents\Delivery;
-use Sellsy\Models\Documents\Document;
-use Sellsy\Models\Documents\Estimate;
-use Sellsy\Models\Documents\Invoice;
-use Sellsy\Models\Documents\Order;
-use Sellsy\Models\Documents\Proforma;
+use Sellsy\Models\Documents\DeliveryInterface;
+use Sellsy\Models\Documents\DocumentInterface;
+use Sellsy\Models\Documents\EstimateInterface;
+use Sellsy\Models\Documents\InvoiceInterface;
+use Sellsy\Models\Documents\OrderInterface;
+use Sellsy\Models\Documents\ProformaInterface;
 use Sellsy\Tests\Fixtures\Components;
 use Sellsy\Tests\Generic\ClientTest;
 
@@ -40,79 +40,91 @@ class ReadTest extends ClientTest
 
     /**
      * @param Documents $documents
-     * @return Estimate
+     * @return EstimateInterface
      * @depends testDocumentClient
      */
     public function testSearchEstimates(Documents $documents)
     {
         $estimates = $documents->searchEstimates(new SearchEstimatesCriteria());
+        $estimate = $estimates->current();
 
         $this->assertInstanceOf('Sellsy\Collections\Collection', $estimates);
-        $this->assertInstanceOf('Sellsy\Models\Documents\EstimateInterface', $estimates->current());
+        $this->assertInstanceOf('Sellsy\Models\Documents\EstimateInterface', $estimate);
 
-        return $estimates->current();
+        return $estimate;
     }
 
     /**
-     * @param Estimate $estimate
+     * @param DocumentInterface $document
      * @depends testSearchEstimates
      */
-    public function testEstimateMapping(Estimate $estimate)
+    public function testDocumentMapping(DocumentInterface $document)
+    {
+        ///TODO Implement
+    }
+
+    /**
+     * @param EstimateInterface $estimate
+     * @depends testSearchEstimates
+     */
+    public function testEstimateMapping(EstimateInterface $estimate)
     {
         ///TODO Implement
     }
 
     /**
      * @param Documents $documents
-     * @return Invoice
+     * @return InvoiceInterface
      * @depends testDocumentClient
      */
     public function testSearchInvoices(Documents $documents)
     {
         $invoices = $documents->searchInvoices(new SearchInvoicesCriteria());
+        $invoice = $invoices->current();
 
         $this->assertInstanceOf('Sellsy\Collections\Collection', $invoices);
-        $this->assertInstanceOf('Sellsy\Models\Documents\InvoiceInterface', $invoices->current());
+        $this->assertInstanceOf('Sellsy\Models\Documents\InvoiceInterface', $invoice);
 
-        return $invoices->current();
+        return $invoice;
     }
 
     /**
-     * @param Invoice $invoice
+     * @param InvoiceInterface $invoice
      * @depends testSearchInvoices
      */
-    public function testInvoiceMapping(Invoice $invoice)
+    public function testInvoiceMapping(InvoiceInterface $invoice)
     {
         ///TODO Implement
     }
 
     /**
      * @param Documents $documents
-     * @return Delivery
+     * @return DeliveryInterface
      * @depends testDocumentClient
      */
     public function testSearchDeliveries(Documents $documents)
     {
         $deliveries = $documents->searchDelivery(new SearchDeliveriesCriteria());
+        $delivery = $deliveries->current();
 
         $this->assertInstanceOf('Sellsy\Collections\Collection', $deliveries);
-        $this->assertInstanceOf('Sellsy\Models\Documents\DeliveryInterface', $deliveries->current());
+        $this->assertInstanceOf('Sellsy\Models\Documents\DeliveryInterface', $delivery);
 
-        return $deliveries->current();
+        return $delivery;
     }
 
     /**
-     * @param Delivery $delivery
+     * @param DeliveryInterface $delivery
      * @depends testSearchDeliveries
      */
-    public function testDeliveryMapping(Delivery $delivery)
+    public function testDeliveryMapping(DeliveryInterface $delivery)
     {
         ///TODO Implement
     }
 
     /**
      * @param Documents $documents
-     * @return Order
+     * @return OrderInterface
      * @depends testDocumentClient
      */
     public function testSearchOrders(Documents $documents)
@@ -120,47 +132,51 @@ class ReadTest extends ClientTest
         $criteria = new SearchOrdersCriteria();
 
         $orders = $documents->searchOrders($criteria);
+        $order = $orders->current();
 
         $this->assertInstanceOf('Sellsy\Collections\Collection', $orders);
-        $this->assertInstanceOf('Sellsy\Models\Documents\OrderInterface', $orders->current());
+        $this->assertInstanceOf('Sellsy\Models\Documents\OrderInterface', $order);
 
-        return $orders->current();
+        return $order;
     }
 
     /**
-     * @param Order $order
+     * @param OrderInterface $order
      * @depends testSearchOrders
      */
-    public function testOrderMapping(Order $order)
+    public function testOrderMapping(OrderInterface $order)
     {
         ///TODO Implement
     }
 
     /**
      * @param Documents $documents
-     * @return Proforma
+     * @return ProformaInterface
      * @depends testDocumentClient
      */
     public function testSearchProforma(Documents $documents)
     {
-        $proforma = $documents->searchProforma(new SearchProformaCriteria());
+        $proformas = $documents->searchProforma(new SearchProformaCriteria());
+        $proforma = $proformas->current();
 
-        $this->assertInstanceOf('Sellsy\Collections\Collection', $proforma);
-        $this->assertInstanceOf('Sellsy\Models\Documents\ProformaInterface', $proforma->current());
+        $this->assertInstanceOf('Sellsy\Collections\Collection', $proformas);
+        $this->assertInstanceOf('Sellsy\Models\Documents\ProformaInterface', $proforma);
 
-        return $proforma->current();
+        return $proforma;
     }
 
     /**
-     * @param Proforma $proforma
+     * @param ProformaInterface $proforma
      * @depends testSearchProforma
      */
-    public function testProformaMapping(Proforma $proforma)
+    public function testProformaMapping(ProformaInterface $proforma)
     {
         ///TODO Implement
     }
 
     /**
+     * @param Documents $documents
+     * @return Collection
      * @depends testDocumentClient
      */
     public function testCollectionAutoloadOff(Documents $documents)
@@ -182,7 +198,7 @@ class ReadTest extends ClientTest
         $estimates = $documents->searchEstimates($criteria, $paginator);
         $estimatesCount = 0;
 
-        /** @var Estimate $estimates */
+        /** @var EstimateInterface $estimates */
         foreach($estimates as $estimate) {
             $estimatesCount++;
         }
@@ -200,7 +216,7 @@ class ReadTest extends ClientTest
     {
         $estimatesCount = 0;
 
-        /** @var Document $document */
+        /** @var EstimateInterface $estimate */
         foreach($estimates->autoload() as $estimate) {
             $estimatesCount++;
         }
