@@ -12,7 +12,7 @@ use Sellsy\Tests\Generic\ClientTest;
 use Sellsy\Models\Catalogue\ItemInterface;
 use Sellsy\Tests\Fixtures\NewItem;
 
-class ReadTest extends ClientTest
+class ReadTest extends \PHPUnit_Framework_TestCase
 {
     public function testCatalogueClient()
     {
@@ -54,7 +54,7 @@ class ReadTest extends ClientTest
 
         $this->assertEquals('analyticsCode_value', $item->analyticsCode);
         $this->assertEquals('notes_value', $item->description);
-        $this->assertEquals('public_path_value', $item->images);
+        $this->assertEquals('public_path_value', $item->image);
         $this->assertEquals('name_value', $item->name);
         $this->assertEquals('tradename_value', $item->tradename);
         $this->assertEquals('slug_value', $item->slug);
@@ -68,11 +68,11 @@ class ReadTest extends ClientTest
         $this->assertEquals('weight_value', $item->packaging->weight);
         $this->assertEquals('packing_value', $item->packaging->packing);
 
-        //$this->assertInternalType('array', $item->customFields);
-        //$this->assertGreaterThan(0, count($item->customFields));
+        $this->assertInternalType('array', $item->tags);
+        $this->assertGreaterThan(0, count($item->tags));
 
-        //$this->assertInternalType('array', $item->tags);
-        //$this->assertGreaterThan(0, count($item->tags));
+        $this->assertInternalType('array', $item->customFields);
+        $this->assertGreaterThan(0, count($item->customFields));
     }
 
     /**

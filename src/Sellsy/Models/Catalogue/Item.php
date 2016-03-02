@@ -114,7 +114,7 @@ class Item implements ItemInterface
      * @var string
      * @copy defaultImage.file.public_path
      */
-    public $images;
+    public $image;
 
     /**
      * @var \Sellsy\Models\Catalogue\Item\PackagingInterface

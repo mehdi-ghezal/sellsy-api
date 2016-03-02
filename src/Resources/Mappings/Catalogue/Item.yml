@@ -1,0 +1,50 @@
+Sellsy\Models\Catalogue\ItemInterface:
+    id: ~
+    isActive: actif
+    analyticsCode: ~
+    isEnabled: ~
+    name: ~
+    slug: ~
+    tradename: ~
+    description: notes
+    saleUnitAmountWithoutTax: unitAmount
+    saleUnitTaxAmount: unitAmountTaxesInc - unitAmount
+    purchaseUnitAmountWithoutTax: purchaseAmount
+    purchaseUnitTaxAmount: purchaseAmountTaxesInc - purchaseAmount
+    unit: ~
+    quantity: qt
+    createAt: createdAt
+    updateAt: updatedAt
+    image: defaultImage.file.public_path
+    packaging:
+        type: Sellsy\Models\Catalogue\Item\PackagingInterface
+        mappings:
+            width: characteristics.width
+            deepth: characteristics.deepth
+            length: characteristics.length
+            height: characteristics.height
+            weight: characteristics.weight
+            packing: characteristics.packing
+    tags:
+        type: Sellsy\Models\SmartTags\TagInterface
+        collection: true
+        origin: tags
+        mappings:
+            id: ~
+            name: word
+            category: ~
+    customFields:
+        type: Sellsy\Models\CustomFields\CustomFieldInterface
+        collection: true
+        origin: customfields
+        mappings:
+            id: ~
+            fieldId: cfid
+            type: ~
+            textValue: textval
+            boolValue: boolval
+            timestampValue: timestampval
+            decimalValue: decimalval
+            numericValue: numericval
+            stringValue: stringval
+            formattedValue: formatted_value

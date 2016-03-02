@@ -62,7 +62,7 @@ class LocalTransport implements TransportInterface
                 throw new \RuntimeException("Unable to save data file " . $path);
             }
 
-            return $array;
+            return json_decode(file_get_contents($path), true);
         }
 
         throw new \RuntimeException("Unable to find the data file " . $path);
@@ -89,7 +89,7 @@ class LocalTransport implements TransportInterface
             $value = $key . '_value';
         });
 
-        return json_encode($data);
+        return json_encode($data, JSON_PRETTY_PRINT);
     }
 
     /**

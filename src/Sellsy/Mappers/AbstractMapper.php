@@ -3,6 +3,8 @@
 namespace Sellsy\Mappers;
 
 use Sellsy\Exception\RuntimeException;
+use Doctrine\Instantiator\Instantiator;
+
 use Sellsy\Models\Accounting\Currency;
 use Sellsy\Models\Accounting\CurrencyInterface;
 use Sellsy\Models\ApiInfos;
@@ -45,6 +47,11 @@ abstract class AbstractMapper implements MapperInterface
      * @var array
      */
     protected $interfacesMappings;
+
+    /**
+     * @var array
+     */
+    protected $instantiator;
 
     /**
      * @param string $interface
@@ -103,5 +110,27 @@ abstract class AbstractMapper implements MapperInterface
             PeopleInterface::class => People::class,
             PackagingInterface::class => Packaging::class,
         );
+    }
+
+    /**
+     * @param $interface
+     * @return mixed
+     * @throws RuntimeException
+     */
+    protected function getObjectInstance($interface)
+    {
+        if (!$this->interfacesMappings) {
+            $this->interfacesMappings = $this->getDefaultInterfacesMappings();
+        }
+
+        if (! isset($this->interfacesMappings[$interface])) {
+            throw new RuntimeException("Unable to find a mapping class for interface " . $interface);
+        }
+
+        if (! $this->instantiator) {
+            $this->instantiator = new Instantiator();
+        }
+
+        return $this->instantiator->instantiate($this->interfacesMappings[$interface]);
     }
 }

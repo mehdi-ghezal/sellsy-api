@@ -2,15 +2,12 @@
 
 namespace Sellsy\Tests\Fixtures;
 
-use Minime\Annotations\Cache\ArrayCache;
-use Minime\Annotations\Parser;
-use Minime\Annotations\Reader;
 use Sellsy\Adapters\AdapterInterface;
 use Sellsy\Adapters\MapperAdapter;
 use Sellsy\Mappers\MapperInterface;
+use Sellsy\Mappers\YmlMapper;
 use Sellsy\Tests\Mock\LocalTransport;
 use Sellsy\Transports\Guzzle;
-use Sellsy\Mappers\MinimeMapper;
 use Sellsy\Client;
 use Sellsy\Transports\TransportInterface;
 
@@ -42,12 +39,12 @@ class Components
     protected static $client;
 
     /**
-     * @return MapperInterface|MinimeMapper
+     * @return MapperInterface|YmlMapper
      */
     public static function getMapper()
     {
         if (! self::$mapper) {
-            self::$mapper = new MinimeMapper(new Reader(new Parser(), new ArrayCache()));
+            self::$mapper = new YmlMapper(realpath(dirname(dirname(__DIR__)) . '/src/Resources/Mappings/'));
         }
 
         return self::$mapper;

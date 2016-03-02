@@ -1,0 +1,11 @@
+Sellsy\Models\ApiInfosInterface:
+    version: apidatas.version
+    status: apidatas.status
+    account:
+        type: Sellsy\Models\Staff\PeopleInterface
+        mappings:
+            id: userdatas.staffId
+            firstName: userdatas.forename
+            lastName: userdatas.name
+            fullName: userdatas.fullName
+            email: userdatas.mail
