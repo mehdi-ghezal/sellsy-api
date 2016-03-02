@@ -314,10 +314,34 @@
                 "public_path": "public_path_value"
             }
         },
-        "tags": [{
-                "1066060": {"id":"1066060","corpid":"35249","status":"status_value","category":"category_value","created":"2015-03-12 13:18:36","word":"word_value","tagid":"1066060","linkedtype":"linkedtype_value","linkedid":"3358840","tagLinkId":"7751879"},
-                "1054305":{"id":"1054305","corpid":"35249","status":"status_value","category":"category_value","created":"2015-02-11 02:58:10","word":"word_value","tagid":"1054305","linkedtype":"linkedtype_value","linkedid":"3358840","tagLinkId":"7751880"}
-        }],
+        "tags": [
+            {
+                "1066060": {
+                    "id":"1066060",
+                    "corpid":"35249",
+                    "status":"status_value",
+                    "category":"category_value",
+                    "created":"2015-03-12 13:18:36",
+                    "word":"word_value",
+                    "tagid":"1066060",
+                    "linkedtype":"linkedtype_value",
+                    "linkedid":"3358840",
+                    "tagLinkId":"7751879"
+                },
+                "1054305":{
+                    "id":"1054305",
+                    "corpid":"35249",
+                    "status":"status_value",
+                    "category":"category_value",
+                    "created":"2015-02-11 02:58:10",
+                    "word":"word_value",
+                    "tagid":"1054305",
+                    "linkedtype":"linkedtype_value",
+                    "linkedid":"3358840",
+                    "tagLinkId":"7751880"
+                }
+            }
+        ],
         "linkid": "313492",
         "sellCode": "701000",
         "purchaseCode": "601000",
