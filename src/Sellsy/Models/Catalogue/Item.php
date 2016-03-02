@@ -3,6 +3,7 @@
 namespace Sellsy\Models\Catalogue;
 
 use Sellsy\Models\CustomFields\CustomFieldTrait;
+use Sellsy\Models\SmartTags\TagTrait;
 
 /**
  * Class Item
@@ -11,6 +12,7 @@ use Sellsy\Models\CustomFields\CustomFieldTrait;
 class Item implements ItemInterface
 {
     use CustomFieldTrait;
+    use TagTrait;
 
     /**
      * @var int
@@ -117,20 +119,13 @@ class Item implements ItemInterface
     /**
      * @var \Sellsy\Models\Catalogue\Item\PackagingInterface
      * @copy {
-     *      "characteristics": {
-     *          "width" : "width",
-     *          "deepth" : "deepth",
-     *          "length" : "length",
-     *          "height" : "height",
-     *          "weight" : "weight",
-     *          "packing" : "packing",
-     *      }
+     *      "characteristics.width" : "width",
+     *      "characteristics.deepth": "deepth",
+     *      "characteristics.length": "length",
+     *      "characteristics.height": "height",
+     *      "characteristics.weight": "weight",
+     *      "characteristics.packing": "packing"
      * }
      */
     public $packaging;
 }
-/*
-
-
-
- */

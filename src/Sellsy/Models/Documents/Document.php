@@ -3,6 +3,7 @@
 namespace Sellsy\Models\Documents;
 
 use Sellsy\Models\CustomFields\CustomFieldTrait;
+use Sellsy\Models\SmartTags\TagTrait;
 
 /**
  * Class Document
@@ -11,6 +12,7 @@ use Sellsy\Models\CustomFields\CustomFieldTrait;
 class Document implements DocumentInterface
 {
     use CustomFieldTrait;
+    use TagTrait;
 
     /**
      * @var int
@@ -93,18 +95,6 @@ class Document implements DocumentInterface
      * }
      */
     public $step;
-
-    /**
-     * @var \Sellsy\Models\SmartTags\TagInterface[]
-     * @copy {
-     *      "tags": {
-     *          "id" : "id",
-     *          "word": "word",
-     *          "category": "category"
-     *      }
-     * }
-     */
-    public $tags;
 
     /**
      * @var \Sellsy\Models\Staff\PeopleInterface
