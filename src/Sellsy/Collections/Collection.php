@@ -201,4 +201,21 @@ class Collection implements \Iterator, \ArrayAccess, \SeekableIterator, \Countab
     {
         return $this->paginator->getNumberOfResults();
     }
+
+    /**
+     * @param bool|true $withAutoload
+     * @return array
+     */
+    public function asArray($withAutoload = true)
+    {
+        $this->autoloadEnabled = !! $withAutoload;
+
+        $copy = array();
+
+        foreach($this as $item) {
+            $copy[] = $item;
+        }
+
+        return $copy;
+    }
 }
