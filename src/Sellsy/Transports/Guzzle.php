@@ -33,28 +33,19 @@ class Guzzle extends AbstractTransport
     protected $client;
 
     /**
+     * @param Client $guzzleClient
      * @param string $consumerToken
      * @param string $consumerSecret
      * @param string $userToken
      * @param string $userSecret
      */
-    public function __construct($consumerToken, $consumerSecret, $userToken, $userSecret)
+    public function __construct(Client $guzzleClient, $consumerToken, $consumerSecret, $userToken, $userSecret)
     {
+        $this->client = $guzzleClient;
+
         $this->oauthConsumerKey = rawurlencode($consumerToken);
         $this->oauthToken = rawurlencode($userToken);
         $this->oauthSignature = rawurlencode(rawurlencode($consumerSecret).'&'.rawurlencode($userSecret));
-
-        $this->client = new Client();
-    }
-
-    /**
-     * @param callable $middleware
-     * @return $this
-     */
-    public function registerMiddleware(callable $middleware)
-    {
-        $this->client->getConfig('handler')->push($middleware);
-        return $this;
     }
 
     /**
