@@ -2,16 +2,18 @@
 
 namespace Sellsy;
 
-use Sellsy\Clients\Catalogue;
-use Sellsy\Clients\Documents;
+use Sellsy\Api\Catalogue;
+use Sellsy\Api\Clients;
+use Sellsy\Api\Documents;
 use Sellsy\Adapters\AdapterInterface;
 use Sellsy\Models\ApiInfosInterface;
 
 /**
- * Class Client
+ * Class Api
+ *
  * @package Sellsy
  */
-class Client
+class Api
 {
     /**
      * @var AdapterInterface
@@ -51,6 +53,18 @@ class Client
         }
 
         return $clients['catalogue'];
+    }
+
+    /**
+     * @return Clients
+     */
+    public function client()
+    {
+        if (! isset($clients['clients'])) {
+            $clients['clients'] = new Clients($this->adapter);
+        }
+
+        return $clients['clients'];
     }
 
     /**

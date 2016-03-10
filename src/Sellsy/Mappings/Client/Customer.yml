@@ -1,0 +1,71 @@
+Sellsy\Models\Client\CustomerInterface:
+    id: ~
+    createAt: joindate
+    picture: pic
+    name:
+    fullName: ~
+    email: ~
+    phoneNumber: tel
+    mobileNumber: mobile
+    fax: ~
+    nafCode: apenaf,
+    rcs: ~
+    siret: ~
+    vatNumber: vat
+    website: webUrl
+    massmailingUnsubscribed: ~
+    massmailingUnsubscribedSMS: ~
+    mainAddressId: mainaddressid
+    mainContactId: maincontactid
+
+    owner:
+        type: Sellsy\Models\Staff\PeopleInterface
+        mappings:
+            id: ownerid
+            fullName: owner
+
+    customFields:
+        type: Sellsy\Models\CustomFields\CustomFieldInterface
+        collection: true
+        origin: customfields
+        mappings:
+            id: ~
+            fieldId: cfid
+            type: ~
+            textValue: textval
+            boolValue: boolval
+            timestampValue: timestampval
+            decimalValue: decimalval
+            numericValue: numericval
+            stringValue: stringval
+            formattedValue: formatted_value
+
+    contacts:
+        type: Sellsy\Models\Client\ContactInterface
+        collection: true
+        origin: contacts
+        mappings:
+            id: ~
+            firstName: forename
+            lastName: name
+            fullName: forename~" "~name
+            picture: pic
+            email: ~
+            phoneNumber: tel
+            mobileNumber: mobile
+            fax: ~
+
+    addresses:
+        type: Sellsy\Models\Addresses\AddressInterface
+        collection: true
+        mappings:
+            id: mainaddressid
+            name: addr_name
+            part1: addr_part1
+            part2: addr_part2
+            zip: addr_part1
+            city: addr_town
+            state: addr_state
+            countryCode: addr_countrycode
+            lat: addr_lat
+            lng: addr_lng

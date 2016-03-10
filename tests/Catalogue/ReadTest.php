@@ -2,10 +2,9 @@
 
 namespace Sellsy\Tests\Catalogue;
 
+use Sellsy\Api\Catalogue;
 use Sellsy\Criteria\Catalogue\GetItemCriteria;
 use Sellsy\Criteria\Catalogue\SearchItemsCriteria;
-use Sellsy\Clients\Catalogue;
-use Sellsy\Tests\Fixtures\Catalogue as CatalogueFixtures;
 use Sellsy\Tests\Fixtures\Components;
 use Sellsy\Models\Catalogue\ItemInterface;
 use Sellsy\Tests\Fixtures\NewItem;
@@ -20,11 +19,11 @@ class ReadTest extends \PHPUnit_Framework_TestCase
     /**
      * @return Catalogue
      */
-    public function testCatalogueClient()
+    public function testCatalogueApi()
     {
-        $catalogue = Components::getClient()->catalogue();
+        $catalogue = Components::getApi()->catalogue();
 
-        $this->assertInstanceOf('Sellsy\Clients\Catalogue', $catalogue);
+        $this->assertInstanceOf('Sellsy\Api\Catalogue', $catalogue);
 
         return $catalogue;
     }
@@ -32,7 +31,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase
     /**
      * @param Catalogue $catalogue
      * @return ItemInterface
-     * @depends testCatalogueClient
+     * @depends testCatalogueApi
      */
     public function testGetItem(Catalogue $catalogue)
     {
@@ -86,7 +85,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase
     /**
      * @param Catalogue $catalogue
      * @return ItemInterface
-     * @depends testCatalogueClient
+     * @depends testCatalogueApi
      */
     public function testSearchItems(Catalogue $catalogue)
     {

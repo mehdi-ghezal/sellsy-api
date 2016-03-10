@@ -2,7 +2,7 @@
 
 namespace Sellsy\Tests\Documents;
 
-use Sellsy\Clients\Documents;
+use Sellsy\Api\Documents;
 use Sellsy\Collections\Collection;
 use Sellsy\Criteria\Documents\SearchCriteria\SearchDeliveriesCriteria;
 use Sellsy\Criteria\Documents\SearchCriteria\SearchEstimatesCriteria;
@@ -17,23 +17,22 @@ use Sellsy\Models\Documents\InvoiceInterface;
 use Sellsy\Models\Documents\OrderInterface;
 use Sellsy\Models\Documents\ProformaInterface;
 use Sellsy\Tests\Fixtures\Components;
-use Sellsy\Tests\Generic\ClientTest;
 
 /**
  * Class ReadTest
  *
  * @package Sellsy\Tests\Documents
  */
-class ReadTest extends ClientTest
+class ReadTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @return Documents
      */
-    public function testDocumentClient()
+    public function testDocumentsApi()
     {
-        $documents = Components::getClient()->documents();
+        $documents = Components::getApi()->documents();
 
-        $this->assertInstanceOf('Sellsy\Clients\Documents', $documents);
+        $this->assertInstanceOf('Sellsy\Api\Documents', $documents);
 
         return $documents;
     }
@@ -41,7 +40,7 @@ class ReadTest extends ClientTest
     /**
      * @param Documents $documents
      * @return EstimateInterface
-     * @depends testDocumentClient
+     * @depends testDocumentsApi
      */
     public function testSearchEstimates(Documents $documents)
     {
@@ -60,7 +59,25 @@ class ReadTest extends ClientTest
      */
     public function testDocumentMapping(DocumentInterface $document)
     {
-        ///TODO Implement
+        $this->assertInstanceOf('\DateTime', $document->getCreateAt());
+        $this->assertInstanceOf('\DateTime', $document->getDisplayDate());
+        $this->assertInstanceOf('Sellsy\Models\Client\ContactInterface', $document->getContact());
+        $this->assertInstanceOf('Sellsy\Models\Accounting\CurrencyInterface', $document->getCurrency());
+        $this->assertInstanceOf('Sellsy\Models\Client\CustomerInterface', $document->getCustomer());
+        $this->assertInstanceOf('Sellsy\Models\Staff\PeopleInterface', $document->getOwner());
+        $this->assertInstanceOf('Sellsy\Models\Documents\Document\StepInterface', $document->getStep());
+
+        $this->assertInternalType('integer', $document->getId());
+        $this->assertInternalType('float', $document->getAmountWithoutTax());
+        $this->assertInternalType('float', $document->getDiscountAmount());
+        $this->assertInternalType('float', $document->getDiscountPercent());
+        $this->assertInternalType('float', $document->getPackagingsAmount());
+        $this->assertInternalType('float', $document->getShippingsAmount());
+        $this->assertInternalType('float', $document->getTaxAmount());
+
+        $this->assertEquals('analyticsCode_value', $document->getAnalyticsCode());
+        $this->assertEquals('note_value', $document->getNote());
+        $this->assertEquals('ident_value', $document->getReference());
     }
 
     /**
@@ -75,7 +92,7 @@ class ReadTest extends ClientTest
     /**
      * @param Documents $documents
      * @return InvoiceInterface
-     * @depends testDocumentClient
+     * @depends testDocumentsApi
      */
     public function testSearchInvoices(Documents $documents)
     {
@@ -99,8 +116,27 @@ class ReadTest extends ClientTest
 
     /**
      * @param Documents $documents
+     * @return InvoiceInterface
+     * @depends testDocumentsApi
+     */
+    public function testSearchInvoicesWithPayments(Documents $documents)
+    {
+        $search = new SearchInvoicesCriteria();
+        $search->setIncludePayments();
+
+        $invoices = $documents->searchInvoices($search);
+        $invoice = $invoices->current();
+
+        $this->assertInstanceOf('Sellsy\Collections\Collection', $invoices);
+        $this->assertInstanceOf('Sellsy\Models\Documents\InvoiceInterface', $invoice);
+
+        return $invoice;
+    }
+
+    /**
+     * @param Documents $documents
      * @return DeliveryInterface
-     * @depends testDocumentClient
+     * @depends testDocumentsApi
      */
     public function testSearchDeliveries(Documents $documents)
     {
@@ -125,7 +161,7 @@ class ReadTest extends ClientTest
     /**
      * @param Documents $documents
      * @return OrderInterface
-     * @depends testDocumentClient
+     * @depends testDocumentsApi
      */
     public function testSearchOrders(Documents $documents)
     {
@@ -152,7 +188,7 @@ class ReadTest extends ClientTest
     /**
      * @param Documents $documents
      * @return ProformaInterface
-     * @depends testDocumentClient
+     * @depends testDocumentsApi
      */
     public function testSearchProforma(Documents $documents)
     {
@@ -177,15 +213,16 @@ class ReadTest extends ClientTest
     /**
      * @param Documents $documents
      * @return Collection
-     * @depends testDocumentClient
+     * @depends testDocumentsApi
      */
     public function testCollectionAutoloadOff(Documents $documents)
     {
         $createPeriodStart = new \DateTime();
         $createPeriodStart->setTime(0, 0, 0);
+        $createPeriodStart->sub(new \DateInterval("P1D"));
 
         $createPeriodEnd = new \DateTime();
-        $createPeriodEnd->setTime(23, 59, 59);
+        $createPeriodEnd->setTime(0, 0, 0);
 
         $criteria = new SearchEstimatesCriteria();
         $criteria->setCreatePeriodStart($createPeriodStart);
@@ -198,7 +235,7 @@ class ReadTest extends ClientTest
         $estimates = $documents->searchEstimates($criteria, $paginator);
         $estimatesCount = 0;
 
-        /** @var EstimateInterface $estimates */
+        /** @var EstimateInterface $estimate */
         foreach($estimates as $estimate) {
             $estimatesCount++;
         }

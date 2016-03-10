@@ -13,6 +13,9 @@
     <php>
         <ini name="error_reporting" value="-1" />
 
+        <const name="CACHE_ENABLED" value="true" />
+        <const name="LOGGING_ENABLED" value="false" />
+
         <const name="SELLSY_CONSUMER_TOKEN" value="" />
         <const name="SELLSY_CONSUMER_SECRET" value="" />
         <const name="SELLSY_USER_TOKEN" value="" />

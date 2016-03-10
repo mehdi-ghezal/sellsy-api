@@ -2,7 +2,7 @@ Sellsy\Models\Documents\DocumentInterface:
     id: ~
     reference: ident
     note: ~
-    createAt: createdAt
+    createAt: created
     displayDate: displayedDate
     analyticsCode: ~
     amountWithoutTax: totalAmountTaxesFree

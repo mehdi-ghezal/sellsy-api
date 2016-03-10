@@ -41,6 +41,30 @@ class SearchInvoicesCriteria extends SearchCriteria
     const STEP_CANCELED = 'cancelled';
 
     /**
+     * @var bool
+     */
+    protected $includePayments = false;
+
+    /**
+     * @param bool|true $includePayments
+     * @return $this
+     */
+    public function setIncludePayments($includePayments = true)
+    {
+        $this->includePayments = !! $includePayments;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isIncludePayments()
+    {
+        return $this->includePayments;
+    }
+
+    /**
      * @return string
      */
     protected function getType()
@@ -61,5 +85,16 @@ class SearchInvoicesCriteria extends SearchCriteria
             self::STEP_PAYMENT_LATE,
             self::STEP_CANCELED
         );
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getParameters()
+    {
+        $parameters = parent::getParameters();
+        $parameters['includePayments'] = $this->includePayments ? 'Y' : 'N';
+
+        return $parameters;
     }
 }

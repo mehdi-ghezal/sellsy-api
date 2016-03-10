@@ -1,6 +1,6 @@
 <?php
 
-namespace Sellsy\Clients;
+namespace Sellsy\Api;
 
 use Sellsy\Collections\Collection;
 use Sellsy\Criteria\Documents\SearchCriteria\SearchEstimatesCriteria;
@@ -18,7 +18,8 @@ use Sellsy\Models\Documents\OrderInterface;
 
 /**
  * Class Documents
- * @package Sellsy\Clients
+ *
+ * @package Sellsy\Api
  */
 class Documents
 {

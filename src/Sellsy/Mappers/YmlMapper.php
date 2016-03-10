@@ -122,18 +122,27 @@ class YmlMapper extends AbstractMapper
         if (is_array($expression) && isset($expression['collection']) && $expression['collection']) {
             $value = array();
 
-            $collectionData = $this->expressionLanguage->evaluate($expression['origin'], $data);
+            // Multiple item collection
+            if (isset($expression['origin'])) {
+                $collectionData = $this->expressionLanguage->evaluate($expression['origin'], $data);
 
-            if ($expression['type'] == TagInterface::class) {
-                $collectionData = is_array($collectionData) ? current($collectionData) : $collectionData;
-            }
+                // Manage special response format for SmartTags
+                if ($expression['type'] == TagInterface::class) {
+                    $collectionData = is_array($collectionData) ? current($collectionData) : $collectionData;
+                }
 
-            if (is_array($collectionData)) {
-                foreach($collectionData as $collectionDataValue) {
-                    if (is_array($collectionDataValue)) {
-                        $value[] = $this->_mapObject($expression['type'], $collectionDataValue, $expression['mappings']);
+                if (is_array($collectionData)) {
+                    foreach($collectionData as $collectionDataValue) {
+                        if (is_array($collectionDataValue)) {
+                            $value[] = $this->_mapObject($expression['type'], $collectionDataValue, $expression['mappings']);
+                        }
                     }
                 }
+            }
+
+            // Single item collection
+            else {
+                $value[] = $this->_mapObject($expression['type'], $data, $expression['mappings']);
             }
 
             return $value;

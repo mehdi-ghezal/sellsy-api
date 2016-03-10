@@ -22,11 +22,17 @@ class LocalTransport implements TransportInterface
     protected $realTransport;
 
     /**
+     * @var bool
+     */
+    protected $useCache;
+
+    /**
      * LocalTransport constructor.
      */
-    public function __construct()
+    public function __construct($useCache)
     {
         $this->basePath = dirname(__DIR__) . '/Data';
+        $this->useCache = $useCache;
     }
 
     /**
@@ -44,6 +50,10 @@ class LocalTransport implements TransportInterface
      */
     public function call(array $requestSettings)
     {
+        if (! $this->useCache) {
+            return $this->realTransport->call($requestSettings);
+        }
+
         $path = $this->getLocalFileName($requestSettings);
 
         if (file_exists($path)) {

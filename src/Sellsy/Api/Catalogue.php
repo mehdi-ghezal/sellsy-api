@@ -1,6 +1,6 @@
 <?php
 
-namespace Sellsy\Clients;
+namespace Sellsy\Api;
 
 use Sellsy\Collections\Collection;
 use Sellsy\Criteria\Catalogue\GetItemCriteria;
@@ -11,7 +11,8 @@ use Sellsy\Models\Catalogue\ItemInterface;
 
 /**
  * Class Catalogue
- * @package Sellsy\Clients
+ *
+ * @package Sellsy\Api
  */
 class Catalogue
 {

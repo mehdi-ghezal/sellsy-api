@@ -35,6 +35,8 @@ use Sellsy\Models\Staff\People;
 use Sellsy\Models\Staff\PeopleInterface;
 use Sellsy\Models\Catalogue\Item\Packaging;
 use Sellsy\Models\Catalogue\Item\PackagingInterface;
+use Sellsy\Models\Addresses\AddressInterface;
+use Sellsy\Models\Addresses\Address;
 
 /**
  * Class AbstractMapper
@@ -62,6 +64,7 @@ abstract class AbstractMapper implements MapperInterface
         TagInterface::class => Tag::class,
         PeopleInterface::class => People::class,
         PackagingInterface::class => Packaging::class,
+        AddressInterface::class => Address::class,
     );
 
     /**
@@ -119,6 +122,7 @@ abstract class AbstractMapper implements MapperInterface
             TagInterface::class => Tag::class,
             PeopleInterface::class => People::class,
             PackagingInterface::class => Packaging::class,
+            AddressInterface::class => Address::class,
         );
     }
 

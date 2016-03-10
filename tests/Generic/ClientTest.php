@@ -2,38 +2,37 @@
 
 namespace Sellsy\Tests\Generic;
 
-use Sellsy\Client;
-use Sellsy\Models\ApiInfos;
+use Sellsy\Api;
 use Sellsy\Tests\Fixtures\Components;
 use Sellsy\Models\ApiInfosInterface;
 
 /**
- * Class ClientTest
+ * Class ApiTest
  *
  * @package Sellsy\Tests\Generic
  */
-class ClientTest extends \PHPUnit_Framework_TestCase
+class ApiTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @return Client
+     * @return Api
      */
-    public function testNewClient()
+    public function testNewApi()
     {
-        $client = Components::getClient();
+        $api = Components::getApi();
 
-        $this->assertInstanceOf('Sellsy\Client', $client);
+        $this->assertInstanceOf('Sellsy\Api', $api);
 
-        return $client;
+        return $api;
     }
 
     /**
-     * @param Client $client
+     * @param Api $api
      * @return ApiInfosInterface
-     * @depends testNewClient
+     * @depends testNewApi
      */
-    public function testGetApiInfos(Client $client)
+    public function testGetApiInfos(Api $api)
     {
-        $infos = $client->getApiInfos();
+        $infos = $api->getApiInfos();
 
         $this->assertInstanceOf('Sellsy\Models\ApiInfosInterface', $infos);
 
