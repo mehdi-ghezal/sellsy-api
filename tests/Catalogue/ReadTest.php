@@ -75,9 +75,11 @@ class ReadTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('weight_value', $item->getPackaging()->getWeight());
         $this->assertEquals('packing_value', $item->getPackaging()->getPacking());
 
+        $this->assertInstanceOf('Sellsy\Models\SmartTags\TagInterface', $item->getTag(function() { return true; }));
         $this->assertInternalType('array', $item->getTags());
         $this->assertGreaterThan(0, count($item->getTags()));
 
+        $this->assertInstanceOf('Sellsy\Models\CustomFields\CustomFieldInterface', $item->getCustomField(function() { return true; }));
         $this->assertInternalType('array', $item->getCustomFields());
         $this->assertGreaterThan(0, count($item->getCustomFields()));
     }

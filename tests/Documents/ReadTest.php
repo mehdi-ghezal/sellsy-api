@@ -11,6 +11,7 @@ use Sellsy\Criteria\Documents\SearchCriteria\SearchOrdersCriteria;
 use Sellsy\Criteria\Documents\SearchCriteria\SearchProformaCriteria;
 use Sellsy\Criteria\Paginator;
 use Sellsy\Models\Documents\DeliveryInterface;
+use Sellsy\Models\Documents\Document;
 use Sellsy\Models\Documents\DocumentInterface;
 use Sellsy\Models\Documents\EstimateInterface;
 use Sellsy\Models\Documents\InvoiceInterface;
@@ -54,10 +55,10 @@ class ReadTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param DocumentInterface $document
+     * @param Document $document
      * @depends testSearchEstimates
      */
-    public function testDocumentMapping(DocumentInterface $document)
+    public function testDocumentMapping(Document $document)
     {
         $this->assertInstanceOf('\DateTime', $document->getCreateAt());
         $this->assertInstanceOf('\DateTime', $document->getDisplayDate());
@@ -78,6 +79,14 @@ class ReadTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('analyticsCode_value', $document->getAnalyticsCode());
         $this->assertEquals('note_value', $document->getNote());
         $this->assertEquals('ident_value', $document->getReference());
+
+        $this->assertInstanceOf('Sellsy\Models\SmartTags\TagInterface', $document->getTag(function() { return true; }));
+        $this->assertInternalType('array', $document->getTags());
+        $this->assertGreaterThan(0, count($document->getTags()));
+
+        $this->assertInstanceOf('Sellsy\Models\CustomFields\CustomFieldInterface', $document->getCustomField(function() { return true; }));
+        $this->assertInternalType('array', $document->getCustomFields());
+        $this->assertGreaterThan(0, count($document->getCustomFields()));
     }
 
     /**

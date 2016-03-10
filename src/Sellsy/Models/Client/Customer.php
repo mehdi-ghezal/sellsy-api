@@ -472,14 +472,6 @@ class Customer implements CustomerInterface
     /**
      * @inheritdoc
      */
-    public function getMainAddressId()
-    {
-        return $this->mainAddressId;
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function setMainAddressId($mainAddressId)
     {
         $this->mainAddressId = $mainAddressId;
@@ -493,14 +485,6 @@ class Customer implements CustomerInterface
         return $this->getAddress(function($address) {
             return $address->getId() == $this->mainAddressId;
         });
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getMainContactId()
-    {
-        return $this->mainContactId;
     }
 
     /**

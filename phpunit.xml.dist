@@ -25,14 +25,17 @@
     </php>
 
     <testsuites>
-        <testsuite name="Sellsy API : Generic">
+        <testsuite name="Generic">
             <directory>./tests/Generic</directory>
         </testsuite>
-        <testsuite name="Sellsy API : Catalogue">
+        <testsuite name="Catalogue">
             <directory>./tests/Catalogue</directory>
         </testsuite>
-        <testsuite name="Sellsy API : Documents">
+        <testsuite name="Documents">
             <directory>./tests/Documents</directory>
+        </testsuite>
+        <testsuite name="Clients">
+            <directory>./tests/Clients</directory>
         </testsuite>
     </testsuites>
 </phpunit>

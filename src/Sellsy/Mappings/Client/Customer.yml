@@ -2,13 +2,13 @@ Sellsy\Models\Client\CustomerInterface:
     id: ~
     createAt: joindate
     picture: pic
-    name:
+    name: ~
     fullName: ~
     email: ~
     phoneNumber: tel
     mobileNumber: mobile
     fax: ~
-    nafCode: apenaf,
+    nafCode: apenaf
     rcs: ~
     siret: ~
     vatNumber: vat

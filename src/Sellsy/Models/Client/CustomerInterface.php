@@ -225,11 +225,6 @@ interface CustomerInterface
     public function addAddresses(AddressInterface $address);
 
     /**
-     * @return int
-     */
-    public function getMainAddressId();
-
-    /**
      * @param int $mainAddressId
      */
     public function setMainAddressId($mainAddressId);
@@ -238,11 +233,6 @@ interface CustomerInterface
      * @return null|AddressInterface
      */
     public function getMainAddress();
-
-    /**
-     * @return int
-     */
-    public function getMainContactId();
 
     /**
      * @param int $mainContactId
