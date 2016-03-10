@@ -60,6 +60,11 @@ class Address implements AddressInterface
     protected $lng;
 
     /**
+     * @var string
+     */
+    protected $formattedAddress;
+
+    /**
      * @inheritdoc
      */
     public function getId()
@@ -217,5 +222,29 @@ class Address implements AddressInterface
     public function setLng($lng)
     {
         $this->lng = $lng;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getFormattedAddress()
+    {
+        return $this->formattedAddress;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setFormattedAddress($formattedAddress)
+    {
+        $this->formattedAddress = $formattedAddress;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function __toString()
+    {
+        return $this->getFormattedAddress();
     }
 }

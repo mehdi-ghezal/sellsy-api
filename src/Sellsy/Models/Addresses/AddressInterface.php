@@ -108,4 +108,19 @@ interface AddressInterface
      * @param string $lng
      */
     public function setLng($lng);
+
+    /**
+     * @return string
+     */
+    public function getFormattedAddress();
+
+    /**
+     * @param string $formattedAddress
+     */
+    public function setFormattedAddress($formattedAddress);
+
+    /**
+     * @return string
+     */
+    public function __toString();
 }

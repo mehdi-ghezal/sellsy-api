@@ -58,7 +58,7 @@ class Api
     /**
      * @return Clients
      */
-    public function client()
+    public function clients()
     {
         if (! isset($clients['clients'])) {
             $clients['clients'] = new Clients($this->adapter);

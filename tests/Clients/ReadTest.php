@@ -20,7 +20,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase
      */
     public function testClientsApi()
     {
-        $catalogue = Components::getApi()->client();
+        $catalogue = Components::getApi()->clients();
 
         $this->assertInstanceOf('Sellsy\Api\Clients', $catalogue);
 
