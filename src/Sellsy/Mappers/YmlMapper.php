@@ -87,30 +87,29 @@ class YmlMapper extends AbstractMapper
     {
         // Simple scalar attribute
         if (is_string($expression)) {
-            try {
-                $value = $this->expressionLanguage->evaluate($expression, $data);
+            $value = $this->evaluate($expression, $data);
 
-                if (strtoupper($value) === 'Y') {
-                    return true;
-                }
-
-                if (strtoupper($value) === 'N') {
-                    return false;
-                }
-
-                if (is_numeric($value)) {
-                    return $value + 0;
-                }
-
-                if (strtotime($value) > 0 && preg_match('/^20[0-9]{2}/', $value)) {
-                    return new \DateTime($value);
-                }
-
+            if (is_null($value)) {
                 return $value;
             }
-            catch(SyntaxError $e) {
-                return null;
+
+            if (is_numeric($value)) {
+                return $value + 0;
             }
+
+            if (strtoupper($value) === 'Y') {
+                return true;
+            }
+
+            if (strtoupper($value) === 'N') {
+                return false;
+            }
+
+            if (strtotime($value) > 0 && preg_match('/^20[0-9]{2}/', $value)) {
+                return new \DateTime($value);
+            }
+
+            return $value;
         }
 
         // Linked object
@@ -124,7 +123,7 @@ class YmlMapper extends AbstractMapper
 
             // Multiple item collection
             if (isset($expression['origin'])) {
-                $collectionData = $this->expressionLanguage->evaluate($expression['origin'], $data);
+                $collectionData = $this->evaluate($expression['origin'], $data);
 
                 // Manage special response format for SmartTags
                 if ($expression['type'] == TagInterface::class) {
@@ -149,5 +148,21 @@ class YmlMapper extends AbstractMapper
         }
 
         return null;
+    }
+
+    /**
+     * @param string $expression
+     * @param array $data
+     * @param mixed|null $default
+     * @return bool|\DateTime|int|null|string
+     */
+    protected function evaluate($expression, array $data, $default = null)
+    {
+        try {
+            return $this->expressionLanguage->evaluate($expression, $data);
+        }
+        catch(SyntaxError $e) {
+            return $default;
+        }
     }
 }

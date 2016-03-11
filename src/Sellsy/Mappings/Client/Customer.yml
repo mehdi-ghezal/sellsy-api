@@ -63,7 +63,7 @@ Sellsy\Models\Client\CustomerInterface:
             name: addr_name
             part1: addr_part1
             part2: addr_part2
-            zip: zip
+            zip: addr_zip
             city: addr_town
             state: addr_state
             countryCode: addr_countrycode
