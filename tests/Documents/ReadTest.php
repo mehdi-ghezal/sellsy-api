@@ -226,16 +226,9 @@ class ReadTest extends \PHPUnit_Framework_TestCase
      */
     public function testCollectionAutoloadOff(Documents $documents)
     {
-        $createPeriodStart = new \DateTime();
-        $createPeriodStart->setTime(0, 0, 0);
-        $createPeriodStart->sub(new \DateInterval("P1D"));
-
-        $createPeriodEnd = new \DateTime();
-        $createPeriodEnd->setTime(0, 0, 0);
-
         $criteria = new SearchEstimatesCriteria();
-        $criteria->setCreatePeriodStart($createPeriodStart);
-        $criteria->setCreatePeriodEnd($createPeriodEnd);
+        $criteria->setCreatePeriodStart(new \DateTime('@1457478000'));
+        $criteria->setCreatePeriodEnd(new \DateTime('@1457564400'));
 
         $paginator = new Paginator();
         $paginator->setNumberPerPage(10);

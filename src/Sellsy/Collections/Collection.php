@@ -93,7 +93,10 @@ class Collection implements \Iterator, \ArrayAccess, \SeekableIterator, \Countab
     {
         if ($this->autoloadEnabled && $this->paginator->getPageNumber() > 1) {
             $this->paginator->setPageNumber(1);
-            $this->adapter->map($this->subject)->call($this->method, $this->criteria, $this->paginator);
+
+            /** @var Collection $newCollection */
+            $newCollection = $this->adapter->map($this->subject)->call($this->method, $this->criteria, $this->paginator);
+            $this->iterator = new \ArrayIterator($newCollection->asArray(false));
         }
 
         $this->iterator->rewind();
@@ -108,7 +111,10 @@ class Collection implements \Iterator, \ArrayAccess, \SeekableIterator, \Countab
 
         if ($this->autoloadEnabled  && ! $this->iterator->valid() && $this->paginator->hasMorePage()) {
             $this->paginator->incrPageNumber();
-            $this->adapter->map($this->subject)->call($this->method, $this->criteria, $this->paginator);
+
+            /** @var Collection $newCollection */
+            $newCollection = $this->adapter->map($this->subject)->call($this->method, $this->criteria, $this->paginator);
+            $this->iterator = new \ArrayIterator($newCollection->asArray(false));
 
             $this->iterator->rewind();
         }
