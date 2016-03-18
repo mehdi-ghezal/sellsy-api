@@ -1,17 +1,12 @@
 <?php
 
-namespace Sellsy\Tests\Generic;
+namespace Sellsy\Tests\Api\Generic;
 
 use Sellsy\Api;
 use Sellsy\Tests\Fixtures\Components;
 use Sellsy\Models\ApiInfosInterface;
 
-/**
- * Class ApiTest
- *
- * @package Sellsy\Tests\Generic
- */
-class ApiTest extends \PHPUnit_Framework_TestCase
+class ClientTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @return Api

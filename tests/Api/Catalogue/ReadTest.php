@@ -1,6 +1,6 @@
 <?php
 
-namespace Sellsy\Tests\Catalogue;
+namespace Sellsy\Tests\Api\Catalogue;
 
 use Sellsy\Api\Catalogue;
 use Sellsy\Criteria\Catalogue\GetItemCriteria;
@@ -9,11 +9,6 @@ use Sellsy\Tests\Fixtures\Components;
 use Sellsy\Models\Catalogue\ItemInterface;
 use Sellsy\Tests\Fixtures\NewItem;
 
-/**
- * Class ReadTest
- *
- * @package Sellsy\Tests\Catalogue
- */
 class ReadTest extends \PHPUnit_Framework_TestCase
 {
     /**

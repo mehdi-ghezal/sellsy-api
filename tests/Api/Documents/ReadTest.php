@@ -1,6 +1,6 @@
 <?php
 
-namespace Sellsy\Tests\Documents;
+namespace Sellsy\Tests\Api\Documents;
 
 use Sellsy\Api\Documents;
 use Sellsy\Collections\Collection;
@@ -19,11 +19,6 @@ use Sellsy\Models\Documents\OrderInterface;
 use Sellsy\Models\Documents\ProformaInterface;
 use Sellsy\Tests\Fixtures\Components;
 
-/**
- * Class ReadTest
- *
- * @package Sellsy\Tests\Documents
- */
 class ReadTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -227,8 +222,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase
     public function testCollectionAutoloadOff(Documents $documents)
     {
         $criteria = new SearchEstimatesCriteria();
-        $criteria->setCreatePeriodStart(new \DateTime('@1457478000'));
-        $criteria->setCreatePeriodEnd(new \DateTime('@1457564400'));
+        $criteria->setCreatePeriod(new \DateTime('@1457478000'), new \DateTime('@1457564400'));
 
         $paginator = new Paginator();
         $paginator->setNumberPerPage(10);

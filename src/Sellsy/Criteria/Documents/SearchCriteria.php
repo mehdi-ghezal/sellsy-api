@@ -48,10 +48,12 @@ abstract class SearchCriteria extends GetListCriteria
 
     /**
      * @param \DateTime $createPeriodStart
+     * @param \DateTime $createPeriodEnd
      */
-    public function setCreatePeriodStart(\DateTime $createPeriodStart)
+    public function setCreatePeriod(\DateTime $createPeriodStart, \DateTime $createPeriodEnd)
     {
         $this->createPeriodStart = $createPeriodStart;
+        $this->createPeriodEnd = $createPeriodEnd;
     }
 
     /**
@@ -60,14 +62,6 @@ abstract class SearchCriteria extends GetListCriteria
     public function getCreatePeriodStart()
     {
         return $this->createPeriodStart;
-    }
-
-    /**
-     * @param \DateTime $createPeriodEnd
-     */
-    public function setCreatePeriodEnd(\DateTime $createPeriodEnd)
-    {
-        $this->createPeriodEnd = $createPeriodEnd;
     }
 
     /**
@@ -80,10 +74,12 @@ abstract class SearchCriteria extends GetListCriteria
 
     /**
      * @param \DateTime $expirePeriodStart
+     * @param \DateTime $expirePeriodEnd
      */
-    public function setExpirePeriodStart($expirePeriodStart)
+    public function setExpirePeriod(\DateTime $expirePeriodStart, \DateTime $expirePeriodEnd)
     {
         $this->expirePeriodStart = $expirePeriodStart;
+        $this->expirePeriodEnd = $expirePeriodEnd;
     }
 
     /**
@@ -92,14 +88,6 @@ abstract class SearchCriteria extends GetListCriteria
     public function getExpirePeriodStart()
     {
         return $this->expirePeriodStart;
-    }
-
-    /**
-     * @param \DateTime $expirePeriodEnd
-     */
-    public function setExpirePeriodEnd($expirePeriodEnd)
-    {
-        $this->expirePeriodEnd = $expirePeriodEnd;
     }
 
     /**
@@ -136,6 +124,21 @@ abstract class SearchCriteria extends GetListCriteria
         foreach($steps as $step) {
             $this->addStep($step);
         }
+
+        return $this;
+    }
+
+    /**
+     * @param string|array $excludeSteps
+     * @return $this
+     * @throws RuntimeException
+     */
+    public function addAllStepsExcept($excludeSteps)
+    {
+        $excludeSteps = is_array($excludeSteps) ? $excludeSteps : array($excludeSteps);
+        $validSteps = $this->getValidSteps();
+
+        $this->steps = array_diff($validSteps, $excludeSteps);
 
         return $this;
     }

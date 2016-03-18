@@ -1,6 +1,6 @@
 <?php
 
-namespace Sellsy\Tests\Client;
+namespace Sellsy\Tests\Api\Client;
 
 use Sellsy\Api\Clients;
 use Sellsy\Criteria\Client\SearchCustomersCriteria;
@@ -8,11 +8,6 @@ use Sellsy\Models\Client\Customer;
 use Sellsy\Models\Client\CustomerInterface;
 use Sellsy\Tests\Fixtures\Components;
 
-/**
- * Class ReadTest
- *
- * @package Sellsy\Tests\Client
- */
 class ReadTest extends \PHPUnit_Framework_TestCase
 {
     /**

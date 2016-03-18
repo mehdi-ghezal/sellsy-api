@@ -26,16 +26,16 @@
 
     <testsuites>
         <testsuite name="Generic">
-            <directory>./tests/Generic</directory>
+            <directory>./tests/APi/Generic</directory>
         </testsuite>
         <testsuite name="Catalogue">
-            <directory>./tests/Catalogue</directory>
+            <directory>./tests/APi/Catalogue</directory>
         </testsuite>
         <testsuite name="Documents">
-            <directory>./tests/Documents</directory>
+            <directory>./tests/APi/Documents</directory>
         </testsuite>
         <testsuite name="Clients">
-            <directory>./tests/Clients</directory>
+            <directory>./tests/APi/Clients</directory>
         </testsuite>
     </testsuites>
 </phpunit>
