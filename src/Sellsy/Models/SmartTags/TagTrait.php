@@ -38,6 +38,19 @@ trait TagTrait
     }
 
     /**
+     * @param string $name
+     * @return boolean
+     */
+    public function hasTag($name)
+    {
+        $tagFound = $this->getTag(function(TagInterface $tag) use($name) {
+            return $tag->getName() == $name;
+        });
+
+        return $tagFound !== null;
+    }
+
+    /**
      * @param TagInterface[] $tags
      */
     public function setTags(array $tags)
