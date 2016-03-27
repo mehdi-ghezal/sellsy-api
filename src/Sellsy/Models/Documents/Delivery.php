@@ -16,7 +16,7 @@ class Delivery extends Document implements DeliveryInterface
      */
     public function isSent()
     {
-        return $this->step == StepInterface::STEP_SENT;
+        return $this->step->getName() == StepInterface::STEP_SENT;
     }
 
     /**
@@ -24,6 +24,6 @@ class Delivery extends Document implements DeliveryInterface
      */
     public function isRead()
     {
-        return $this->step == StepInterface::STEP_READ;
+        return $this->step->getName() == StepInterface::STEP_READ;
     }
 }

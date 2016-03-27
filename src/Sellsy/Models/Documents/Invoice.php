@@ -100,7 +100,7 @@ class Invoice extends Document implements InvoiceInterface
      */
     public function isPaymentDue()
     {
-        return $this->step == StepInterface::STEP_PAYMENT_DUE;
+        return $this->step->getName() == StepInterface::STEP_PAYMENT_DUE;
     }
 
     /**
@@ -108,7 +108,7 @@ class Invoice extends Document implements InvoiceInterface
      */
     public function isPaymentPartial()
     {
-        return $this->step == StepInterface::STEP_PAYMENT_PARTIAL;
+        return $this->step->getName() == StepInterface::STEP_PAYMENT_PARTIAL;
     }
 
     /**
@@ -116,7 +116,7 @@ class Invoice extends Document implements InvoiceInterface
      */
     public function isPaymentDone()
     {
-        return $this->step == StepInterface::STEP_PAYMENT_DONE;
+        return $this->step->getName() == StepInterface::STEP_PAYMENT_DONE;
     }
 
     /**
@@ -124,7 +124,7 @@ class Invoice extends Document implements InvoiceInterface
      */
     public function isPaymentLate()
     {
-        return $this->step == StepInterface::STEP_PAYMENT_LATE;
+        return $this->step->getName() == StepInterface::STEP_PAYMENT_LATE;
     }
 
     /**
@@ -132,6 +132,6 @@ class Invoice extends Document implements InvoiceInterface
      */
     public function isCancelled()
     {
-        return $this->step == StepInterface::STEP_CANCELLED;
+        return $this->step->getName() == StepInterface::STEP_CANCELLED;
     }
 }

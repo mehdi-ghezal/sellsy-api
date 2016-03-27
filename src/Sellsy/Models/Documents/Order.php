@@ -37,7 +37,7 @@ class Order extends Document implements OrderInterface
      */
     public function isRead()
     {
-        return $this->step == StepInterface::STEP_READ;
+        return $this->step->getName() == StepInterface::STEP_READ;
     }
 
     /**
@@ -45,7 +45,7 @@ class Order extends Document implements OrderInterface
      */
     public function isAccepted()
     {
-        return $this->step == StepInterface::STEP_ACCEPTED;
+        return $this->step->getName() == StepInterface::STEP_ACCEPTED;
     }
 
     /**
@@ -53,7 +53,7 @@ class Order extends Document implements OrderInterface
      */
     public function isExpired()
     {
-        return $this->step == StepInterface::STEP_EXPIRED;
+        return $this->step->getName() == StepInterface::STEP_EXPIRED;
     }
 
     /**
@@ -61,7 +61,7 @@ class Order extends Document implements OrderInterface
      */
     public function isDeposit()
     {
-        return $this->step == StepInterface::STEP_DEPOSIT;
+        return $this->step->getName() == StepInterface::STEP_DEPOSIT;
     }
 
     /**
@@ -69,7 +69,7 @@ class Order extends Document implements OrderInterface
      */
     public function isInvoiced()
     {
-        return $this->step == StepInterface::STEP_INVOICED;
+        return $this->step->getName() == StepInterface::STEP_INVOICED;
     }
 
     /**
@@ -77,6 +77,6 @@ class Order extends Document implements OrderInterface
      */
     public function isCancelled()
     {
-        return $this->step == StepInterface::STEP_CANCELLED;
+        return $this->step->getName() == StepInterface::STEP_CANCELLED;
     }
 }

@@ -382,6 +382,6 @@ class Document implements DocumentInterface
      */
     public function isDraft()
     {
-        return $this->step == StepInterface::STEP_DRAFT;
+        return $this->step->getName() == StepInterface::STEP_DRAFT;
     }
 }

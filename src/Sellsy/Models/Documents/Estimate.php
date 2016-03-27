@@ -100,7 +100,7 @@ class Estimate extends Document implements EstimateInterface
      */
     public function isSent()
     {
-        return $this->step == StepInterface::STEP_SENT;
+        return $this->step->getName() == StepInterface::STEP_SENT;
     }
 
     /**
@@ -108,7 +108,7 @@ class Estimate extends Document implements EstimateInterface
      */
     public function isRead()
     {
-        return $this->step == StepInterface::STEP_READ;
+        return $this->step->getName() == StepInterface::STEP_READ;
     }
 
     /**
@@ -116,7 +116,7 @@ class Estimate extends Document implements EstimateInterface
      */
     public function isAccepted()
     {
-        return $this->step == StepInterface::STEP_ACCEPTED;
+        return $this->step->getName() == StepInterface::STEP_ACCEPTED;
     }
 
     /**
@@ -124,7 +124,7 @@ class Estimate extends Document implements EstimateInterface
      */
     public function isRefused()
     {
-        return $this->step == StepInterface::STEP_REFUSED;
+        return $this->step->getName() == StepInterface::STEP_REFUSED;
     }
 
     /**
@@ -132,7 +132,7 @@ class Estimate extends Document implements EstimateInterface
      */
     public function isExpired()
     {
-        return $this->step == StepInterface::STEP_EXPIRED;
+        return $this->step->getName() == StepInterface::STEP_EXPIRED;
     }
 
     /**
@@ -140,7 +140,7 @@ class Estimate extends Document implements EstimateInterface
      */
     public function isDeposit()
     {
-        return $this->step == StepInterface::STEP_DEPOSIT;
+        return $this->step->getName() == StepInterface::STEP_DEPOSIT;
     }
 
     /**
@@ -148,7 +148,7 @@ class Estimate extends Document implements EstimateInterface
      */
     public function isInvoiced()
     {
-        return $this->step == StepInterface::STEP_INVOICED;
+        return $this->step->getName() == StepInterface::STEP_INVOICED;
     }
 
     /**
@@ -156,6 +156,6 @@ class Estimate extends Document implements EstimateInterface
      */
     public function isInvoicedCancelled()
     {
-        return $this->step == StepInterface::STEP_CANCELLED;
+        return $this->step->getName() == StepInterface::STEP_CANCELLED;
     }
 }
