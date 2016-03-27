@@ -376,4 +376,12 @@ class Document implements DocumentInterface
     {
         $this->contact = $contact;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function isDraft()
+    {
+        return $this->step == StepInterface::STEP_DRAFT;
+    }
 }

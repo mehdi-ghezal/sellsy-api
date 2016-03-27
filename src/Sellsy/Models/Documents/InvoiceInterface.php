@@ -48,4 +48,29 @@ interface InvoiceInterface extends DocumentInterface
      * @param float $markupRate
      */
     public function setMarkupRate($markupRate);
+
+    /**
+     * @return bool
+     */
+    public function isPaymentDue();
+
+    /**
+     * @return bool
+     */
+    public function isPaymentPartial();
+
+    /**
+     * @return bool
+     */
+    public function isPaymentDone();
+
+    /**
+     * @return bool
+     */
+    public function isPaymentLate();
+
+    /**
+     * @return bool
+     */
+    public function isCancelled();
 }

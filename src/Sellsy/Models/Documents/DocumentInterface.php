@@ -184,4 +184,9 @@ interface DocumentInterface
      * @param ContactInterface $contact
      */
     public function setContact(ContactInterface $contact);
+
+    /**
+     * @return boolean
+     */
+    public function isDraft();
 }

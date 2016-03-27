@@ -2,6 +2,8 @@
 
 namespace Sellsy\Models\Documents;
 
+use Sellsy\Models\Documents\Document\StepInterface;
+
 /**
  * Class Estimate
  *
@@ -91,5 +93,69 @@ class Estimate extends Document implements EstimateInterface
     public function setExpireAt(\DateTime $expireAt)
     {
         $this->expireAt = $expireAt;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isSent()
+    {
+        return $this->step == StepInterface::STEP_SENT;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isRead()
+    {
+        return $this->step == StepInterface::STEP_READ;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isAccepted()
+    {
+        return $this->step == StepInterface::STEP_ACCEPTED;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isRefused()
+    {
+        return $this->step == StepInterface::STEP_REFUSED;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isExpired()
+    {
+        return $this->step == StepInterface::STEP_EXPIRED;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isDeposit()
+    {
+        return $this->step == StepInterface::STEP_DEPOSIT;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isInvoiced()
+    {
+        return $this->step == StepInterface::STEP_INVOICED;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isInvoicedCancelled()
+    {
+        return $this->step == StepInterface::STEP_CANCELLED;
     }
 }

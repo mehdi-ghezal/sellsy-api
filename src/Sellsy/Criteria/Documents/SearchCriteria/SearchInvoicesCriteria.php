@@ -3,6 +3,7 @@
 namespace Sellsy\Criteria\Documents\SearchCriteria;
 
 use Sellsy\Criteria\Documents\SearchCriteria;
+use Sellsy\Models\Documents\Document\StepInterface;
 
 /**
  * Class SearchInvoicesCriteria
@@ -10,36 +11,6 @@ use Sellsy\Criteria\Documents\SearchCriteria;
  */
 class SearchInvoicesCriteria extends SearchCriteria
 {
-    /**
-     * @var string
-     */
-    const STEP_DRAFT = 'draft';
-
-    /**
-     * @var string
-     */
-    const STEP_PAYMENT_DUE = 'due';
-
-    /**
-     * @var string
-     */
-    const STEP_PAYMENT_PARTIAL = 'payinprogress';
-
-    /**
-     * @var string
-     */
-    const STEP_PAYMENT_DONE = 'paid';
-
-    /**
-     * @var string
-     */
-    const STEP_PAYMENT_LATE = 'late';
-
-    /**
-     * @var string
-     */
-    const STEP_CANCELED = 'cancelled';
-
     /**
      * @var bool
      */
@@ -78,12 +49,12 @@ class SearchInvoicesCriteria extends SearchCriteria
     protected function getValidSteps()
     {
         return array(
-            self::STEP_DRAFT,
-            self::STEP_PAYMENT_DUE,
-            self::STEP_PAYMENT_PARTIAL,
-            self::STEP_PAYMENT_DONE,
-            self::STEP_PAYMENT_LATE,
-            self::STEP_CANCELED
+            StepInterface::STEP_DRAFT,
+            StepInterface::STEP_PAYMENT_DUE,
+            StepInterface::STEP_PAYMENT_PARTIAL,
+            StepInterface::STEP_PAYMENT_DONE,
+            StepInterface::STEP_PAYMENT_LATE,
+            StepInterface::STEP_CANCELLED
         );
     }
 

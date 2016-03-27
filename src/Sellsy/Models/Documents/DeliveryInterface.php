@@ -9,5 +9,13 @@ namespace Sellsy\Models\Documents;
  */
 interface DeliveryInterface extends DocumentInterface
 {
+    /**
+     * @return bool
+     */
+    public function isSent();
 
+    /**
+     * @return bool
+     */
+    public function isRead();
 }

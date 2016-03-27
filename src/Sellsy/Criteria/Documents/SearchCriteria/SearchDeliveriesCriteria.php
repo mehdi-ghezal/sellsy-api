@@ -3,6 +3,7 @@
 namespace Sellsy\Criteria\Documents\SearchCriteria;
 
 use Sellsy\Criteria\Documents\SearchCriteria;
+use Sellsy\Models\Documents\Document\StepInterface;
 
 /**
  * Class SearchDeliveriesCriteria
@@ -10,31 +11,6 @@ use Sellsy\Criteria\Documents\SearchCriteria;
  */
 class SearchDeliveriesCriteria extends SearchCriteria
 {
-    /**
-     * @var string
-     */
-    const STEP_DRAFT = 'draft';
-
-    /**
-     * @var string
-     */
-    const STEP_SENT = 'sent';
-
-    /**
-     * @var string
-     */
-    const STEP_READ = 'read';
-
-    /**
-     * @var string
-     */
-    const STEP_INVOICED_PARTIALLY = 'partialinvoiced';
-
-    /**
-     * @var string
-     */
-    const STEP_INVOICED = 'invoiced';
-
     /**
      * @return string
      */
@@ -49,11 +25,11 @@ class SearchDeliveriesCriteria extends SearchCriteria
     protected function getValidSteps()
     {
         return array(
-            self::STEP_DRAFT,
-            self::STEP_SENT,
-            self::STEP_READ,
-            self::STEP_INVOICED_PARTIALLY,
-            self::STEP_INVOICED
+            StepInterface::STEP_DRAFT,
+            StepInterface::STEP_SENT,
+            StepInterface::STEP_READ,
+            StepInterface::STEP_INVOICED_PARTIALLY,
+            StepInterface::STEP_INVOICED
         );
     }
 }

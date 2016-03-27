@@ -2,6 +2,8 @@
 
 namespace Sellsy\Models\Documents;
 
+use Sellsy\Models\Documents\Document\StepInterface;
+
 /**
  * Class Invoice
  *
@@ -91,5 +93,45 @@ class Invoice extends Document implements InvoiceInterface
     public function setMarkupRate($markupRate)
     {
         $this->markupRate = $markupRate;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isPaymentDue()
+    {
+        return $this->step == StepInterface::STEP_PAYMENT_DUE;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isPaymentPartial()
+    {
+        return $this->step == StepInterface::STEP_PAYMENT_PARTIAL;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isPaymentDone()
+    {
+        return $this->step == StepInterface::STEP_PAYMENT_DONE;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isPaymentLate()
+    {
+        return $this->step == StepInterface::STEP_PAYMENT_LATE;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isCancelled()
+    {
+        return $this->step == StepInterface::STEP_CANCELLED;
     }
 }
