@@ -189,4 +189,9 @@ interface DocumentInterface
      * @return boolean
      */
     public function isDraft();
+
+    /**
+     * @return string
+     */
+    public function getDoctype();
 }

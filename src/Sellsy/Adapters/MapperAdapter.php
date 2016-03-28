@@ -64,11 +64,6 @@ class MapperAdapter implements AdapterInterface
     {
         // Ensure to clean subject, @see finally
         try {
-            // Subject is required with this Adapter
-            if (! $this->subject) {
-                throw new RuntimeException('No subject mapped, you must call "map" method before use the "call" method');
-            }
-
             // Send API Call with the transport
             $apiResult = $this->transport->call(array(
                 'method' => $method,
@@ -77,6 +72,18 @@ class MapperAdapter implements AdapterInterface
                     $paginator ? $paginator->getParameters() : array()
                 )
             ));
+
+            // API Call that return only a status
+            if (isset($apiResult['response']) && is_null($apiResult['response'])) {
+                $this->subject = null;
+
+                return true;
+            }
+
+            // In this case, the subject is required for this adapter
+            if (! $this->subject) {
+                throw new RuntimeException('No subject mapped, you must call "map" method before use the "call" method');
+            }
 
             // API Call that return a collection
             if (isset($apiResult['response']['result'])) {

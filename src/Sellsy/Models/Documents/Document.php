@@ -2,6 +2,7 @@
 
 namespace Sellsy\Models\Documents;
 
+use Sellsy\Exception\RuntimeException;
 use Sellsy\Models\Accounting\CurrencyInterface;
 use Sellsy\Models\Client\ContactInterface;
 use Sellsy\Models\Client\CustomerInterface;
@@ -383,5 +384,33 @@ class Document implements DocumentInterface
     public function isDraft()
     {
         return $this->step->getName() == StepInterface::STEP_DRAFT;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDoctype()
+    {
+        if ($this instanceof DeliveryInterface) {
+            return 'delivery';
+        }
+
+        if ($this instanceof EstimateInterface) {
+            return 'estimate';
+        }
+
+        if ($this instanceof InvoiceInterface) {
+            return 'invoice';
+        }
+
+        if ($this instanceof OrderInterface) {
+            return 'order';
+        }
+
+        if ($this instanceof Proforma) {
+            return 'proforma';
+        }
+
+        throw new RuntimeException(sprintf('Unable to find doctype for class "%s"', static::class));
     }
 }

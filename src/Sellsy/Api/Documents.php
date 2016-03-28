@@ -8,8 +8,12 @@ use Sellsy\Criteria\Documents\SearchCriteria\SearchInvoicesCriteria;
 use Sellsy\Criteria\Documents\SearchCriteria\SearchDeliveriesCriteria;
 use Sellsy\Criteria\Documents\SearchCriteria\SearchOrdersCriteria;
 use Sellsy\Criteria\Documents\SearchCriteria\SearchProformaCriteria;
+use Sellsy\Criteria\Documents\UpdateStepCriteria;
 use Sellsy\Criteria\Paginator;
 use Sellsy\Adapters\AdapterInterface;
+use Sellsy\Exception\ServerException;
+use Sellsy\Models\Documents\Document\StepInterface;
+use Sellsy\Models\Documents\DocumentInterface;
 use Sellsy\Models\Documents\EstimateInterface;
 use Sellsy\Models\Documents\InvoiceInterface;
 use Sellsy\Models\Documents\DeliveryInterface;
@@ -86,5 +90,21 @@ class Documents
     public function searchProforma(SearchProformaCriteria $criteria, Paginator $paginator = null)
     {
         return $this->adapter->map(ProformaInterface::class)->call('Document.getList', $criteria, $paginator);
+    }
+
+    /**
+     * @param UpdateStepCriteria $criteria
+     * @return bool
+     */
+    public function updateStep(UpdateStepCriteria $criteria)
+    {
+        try {
+            $this->adapter->call('Document.updateStep', $criteria);
+            return true;
+        }
+
+        catch(ServerException $e) {
+            return false;
+        }
     }
 } 
