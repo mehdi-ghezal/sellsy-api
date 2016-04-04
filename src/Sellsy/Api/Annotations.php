@@ -4,8 +4,10 @@ namespace Sellsy\Api;
 
 use Sellsy\Adapters\AdapterInterface;
 use Sellsy\Collections\Collection;
+use Sellsy\Criteria\Annotations\CreateAnnotationCriteria;
 use Sellsy\Criteria\Annotations\SearchAnnotationsCriteria;
 use Sellsy\Criteria\Paginator;
+use Sellsy\Exception\ServerException;
 use Sellsy\Models\Annotations\AnnotationInterface;
 
 /**
@@ -36,5 +38,21 @@ class Annotations
     public function searchAnnotations(SearchAnnotationsCriteria $criteria, Paginator $paginator = null)
     {
         return $this->adapter->map(AnnotationInterface::class)->call('Annotations.getList', $criteria, $paginator);
+    }
+
+    /**
+     * @param CreateAnnotationCriteria $criteria
+     * @return bool
+     */
+    public function create(CreateAnnotationCriteria $criteria)
+    {
+        try {
+            $this->adapter->call('Annotations.create', $criteria);
+            return true;
+        }
+
+        catch(ServerException $e) {
+            return false;
+        }
     }
 } 

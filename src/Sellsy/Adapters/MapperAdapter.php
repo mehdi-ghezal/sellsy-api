@@ -74,7 +74,7 @@ class MapperAdapter implements AdapterInterface
             ));
 
             // API Call that return only a status
-            if (array_key_exists('response', $apiResult) && is_null($apiResult['response'])) {
+            if (array_key_exists('response', $apiResult) && ! is_array($apiResult['response'])) {
                 $this->subject = null;
 
                 return true;
