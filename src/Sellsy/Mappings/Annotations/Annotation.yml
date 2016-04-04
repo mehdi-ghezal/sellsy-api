@@ -1,0 +1,9 @@
+Sellsy\Models\Annotations\AnnotationInterface:
+    id: datas.id
+    ownerId: datas.ownerid
+    relatedType: datas.relatedtype
+    relatedId: datas.relatedid
+    createAt: timestampToDateTime(datas.timestamp)
+    updateAt: timestampToDateTime(datas.lastupdatetimestamp)
+    title: datas.title
+    content: datas.annotation

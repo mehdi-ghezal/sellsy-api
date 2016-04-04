@@ -2,6 +2,7 @@
 
 namespace Sellsy;
 
+use Sellsy\Api\Annotations;
 use Sellsy\Api\Catalogue;
 use Sellsy\Api\Clients;
 use Sellsy\Api\Documents;
@@ -77,5 +78,17 @@ class Api
         }
 
         return $clients['documents'];
+    }
+
+    /**
+     * @return Annotations
+     */
+    public function annotations()
+    {
+        if (! isset($clients['annotations'])) {
+            $clients['annotations'] = new Annotations($this->adapter);
+        }
+
+        return $clients['annotations'];
     }
 }

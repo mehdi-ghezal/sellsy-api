@@ -3,6 +3,7 @@
 namespace Sellsy\Mappers;
 
 use Sellsy\Exception\RuntimeException;
+use Sellsy\ExpressionLanguage\DateTimeExpressionLanguageProvider;
 use Sellsy\Mappers\YmlMapper\MappingsParser;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\ExpressionLanguage\SyntaxError;
@@ -35,10 +36,11 @@ class YmlMapper extends AbstractMapper
     {
         $parser = new MappingsParser();
 
-        $path = $path ? $path : realpath(dirname(__DIR__) . '/Mappings');
+        $this->interfacesMappings = $this->getDefaultInterfacesMappings();
+        $this->mappings = $parser->parse($path ?: realpath(dirname(__DIR__) . '/Mappings'));
 
-        $this->mappings = $parser->parse($path);
         $this->expressionLanguage = new ExpressionLanguage();
+        $this->expressionLanguage->registerProvider(new DateTimeExpressionLanguageProvider());
     }
 
     /**
@@ -97,15 +99,15 @@ class YmlMapper extends AbstractMapper
                 return $value + 0;
             }
 
-            if (strtoupper($value) === 'Y') {
+            if (is_string($value) && strtoupper($value) === 'Y') {
                 return true;
             }
 
-            if (strtoupper($value) === 'N') {
+            if (is_string($value) && strtoupper($value) === 'N') {
                 return false;
             }
 
-            if (strtotime($value) > 0 && preg_match('/^20[0-9]{2}/', $value)) {
+            if (is_string($value) && strtotime($value) > 0 && preg_match('/^20[0-9]{2}/', $value)) {
                 return new \DateTime($value);
             }
 

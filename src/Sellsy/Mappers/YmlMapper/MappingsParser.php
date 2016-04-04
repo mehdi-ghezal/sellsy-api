@@ -61,23 +61,35 @@ class MappingsParser
     {
         $mappings = $this->parser->parse(file_get_contents($fileName));
 
-        // Manage default value and syntax replacement
+        // Manage default value
         array_walk_recursive($mappings, function(&$value, $key) {
             if (is_null($value)) {
                 $value = $key;
             }
+        });
 
-            $value = str_replace('\.', '####____####', $value);
+        // Manage syntax replacement : DOT by ARRAY notation
+        array_walk_recursive($mappings, function(&$value, $key) {
+            $newValue = '';
+            $functionsParts = preg_split('/(\(|\))/i', $value, -1, PREG_SPLIT_DELIM_CAPTURE);
 
-            if (strpos($value, '.') !== false) {
-                $value = explode('.', $value);
-                $value = join("']['", $value);
-                $value .= "']";
+            foreach($functionsParts as $part) {
+                $stringContactenationParts = preg_split('/(~)/i', $part, -1, PREG_SPLIT_DELIM_CAPTURE);
 
-                $value = substr_replace($value, '', strpos($value, ']') - 1, 2);
+                foreach($stringContactenationParts as $subpart) {
+                    if (! preg_match('/^["\'].*["\']$/', $subpart) && strpos($subpart, '.') !== false) {
+                        $subpart = explode('.', $subpart);
+                        $subpart = join("']['", $subpart);
+                        $subpart .= "']";
+
+                        $subpart = substr_replace($subpart, '', strpos($subpart, ']') - 1, 2);
+                    }
+
+                    $newValue .= $subpart;
+                }
             }
 
-            $value = str_replace('####____####', '.', $value);
+            $value = $newValue;
         });
 
         // Manage use and attributes statements

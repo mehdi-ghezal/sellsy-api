@@ -22,6 +22,9 @@
         <const name="SELLSY_USER_SECRET" value="" />
 
         <const name="CATALOGUE_ITEM_ID" value="1825031" />
+
+        <const name="ANNOTATIONS_SEARCH_TYPE" value="document" />
+        <const name="ANNOTATIONS_SEARCH_ID" value="2782598" />
     </php>
 
     <testsuites>
@@ -36,6 +39,9 @@
         </testsuite>
         <testsuite name="Clients">
             <directory>./tests/APi/Clients</directory>
+        </testsuite>
+        <testsuite name="Api_Annotations">
+            <directory>./tests/Api/Annotations</directory>
         </testsuite>
     </testsuites>
 </phpunit>

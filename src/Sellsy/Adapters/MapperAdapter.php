@@ -89,10 +89,18 @@ class MapperAdapter implements AdapterInterface
             if (isset($apiResult['response']['result'])) {
                 // Update paginator from API Response
                 $paginator = $paginator ?: new Paginator();
-                $paginator->setPageNumber($apiResult['response']['infos']['pagenum']);
-                $paginator->setNumberPerPage($apiResult['response']['infos']['nbperpage']);
-                $paginator->setNumberOfPages($apiResult['response']['infos']['nbpages']);
-                $paginator->setNumberOfResults($apiResult['response']['infos']['nbtotal']);
+
+                if (isset($apiResult['response']['infos'])) {
+                    $paginator->setPageNumber($apiResult['response']['infos']['pagenum']);
+                    $paginator->setNumberPerPage($apiResult['response']['infos']['nbperpage']);
+                    $paginator->setNumberOfPages($apiResult['response']['infos']['nbpages']);
+                    $paginator->setNumberOfResults($apiResult['response']['infos']['nbtotal']);
+                } else {
+                    $paginator->setPageNumber(1);
+                    $paginator->setNumberOfPages(1);
+                    $paginator->setNumberOfResults(count($apiResult['response']['result']));
+                    $paginator->setNumberPerPage($paginator->getNumberOfResults());
+                }
 
                 // Initialize items
                 $items = array();

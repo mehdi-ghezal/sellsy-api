@@ -7,6 +7,8 @@ use Doctrine\Instantiator\Instantiator;
 
 use Sellsy\Models\Accounting\Currency;
 use Sellsy\Models\Accounting\CurrencyInterface;
+use Sellsy\Models\Annotations\Annotation;
+use Sellsy\Models\Annotations\AnnotationInterface;
 use Sellsy\Models\ApiInfos;
 use Sellsy\Models\ApiInfosInterface;
 use Sellsy\Models\Catalogue\Item;
@@ -48,24 +50,7 @@ abstract class AbstractMapper implements MapperInterface
     /**
      * @var array
      */
-    protected $interfacesMappings = array(
-        ApiInfosInterface::class => ApiInfos::class,
-        CurrencyInterface::class => Currency::class,
-        ItemInterface::class => Item::class,
-        ContactInterface::class => Contact::class,
-        CustomerInterface::class => Customer::class,
-        CustomFieldInterface::class => CustomField::class,
-        DeliveryInterface::class => Delivery::class,
-        EstimateInterface::class => Estimate::class,
-        InvoiceInterface::class => Invoice::class,
-        OrderInterface::class => Order::class,
-        ProformaInterface::class => Proforma::class,
-        StepInterface::class => Step::class,
-        TagInterface::class => Tag::class,
-        PeopleInterface::class => People::class,
-        PackagingInterface::class => Packaging::class,
-        AddressInterface::class => Address::class,
-    );
+    protected $interfacesMappings;
 
     /**
      * @var array
@@ -123,6 +108,7 @@ abstract class AbstractMapper implements MapperInterface
             PeopleInterface::class => People::class,
             PackagingInterface::class => Packaging::class,
             AddressInterface::class => Address::class,
+            AnnotationInterface::class => Annotation::class,
         );
     }
 
