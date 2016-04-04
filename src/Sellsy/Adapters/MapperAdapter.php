@@ -43,6 +43,14 @@ class MapperAdapter implements AdapterInterface
     }
 
     /**
+     * @inheritdoc
+     */
+    public function getTransport()
+    {
+        return $this->transport;
+    }
+
+    /**
      * @param mixed $object
      * @return $this
      */

@@ -30,6 +30,19 @@ class Catalogue
     }
 
     /**
+     * @param string $consumerToken
+     * @param string $consumerSecret
+     * @param string $userToken
+     * @param string $userSecret
+     * @return $this
+     */
+    public function overrideAuthentication($consumerToken, $consumerSecret, $userToken, $userSecret)
+    {
+        $this->adapter->getTransport()->overrideAuthentication($consumerToken, $consumerSecret, $userToken, $userSecret);
+        return $this;
+    }
+
+    /**
      * @param GetItemCriteria $criteria
      * @return ItemInterface|array
      */

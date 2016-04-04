@@ -11,12 +11,86 @@ use Sellsy\Exception\ServerException;
 abstract class AbstractTransport implements TransportInterface
 {
     /**
+     * @var string
+     */
+    protected $consumerToken;
+
+    /**
+     * @var string
+     */
+    protected $consumerSecret;
+
+    /**
+     * @var string
+     */
+    protected $userToken;
+
+    /**
+     * @var string
+     */
+    protected $userSecret;
+
+    /**
+     * @var array
+     */
+    private $overrideAuthentication;
+
+    /**
+     * @param string $consumerToken
+     * @param string $consumerSecret
+     * @param string $userToken
+     * @param string $userSecret
+     * @return $this
+     */
+    public function overrideAuthentication($consumerToken, $consumerSecret, $userToken, $userSecret)
+    {
+        $this->overrideAuthentication = array();
+        $this->overrideAuthentication['consumerToken'] = $consumerToken;
+        $this->overrideAuthentication['consumerSecret'] = $consumerSecret;
+        $this->overrideAuthentication['userToken'] = $userToken;
+        $this->overrideAuthentication['userSecret'] = $userSecret;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getAuthenticationHeader()
+    {
+        if ($this->overrideAuthentication) {
+            $consumerToken = $this->overrideAuthentication['consumerToken'];
+            $consumerSecret = $this->overrideAuthentication['consumerSecret'];
+            $userToken = $this->overrideAuthentication['userToken'];
+            $userSecret = $this->overrideAuthentication['userSecret'];
+
+            $this->overrideAuthentication = array();
+        } else {
+            $consumerToken = $this->consumerToken;
+            $consumerSecret = $this->consumerSecret;
+            $userToken = $this->userToken;
+            $userSecret = $this->userSecret;
+        }
+
+        return sprintf(
+            "OAuth %s, %s, %s, %s, %s, %s, %s",
+            sprintf('oauth_consumer_key="%s"',      rawurlencode($consumerToken)),
+            sprintf('oauth_token="%s"',             rawurlencode($userToken)),
+            sprintf('oauth_nonce="%s"',             md5(time() + rand(0,1000))),
+            sprintf('oauth_timestamp="%s"',         time()),
+            sprintf('oauth_signature_method="%s"',  'PLAINTEXT'),
+            sprintf('oauth_signature="%s"',         rawurlencode(rawurlencode($consumerSecret).'&'.rawurlencode($userSecret))),
+            sprintf('oauth_version="%s"',           '1.0')
+        );
+    }
+
+    /**
      * @param string $httpResponseBody
      * @param int $httpResponseStatusCode
      * @return array
      * @throws ServerException
      */
-    public function convertResponseBody($httpResponseBody, $httpResponseStatusCode)
+    protected function convertResponseBody($httpResponseBody, $httpResponseStatusCode)
     {
         try {
             if (false !== strpos($httpResponseBody, 'oauth_problem=signature_invalid')) {

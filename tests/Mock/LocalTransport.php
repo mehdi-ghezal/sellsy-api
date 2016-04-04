@@ -122,4 +122,16 @@ class LocalTransport implements TransportInterface
 
         return sprintf('%s/%s', $this->basePath, $fileName);
     }
+
+    /**
+     * @param string $consumerToken
+     * @param string $consumerSecret
+     * @param string $userToken
+     * @param string $userSecret
+     * @return TransportInterface
+     */
+    public function overrideAuthentication($consumerToken, $consumerSecret, $userToken, $userSecret)
+    {
+        return $this;
+    }
 }

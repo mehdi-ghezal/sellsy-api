@@ -4,6 +4,7 @@ namespace Sellsy\Adapters;
 
 use Sellsy\Criteria\CriteriaInterface;
 use Sellsy\Criteria\Paginator;
+use Sellsy\Transports\TransportInterface;
 
 /**
  * Interface AdapterInterface
@@ -11,6 +12,11 @@ use Sellsy\Criteria\Paginator;
  */
 interface AdapterInterface
 {
+    /**
+     * @return TransportInterface
+     */
+    public function getTransport();
+
     /**
      * @param mixed $object
      * @return $this
