@@ -8,12 +8,12 @@
         "actif": "Y",
         "isEnabled": "Y",
         "inPos": "N",
-        "rank": "0",
+        "rank": "rank_value",
         "name": "name_value",
         "tradename": "tradename_value",
         "tradenametonote": "Y",
         "notes": "notes_value",
-        "unitAmount": "23.900000000",
+        "unitAmount": "22.900000000",
         "unitAmountIsTaxesFree": "Y",
         "useEcoTax": "N",
         "ecoTaxType": "ecoTaxType_value",
@@ -23,17 +23,17 @@
         "qt": "1.000000000",
         "taxid": "1482276",
         "taxrate": "20.000000000",
-        "accountchartid": "0",
+        "accountchartid": "accountchartid_value",
         "purchaseAmount": "18.080000000",
         "costPerHour": "0.000000000",
         "createdAt": "2014-07-22 14:49:06",
-        "updatedAt": "2014-07-22 14:52:24",
+        "updatedAt": "2016-03-18 16:51:19",
         "useDeclination": "Y",
         "stickyNote": "stickyNote_value",
         "categoryid": "121",
         "accountchart": "accountchart_value",
         "slug": "slug_value",
-        "decl_id": 0,
+        "decl_id": "decl_id_value",
         "typeLabel": "typeLabel_value",
         "nameSample": "nameSample_value",
         "notesSample": "notesSample_value",
@@ -42,16 +42,16 @@
         "isTaxesFree": "isTaxesFree_value",
         "isTaxesFreeBool": "Y",
         "purchaseAmountTaxesInc": "21.696000000",
-        "unitAmountTaxesInc": "28.680000000",
+        "unitAmountTaxesInc": "27.480000000",
         "accountingCode": "accountingCode_value",
         "analyticsCode": "analyticsCode_value",
         "accountingPurchaseCode": "accountingPurchaseCode_value",
         "customfields": [
             {
-                "id": 0,
+                "id": "12445636",
                 "status": "status_value",
                 "corpid": "35249",
-                "cfid": 4709,
+                "cfid": "4709",
                 "groupid": "692",
                 "type": "type_value",
                 "linkedtype": "linkedtype_value",
@@ -59,10 +59,10 @@
                 "formatted_value": "formatted_value_value"
             },
             {
-                "id": 0,
+                "id": "12445638",
                 "status": "status_value",
                 "corpid": "35249",
-                "cfid": 16305,
+                "cfid": "16305",
                 "groupid": "2158",
                 "type": "type_value",
                 "linkedtype": "linkedtype_value",
@@ -70,10 +70,21 @@
                 "formatted_value": "formatted_value_value"
             },
             {
-                "id": 0,
+                "id": "12445639",
                 "status": "status_value",
                 "corpid": "35249",
-                "cfid": 4708,
+                "cfid": "18727",
+                "groupid": "groupid_value",
+                "type": "type_value",
+                "linkedtype": "linkedtype_value",
+                "linkedid": "1825031",
+                "formatted_value": "formatted_value_value"
+            },
+            {
+                "id": "12445640",
+                "status": "status_value",
+                "corpid": "35249",
+                "cfid": "4708",
                 "groupid": "693",
                 "type": "type_value",
                 "linkedtype": "linkedtype_value",
@@ -81,10 +92,10 @@
                 "formatted_value": "formatted_value_value"
             },
             {
-                "id": 0,
+                "id": "12445641",
                 "status": "status_value",
                 "corpid": "35249",
-                "cfid": 4707,
+                "cfid": "4707",
                 "groupid": "693",
                 "type": "type_value",
                 "linkedtype": "linkedtype_value",
@@ -92,10 +103,10 @@
                 "formatted_value": "formatted_value_value"
             },
             {
-                "id": 0,
+                "id": "12445642",
                 "status": "status_value",
                 "corpid": "35249",
-                "cfid": 4706,
+                "cfid": "4706",
                 "groupid": "693",
                 "type": "type_value",
                 "linkedtype": "linkedtype_value",
@@ -103,10 +114,21 @@
                 "formatted_value": "formatted_value_value"
             },
             {
-                "id": 0,
+                "id": "12445643",
                 "status": "status_value",
                 "corpid": "35249",
-                "cfid": 4705,
+                "cfid": "4705",
+                "groupid": "692",
+                "type": "type_value",
+                "linkedtype": "linkedtype_value",
+                "linkedid": "1825031",
+                "formatted_value": "1"
+            },
+            {
+                "id": "12445644",
+                "status": "status_value",
+                "corpid": "35249",
+                "cfid": "6776",
                 "groupid": "692",
                 "type": "type_value",
                 "linkedtype": "linkedtype_value",
@@ -114,10 +136,10 @@
                 "formatted_value": "formatted_value_value"
             },
             {
-                "id": 0,
+                "id": "12445645",
                 "status": "status_value",
                 "corpid": "35249",
-                "cfid": 6776,
+                "cfid": "4704",
                 "groupid": "692",
                 "type": "type_value",
                 "linkedtype": "linkedtype_value",
@@ -125,21 +147,10 @@
                 "formatted_value": "formatted_value_value"
             },
             {
-                "id": 0,
+                "id": "12445646",
                 "status": "status_value",
                 "corpid": "35249",
-                "cfid": 4704,
-                "groupid": "692",
-                "type": "type_value",
-                "linkedtype": "linkedtype_value",
-                "linkedid": "1825031",
-                "formatted_value": "formatted_value_value"
-            },
-            {
-                "id": 0,
-                "status": "status_value",
-                "corpid": "35249",
-                "cfid": 4949,
+                "cfid": "4949",
                 "groupid": "693",
                 "type": "type_value",
                 "linkedtype": "linkedtype_value",
@@ -147,10 +158,10 @@
                 "formatted_value": "formatted_value_value"
             },
             {
-                "id": 0,
+                "id": "12445647",
                 "status": "status_value",
                 "corpid": "35249",
-                "cfid": 6780,
+                "cfid": "6780",
                 "groupid": "978",
                 "type": "type_value",
                 "linkedtype": "linkedtype_value",
@@ -158,10 +169,10 @@
                 "formatted_value": "formatted_value_value"
             },
             {
-                "id": 0,
+                "id": "12445648",
                 "status": "status_value",
                 "corpid": "35249",
-                "cfid": 6779,
+                "cfid": "6779",
                 "groupid": "979",
                 "type": "type_value",
                 "linkedtype": "linkedtype_value",
@@ -169,10 +180,10 @@
                 "formatted_value": "formatted_value_value"
             },
             {
-                "id": 0,
+                "id": "12445649",
                 "status": "status_value",
                 "corpid": "35249",
-                "cfid": 4703,
+                "cfid": "4703",
                 "groupid": "692",
                 "type": "type_value",
                 "linkedtype": "linkedtype_value",
@@ -180,10 +191,10 @@
                 "formatted_value": "formatted_value_value"
             },
             {
-                "id": 0,
+                "id": "12445650",
                 "status": "status_value",
                 "corpid": "35249",
-                "cfid": 4702,
+                "cfid": "4702",
                 "groupid": "693",
                 "type": "type_value",
                 "linkedtype": "linkedtype_value",
@@ -191,10 +202,10 @@
                 "formatted_value": "formatted_value_value"
             },
             {
-                "id": 0,
+                "id": "12445651",
                 "status": "status_value",
                 "corpid": "35249",
-                "cfid": 4701,
+                "cfid": "4701",
                 "groupid": "693",
                 "type": "type_value",
                 "linkedtype": "linkedtype_value",
@@ -202,10 +213,10 @@
                 "formatted_value": "formatted_value_value"
             },
             {
-                "id": 0,
+                "id": "12445652",
                 "status": "status_value",
                 "corpid": "35249",
-                "cfid": 16325,
+                "cfid": "16325",
                 "groupid": "2158",
                 "type": "type_value",
                 "linkedtype": "linkedtype_value",
@@ -213,10 +224,10 @@
                 "formatted_value": "formatted_value_value"
             },
             {
-                "id": 0,
+                "id": "12445653",
                 "status": "status_value",
                 "corpid": "35249",
-                "cfid": 15298,
+                "cfid": "15298",
                 "groupid": "2038",
                 "type": "type_value",
                 "linkedtype": "linkedtype_value",
@@ -224,10 +235,10 @@
                 "formatted_value": "formatted_value_value"
             },
             {
-                "id": 0,
+                "id": "12445654",
                 "status": "status_value",
                 "corpid": "35249",
-                "cfid": 6778,
+                "cfid": "6778",
                 "groupid": "978",
                 "type": "type_value",
                 "linkedtype": "linkedtype_value",
@@ -235,10 +246,10 @@
                 "formatted_value": "formatted_value_value"
             },
             {
-                "id": 0,
+                "id": "12445655",
                 "status": "status_value",
                 "corpid": "35249",
-                "cfid": 6777,
+                "cfid": "6777",
                 "groupid": "979",
                 "type": "type_value",
                 "linkedtype": "linkedtype_value",
@@ -246,10 +257,10 @@
                 "formatted_value": "formatted_value_value"
             },
             {
-                "id": 0,
+                "id": "12445656",
                 "status": "status_value",
                 "corpid": "35249",
-                "cfid": 17318,
+                "cfid": "17318",
                 "groupid": "692",
                 "type": "type_value",
                 "linkedtype": "linkedtype_value",
@@ -257,10 +268,10 @@
                 "formatted_value": "formatted_value_value"
             },
             {
-                "id": 0,
+                "id": "12445657",
                 "status": "status_value",
                 "corpid": "35249",
-                "cfid": 4700,
+                "cfid": "4700",
                 "groupid": "692",
                 "type": "type_value",
                 "linkedtype": "linkedtype_value",
@@ -272,9 +283,9 @@
         "formatted_purchaseAmountTaxesInc": "formatted_purchaseAmountTaxesInc_value",
         "formatted_unitAmount": "formatted_unitAmount_value",
         "formatted_unitAmountTaxesInc": "formatted_unitAmountTaxesInc_value",
-        "stockItemQt": 0,
-        "stockItemBookedQt": 0,
-        "stockItemAvailableQt": 0,
+        "stockItemQt": "stockItemQt_value",
+        "stockItemBookedQt": "stockItemBookedQt_value",
+        "stockItemAvailableQt": "stockItemAvailableQt_value",
         "valomode": "valomode_value",
         "formatted_valo": "formatted_valo_value",
         "formatted_qt": "1.00",
@@ -287,7 +298,7 @@
             "id": "22705",
             "corpid": "35249",
             "itemid": "1825031",
-            "declid": "0",
+            "declid": "declid_value",
             "status": "status_value",
             "fid": "4349158",
             "isdefault": "Y",
@@ -311,7 +322,7 @@
                 "attachtopurInvoice": "N",
                 "attachtopurCreditNote": "N",
                 "file_fullname": "file_fullname_value",
-                "public_path": "public_path_value"
+                "public_path": "?_f=file&id=JTBDJUM1UkwlMjJGJTVCViVBNyVDNiVCMXglQzIlQjQlMjglN0YlRUQlMTElNUMlMDUlOEQlQjElMEZuJUQ1JUVCJUYzJTlBJUI1JUJFcFolRUQlQzElOTAlREQlOEF1JUFBJUQwJThFJUQ4JUJGJUMxJURFJTkwJURDJUM0JUZBRWQlMjIlQjclMTQlQjFuJTAxJTBCJTlCJUE0JUFGJUEzJTIyVyVGNzNXJUEwJUEwQ0slMTQlQkIlODclQUMlRjVNJUNGJUY4JTJGJUM5JUVFJTBGJTNELTUlQzElNUMlRkMlMkYwJTlFciU4RF8lM0I1JUJDJTg0JUUwJTA5JTA5JTI2JTA0JTdGJTEwJUY4JUQwJUM4JUQwJThFVCUxNkIlQTQlQ0UlRUQlREYlOEElRDlXJTlCJTVDMSUxMCVBMCVDNCVCRg==&key=b6bf57ed0b4e24ef5eb4298040fa997f"
             }
         },
         "tags": [
@@ -352,8 +363,8 @@
             "status": "status_value",
             "itemid": "1825031",
             "idf1": "705",
-            "idf2": "0",
-            "idf3": "0",
+            "idf2": "idf2_value",
+            "idf3": "idf3_value",
             "idf1_details": {
                 "id": "705",
                 "corpid": "35249",
@@ -439,11 +450,11 @@
             "firstenabled": "2014-07-22 00:00:00",
             "enabled": "Y",
             "valo": "valo_value",
-            "replenishmentNbDays": "0",
+            "replenishmentNbDays": "replenishmentNbDays_value",
             "minstock": "0.000000000",
-            "sum": "60.730000000",
+            "sum": "62.520000000",
             "bookedsum": "0.000000000",
-            "availablesum": "60.730000000",
+            "availablesum": "62.520000000",
             "stockWarehouse": {
                 "2778": {
                     "infos": {
@@ -459,7 +470,7 @@
                             "linkedtype": "linkedtype_value",
                             "linkedid": "2778",
                             "status": "status_value",
-                            "rank": "0",
+                            "rank": "rank_value",
                             "name": "name_value",
                             "part1": "part1_value",
                             "part2": "part2_value",
@@ -470,7 +481,7 @@
                             "state": "state_value",
                             "townid": "3834800",
                             "countrycode": "countrycode_value",
-                            "originalid": "0",
+                            "originalid": "originalid_value",
                             "lat": "lat_value",
                             "lng": "lng_value",
                             "partsToDisplay": {
@@ -487,9 +498,9 @@
                             }
                         }
                     },
-                    "qt": "60.730000000",
+                    "qt": "62.520000000",
                     "bookedqt": "0.000000000",
-                    "availableqt": "60.730000000"
+                    "availableqt": "62.520000000"
                 }
             }
         },
@@ -498,7 +509,7 @@
                 "id": "109",
                 "name": "name_value",
                 "description": "description_value",
-                "parentid": "0",
+                "parentid": "parentid_value",
                 "logo": "logo_value",
                 "corpid": "35249",
                 "slug": "slug_value"
@@ -527,7 +538,7 @@
                 "id": "22705",
                 "corpid": "35249",
                 "itemid": "1825031",
-                "declid": "0",
+                "declid": "declid_value",
                 "status": "status_value",
                 "fid": "4349158",
                 "isdefault": "Y",
@@ -551,7 +562,7 @@
                     "attachtopurInvoice": "N",
                     "attachtopurCreditNote": "N",
                     "file_fullname": "file_fullname_value",
-                    "public_path": "public_path_value"
+                    "public_path": "?_f=file&id=JTBDJUM1UkwlMjJGJTVCViVBNyVDNiVCMXglQzIlQjQlMjglN0YlRUQlMTElNUMlMDUlOEQlQjElMEZuJUQ1JUVCJUYzJTlBJUI1JUJFcFolRUQlQzElOTAlREQlOEF1JUFBJUQwJThFJUQ4JUJGJUMxJURFJTkwJURDJUM0JUZBRWQlMjIlQjclMTQlQjFuJTAxJTBCJTlCJUE0JUFGJUEzJTIyVyVGNzNXJUEwJUEwQ0slMTQlQkIlODclQUMlRjVNJUNGJUY4JTJGJUM5JUVFJTBGJTNELTUlQzElNUMlRkMlMkYwJTlFciU4RF8lM0I1JUJDJTg0JUUwJTA5JTA5JTI2JTA0JTdGJTEwJUY4JUQwJUM4JUQwJThFVCUxNkIlQTQlQ0UlRUQlREYlOEElRDlXJTlCJTVDMSUxMCVBMCVDNCVCRg==&key=b6bf57ed0b4e24ef5eb4298040fa997f"
                 }
             }
         ]

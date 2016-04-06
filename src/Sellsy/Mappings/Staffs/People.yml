@@ -1,0 +1,12 @@
+Sellsy\Models\Staff\PeopleInterface:
+    id: number(linkedid)
+    firstName: forename
+    lastName: name
+    email: ~
+    fullName: ~
+    createAt: parseTimestamp(created)
+    updateAt: parseTimestamp(lastUpdate)
+    phoneNumber: tel
+    mobileNumber: mobile
+    picture: url(pic)
+    avatar: url(avatar.value)

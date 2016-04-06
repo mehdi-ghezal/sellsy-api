@@ -56,19 +56,13 @@ class ReadTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('analyticsCode_value', $item->getAnalyticsCode());
         $this->assertEquals('notes_value', $item->getDescription());
-        $this->assertEquals('https://www.sellsy.fr/public_path_value', $item->getImage());
+        $this->assertStringStartsWith('https://www.sellsy.fr/?_f', $item->getImage());
         $this->assertEquals('name_value', $item->getName());
         $this->assertEquals('tradename_value', $item->getTradename());
         $this->assertEquals('slug_value', $item->getSlug());
         $this->assertEquals('unit_value', $item->getUnit());
 
         $this->assertInstanceOf('\Sellsy\Models\Catalogue\Item\Packaging', $item->getPackaging());
-        $this->assertEquals('width_value', $item->getPackaging()->getWidth());
-        $this->assertEquals('deepth_value', $item->getPackaging()->getDeepth());
-        $this->assertEquals('length_value', $item->getPackaging()->getLength());
-        $this->assertEquals('height_value', $item->getPackaging()->getHeight());
-        $this->assertEquals('weight_value', $item->getPackaging()->getWeight());
-        $this->assertEquals('packing_value', $item->getPackaging()->getPacking());
 
         $this->assertInstanceOf('Sellsy\Models\SmartTags\TagInterface', $item->getTag(function() { return true; }));
         $this->assertInternalType('array', $item->getTags());

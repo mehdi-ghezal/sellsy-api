@@ -4,7 +4,7 @@ Sellsy\Models\ApiInfosInterface:
     account:
         type: Sellsy\Models\Staff\PeopleInterface
         mappings:
-            id: userdatas.staffId
+            id: number(userdatas.staffId)
             firstName: userdatas.forename
             lastName: userdatas.name
             fullName: userdatas.fullName

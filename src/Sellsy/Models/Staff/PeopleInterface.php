@@ -58,4 +58,64 @@ interface PeopleInterface
      * @param string $fullName
      */
     public function setFullName($fullName);
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreateAt();
+
+    /**
+     * @param \DateTime $createAt
+     */
+    public function setCreateAt(\DateTime $createAt);
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdateAt();
+
+    /**
+     * @param \DateTime $updateAt
+     */
+    public function setUpdateAt(\DateTime $updateAt);
+
+    /**
+     * @return string
+     */
+    public function getPhoneNumber();
+
+    /**
+     * @param string $phoneNumber
+     */
+    public function setPhoneNumber($phoneNumber);
+
+    /**
+     * @return string
+     */
+    public function getMobileNumber();
+
+    /**
+     * @param string $mobileNumber
+     */
+    public function setMobileNumber($mobileNumber);
+
+    /**
+     * @return mixed
+     */
+    public function getPicture();
+
+    /**
+     * @param mixed $picture
+     */
+    public function setPicture($picture);
+
+    /**
+     * @return string
+     */
+    public function getAvatar();
+
+    /**
+     * @param string $avatar
+     */
+    public function setAvatar($avatar);
 }

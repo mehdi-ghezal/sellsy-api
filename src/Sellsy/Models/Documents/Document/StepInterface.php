@@ -80,12 +80,12 @@ interface StepInterface
     const STEP_PAYMENT_LATE = 'late';
 
     /**
-     * @return int
+     * @return string
      */
     public function getId();
 
     /**
-     * @param int $id
+     * @param string $id
      */
     public function setId($id);
 

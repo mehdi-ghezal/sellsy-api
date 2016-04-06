@@ -7,6 +7,7 @@ use Sellsy\Api\Catalogue;
 use Sellsy\Api\Clients;
 use Sellsy\Api\Documents;
 use Sellsy\Adapters\AdapterInterface;
+use Sellsy\Api\Staffs;
 use Sellsy\Models\ApiInfosInterface;
 
 /**
@@ -90,5 +91,17 @@ class Api
         }
 
         return $clients['annotations'];
+    }
+
+    /**
+     * @return Annotations
+     */
+    public function staffs()
+    {
+        if (! isset($clients['staffs'])) {
+            $clients['staffs'] = new Staffs($this->adapter);
+        }
+
+        return $clients['staffs'];
     }
 }

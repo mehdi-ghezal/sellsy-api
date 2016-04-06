@@ -28,20 +28,35 @@
     </php>
 
     <testsuites>
-        <testsuite name="Generic">
-            <directory>./tests/APi/Generic</directory>
+        <testsuite name="Api">
+            <directory>./tests/Api/</directory>
+
+            <testsuite name="Api_Generic">
+                <directory>./tests/Api/Generic</directory>
+            </testsuite>
+            <testsuite name="Api_Catalogue">
+                <directory>./tests/Api/Catalogue</directory>
+            </testsuite>
+            <testsuite name="Api_Documents">
+                <directory>./tests/Api/Documents</directory>
+            </testsuite>
+            <testsuite name="Api_Clients">
+                <directory>./tests/Api/Clients</directory>
+            </testsuite>
+            <testsuite name="Api_Annotations">
+                <directory>./tests/Api/Annotations</directory>
+            </testsuite>
+            <testsuite name="Api_Staffs">
+                <directory>./tests/Api/Staffs</directory>
+            </testsuite>
         </testsuite>
-        <testsuite name="Catalogue">
-            <directory>./tests/APi/Catalogue</directory>
-        </testsuite>
-        <testsuite name="Documents">
-            <directory>./tests/APi/Documents</directory>
-        </testsuite>
-        <testsuite name="Clients">
-            <directory>./tests/APi/Clients</directory>
-        </testsuite>
-        <testsuite name="Api_Annotations">
-            <directory>./tests/Api/Annotations</directory>
+
+        <testsuite name="Criteria">
+            <directory>./tests/Criteria/Documents</directory>
+
+            <testsuite name="Criteria_Documents">
+                <directory>./tests/Criteria/Documents</directory>
+            </testsuite>
         </testsuite>
     </testsuites>
 </phpunit>

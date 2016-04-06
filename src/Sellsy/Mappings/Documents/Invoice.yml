@@ -2,9 +2,9 @@ Sellsy\Models\Documents\InvoiceInterface:
     use:
         - Sellsy\Models\Documents\DocumentInterface
     attributes:
-        dueAmount: ~
-        marginAmount: marge
-        marginRate: marge_tauxMarge
-        markupRate: marge_tauxMarque
+        dueAmount: number(dueAmount)
+        marginAmount: number(marge)
+        marginRate: number(marge_tauxMarge)
+        markupRate: number(marge_tauxMarque)
 
 

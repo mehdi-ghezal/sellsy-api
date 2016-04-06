@@ -1,36 +1,36 @@
 Sellsy\Models\Catalogue\ItemInterface:
-    id: ~
-    isActive: actif
+    id: number(id)
+    isActive: boolean(actif)
     analyticsCode: ~
-    isEnabled: ~
+    isEnabled: boolean(isEnabled)
     name: ~
     slug: ~
     tradename: ~
     description: notes
-    saleUnitAmountWithoutTax: unitAmount
-    saleUnitTaxAmount: unitAmountTaxesInc - unitAmount
-    purchaseUnitAmountWithoutTax: purchaseAmount
-    purchaseUnitTaxAmount: purchaseAmountTaxesInc - purchaseAmount
+    saleUnitAmountWithoutTax: number(unitAmount)
+    saleUnitTaxAmount: number(unitAmountTaxesInc - unitAmount)
+    purchaseUnitAmountWithoutTax: number(purchaseAmount)
+    purchaseUnitTaxAmount: number(purchaseAmountTaxesInc - purchaseAmount)
     unit: ~
-    quantity: qt
-    createAt: createdAt
-    updateAt: updatedAt
-    image: '"https://www.sellsy.fr/"~defaultImage.file.public_path'
+    quantity: number(qt)
+    createAt: parseDateTime(createdAt)
+    updateAt: parseDateTime(updatedAt)
+    image: url(defaultImage.file.public_path)
     packaging:
         type: Sellsy\Models\Catalogue\Item\PackagingInterface
         mappings:
-            width: characteristics.width
-            deepth: characteristics.deepth
-            length: characteristics.length
-            height: characteristics.height
-            weight: characteristics.weight
-            packing: characteristics.packing
+            width: number(characteristics.width)
+            deepth: number(characteristics.deepth)
+            length: number(characteristics.length)
+            height: number(characteristics.height)
+            weight: number(characteristics.weight)
+            packing: number(characteristics.packing)
     tags:
         type: Sellsy\Models\SmartTags\TagInterface
         collection: true
         origin: tags
         mappings:
-            id: ~
+            id: number(id)
             name: word
             category: ~
     customFields:
@@ -38,13 +38,13 @@ Sellsy\Models\Catalogue\ItemInterface:
         collection: true
         origin: customfields
         mappings:
-            id: ~
-            fieldId: cfid
+            id: number(id)
+            fieldId: number(cfid)
             type: ~
             textValue: textval
-            boolValue: boolval
+            boolValue: boolean(boolval)
             timestampValue: timestampval
-            decimalValue: decimalval
-            numericValue: numericval
+            decimalValue: number(decimalval)
+            numericValue: number(numericval)
             stringValue: stringval
             formattedValue: formatted_value

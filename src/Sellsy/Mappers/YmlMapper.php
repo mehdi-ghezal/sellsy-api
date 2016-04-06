@@ -3,12 +3,10 @@
 namespace Sellsy\Mappers;
 
 use Sellsy\Exception\RuntimeException;
-use Sellsy\ExpressionLanguage\DateTimeExpressionLanguageProvider;
-use Sellsy\Mappers\YmlMapper\MappingsParser;
-use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
-use Symfony\Component\ExpressionLanguage\SyntaxError;
-
+use Sellsy\ExpressionLanguage\ExpressionLanguage;
 use Sellsy\Models\SmartTags\TagInterface;
+use Sellsy\Mappers\YmlMapper\MappingsParser;
+use Symfony\Component\ExpressionLanguage\SyntaxError;
 
 /**
  * Class YmlMapper
@@ -40,7 +38,6 @@ class YmlMapper extends AbstractMapper
         $this->mappings = $parser->parse($path ?: realpath(dirname(__DIR__) . '/Mappings'));
 
         $this->expressionLanguage = new ExpressionLanguage();
-        $this->expressionLanguage->registerProvider(new DateTimeExpressionLanguageProvider());
     }
 
     /**
@@ -89,29 +86,7 @@ class YmlMapper extends AbstractMapper
     {
         // Simple scalar attribute
         if (is_string($expression)) {
-            $value = $this->evaluate($expression, $data);
-
-            if (is_null($value)) {
-                return $value;
-            }
-
-            if (is_numeric($value)) {
-                return $value + 0;
-            }
-
-            if (is_string($value) && strtoupper($value) === 'Y') {
-                return true;
-            }
-
-            if (is_string($value) && strtoupper($value) === 'N') {
-                return false;
-            }
-
-            if (is_string($value) && strtotime($value) > 0 && preg_match('/^20[0-9]{2}/', $value)) {
-                return new \DateTime($value);
-            }
-
-            return $value;
+            return $this->evaluate($expression, $data);
         }
 
         // Linked object

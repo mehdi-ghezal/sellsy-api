@@ -1,7 +1,7 @@
 Sellsy\Models\Client\CustomerInterface:
-    id: ~
-    createAt: joindate
-    picture: pic
+    id: number(id)
+    createAt: parseDateTime(joindate)
+    picture: url(pic)
     name: ~
     fullName: ~
     email: ~
@@ -13,15 +13,15 @@ Sellsy\Models\Client\CustomerInterface:
     siret: ~
     vatNumber: vat
     website: webUrl
-    massmailingUnsubscribed: ~
-    massmailingUnsubscribedSMS: ~
-    mainAddressId: mainaddressid
-    mainContactId: maincontactid
+    massmailingUnsubscribed: boolean(massmailingUnsubscribed)
+    massmailingUnsubscribedSMS: boolean(massmailingUnsubscribedSMS)
+    mainAddressId: number(mainaddressid)
+    mainContactId: number(maincontactid)
 
     owner:
         type: Sellsy\Models\Staff\PeopleInterface
         mappings:
-            id: ownerid
+            id: number(ownerid)
             fullName: owner
 
     customFields:
@@ -29,14 +29,14 @@ Sellsy\Models\Client\CustomerInterface:
         collection: true
         origin: customfields
         mappings:
-            id: ~
-            fieldId: cfid
+            id: number(id)
+            fieldId: number(cfid)
             type: ~
             textValue: textval
-            boolValue: boolval
+            boolValue: boolean(boolval)
             timestampValue: timestampval
-            decimalValue: decimalval
-            numericValue: numericval
+            decimalValue: number(decimalval)
+            numericValue: number(numericval)
             stringValue: stringval
             formattedValue: formatted_value
 
@@ -45,11 +45,11 @@ Sellsy\Models\Client\CustomerInterface:
         collection: true
         origin: contacts
         mappings:
-            id: ~
+            id: number(id)
             firstName: forename
             lastName: name
             fullName: forename~" "~name
-            picture: pic
+            picture: url(pic)
             email: ~
             phoneNumber: tel
             mobileNumber: mobile
@@ -59,7 +59,7 @@ Sellsy\Models\Client\CustomerInterface:
         type: Sellsy\Models\Addresses\AddressInterface
         collection: true
         mappings:
-            id: mainaddressid
+            id: number(mainaddressid)
             name: addr_name
             part1: addr_part1
             part2: addr_part2

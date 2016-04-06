@@ -66,7 +66,6 @@ class ReadTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('mobile_value', $customer->getMobileNumber());
         $this->assertEquals('apenaf_value', $customer->getNafCode());
         $this->assertEquals('name_value', $customer->getName());
-        $this->assertEquals('pic_value', $customer->getPicture());
         $this->assertEquals('rcs_value', $customer->getRcs());
         $this->assertEquals('siret_value', $customer->getSiret());
         $this->assertEquals('vat_value', $customer->getVatNumber());

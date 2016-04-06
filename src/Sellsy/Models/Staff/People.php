@@ -35,6 +35,36 @@ class People implements PeopleInterface
     protected $fullName;
 
     /**
+     * @var \DateTime
+     */
+    protected $createAt;
+
+    /**
+     * @var \DateTime
+     */
+    protected $updateAt;
+
+    /**
+     * @var string
+     */
+    protected $phoneNumber;
+
+    /**
+     * @var string
+     */
+    protected $mobileNumber;
+
+    /**
+     * @var string
+     */
+    protected $picture;
+
+    /**
+     * @var string
+     */
+    protected $avatar;
+
+    /**
      * @inheritdoc
      */
     public function getId()
@@ -103,7 +133,11 @@ class People implements PeopleInterface
      */
     public function getFullName()
     {
-        return $this->fullName;
+        if ($this->fullName) {
+            return $this->fullName;
+        }
+
+        return sprintf('%s %s', $this->firstName, $this->lastName);
     }
 
     /**
@@ -112,5 +146,101 @@ class People implements PeopleInterface
     public function setFullName($fullName)
     {
         $this->fullName = $fullName;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCreateAt()
+    {
+        return $this->createAt;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setCreateAt(\DateTime $createAt)
+    {
+        $this->createAt = $createAt;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getUpdateAt()
+    {
+        return $this->updateAt;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setUpdateAt(\DateTime $updateAt)
+    {
+        $this->updateAt = $updateAt;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMobileNumber()
+    {
+        return $this->mobileNumber;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setMobileNumber($mobileNumber)
+    {
+        $this->mobileNumber = $mobileNumber;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setPicture($picture)
+    {
+        $this->picture = $picture;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
     }
 }

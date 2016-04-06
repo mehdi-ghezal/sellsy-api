@@ -2,7 +2,7 @@ Sellsy\Models\Documents\EstimateInterface:
     use:
         - Sellsy\Models\Documents\DocumentInterface
     attributes:
-        marginAmount: marge
-        marginRate: marge_tauxMarge
-        markupRate: marge_tauxMarque
-        expireAt: expireDate
+        marginAmount: number(marge)
+        marginRate: number(marge_tauxMarge)
+        markupRate: number(marge_tauxMarque)
+        expireAt: parseDateTime(expireDate)

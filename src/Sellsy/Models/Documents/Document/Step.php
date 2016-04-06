@@ -12,7 +12,7 @@ use Sellsy\Exception\BadArgumentException;
 class Step implements StepInterface
 {
     /**
-     * @var int
+     * @var string
      */
     protected $id;
 

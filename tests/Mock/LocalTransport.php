@@ -86,14 +86,33 @@ class LocalTransport implements TransportInterface
     {
         // Anonymize data
         array_walk_recursive($data['response'], function(&$value, $key) {
-            switch(true) {
-                case $value === 'Y' :
-                case $value === 'y' :
-                case $value === 'N' :
-                case $value === 'n' :
-                case is_numeric($value) :
-                case strtotime($value) :
+            if ($value) {
+                // Not anonymize bool and numeric values
+                switch(true) {
+                    case $value === 'Y' :
+                    case $value === 'y' :
+                    case $value === 'N' :
+                    case $value === 'n' :
+                    case is_numeric($value) :
+                        return false;
+                }
+
+                // Not anonymize DateTime String
+                try {
+                    new \DateTime($value);
                     return false;
+                } catch(\Exception $e) {}
+
+                // Not anonymize Timestamp String
+                try {
+                    new \DateTime('@' . $value);
+                    return false;
+                } catch(\Exception $e) {}
+
+                // Not anonymize file path
+                if (strpos($value, '?_f') === 0) {
+                    return false;
+                }
             }
 
             $value = $key . '_value';
