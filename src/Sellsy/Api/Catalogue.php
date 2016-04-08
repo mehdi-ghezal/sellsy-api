@@ -48,7 +48,7 @@ class Catalogue
      */
     public function getItem(GetItemCriteria $criteria)
     {
-        return $this->adapter->map(ItemInterface::class)->call('Catalogue.getOne', $criteria);
+        return $this->adapter->map(ItemInterface::class, 'one')->call('Catalogue.getOne', $criteria);
     }
 
     /**
@@ -58,6 +58,6 @@ class Catalogue
      */
     public function searchItems(SearchItemsCriteria $criteria, Paginator $paginator = null)
     {
-        return $this->adapter->map(ItemInterface::class)->call('Catalogue.getList', $criteria, $paginator);
+        return $this->adapter->map(ItemInterface::class, 'list')->call('Catalogue.getList', $criteria, $paginator);
     }
 } 

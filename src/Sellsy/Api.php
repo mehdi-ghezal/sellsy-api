@@ -42,7 +42,7 @@ class Api
      */
     public function getApiInfos()
     {
-        return $this->adapter->map(ApiInfosInterface::class)->call('Infos.getInfos');
+        return $this->adapter->map(ApiInfosInterface::class, 'default')->call('Infos.getInfos');
     }
 
     /**

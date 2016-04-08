@@ -43,19 +43,15 @@ class BaseAdapter implements AdapterInterface
     }
 
     /**
-     * @param mixed $object
-     * @return $this
+     * @inheritdoc
      */
-    public function map($object)
+    public function map($interface, $context)
     {
         return $this;
     }
 
     /**
-     * @param $method
-     * @param CriteriaInterface|null $criteria
-     * @param Paginator|null $paginator
-     * @return array
+     * @inheritdoc
      */
     public function call($method, CriteriaInterface $criteria = null, Paginator $paginator = null)
     {

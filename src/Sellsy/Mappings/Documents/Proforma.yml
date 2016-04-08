@@ -1,5 +1,7 @@
 Sellsy\Models\Documents\ProformaInterface:
-    use:
-        - Sellsy\Models\Documents\DocumentInterface
-    attributes:
-        expireAt: parseDateTime(expireDate)
+    default:
+        context: ['list', 'one']
+        use:
+            Sellsy\Models\Documents\DocumentInterface: list
+        mappings:
+            expireAt: parseDateTime(expireDate)

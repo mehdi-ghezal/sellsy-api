@@ -50,7 +50,7 @@ class Annotations
      */
     public function searchAnnotations(SearchAnnotationsCriteria $criteria, Paginator $paginator = null)
     {
-        return $this->adapter->map(AnnotationInterface::class)->call('Annotations.getList', $criteria, $paginator);
+        return $this->adapter->map(AnnotationInterface::class, 'list')->call('Annotations.getList', $criteria, $paginator);
     }
 
     /**

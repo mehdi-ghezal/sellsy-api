@@ -2,7 +2,6 @@
 
 namespace Sellsy\Mappers\YmlMapper;
 
-use Psr\Log\LoggerInterface;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -12,11 +11,6 @@ use Symfony\Component\Yaml\Yaml;
  */
 class MappingsParser
 {
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
-
     /**
      * @var Yaml
      */
@@ -29,12 +23,9 @@ class MappingsParser
 
     /**
      * MappingsParser constructor.
-     *
-     * @param LoggerInterface $logger
      */
-    public function __construct(LoggerInterface $logger)
+    public function __construct()
     {
-        $this->logger = $logger;
         $this->parser = new Yaml();
         $this->useToProcess = array();
     }
@@ -45,22 +36,24 @@ class MappingsParser
      */
     public function parse($path)
     {
-        if (is_file($path)) {
-            return $this->parseFile($path);
-        }
-
         $mappings = array();
 
-        $directories = new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS);
-        $files = new \RecursiveIteratorIterator($directories, \RecursiveIteratorIterator::SELF_FIRST);
+        if(is_dir($path)) {
+            $directories = new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS);
+            $files = new \RecursiveIteratorIterator($directories, \RecursiveIteratorIterator::SELF_FIRST);
 
-        /** @var \SplFileInfo $file */
-        foreach($files as $file) {
-            if (! $file->isFile()) {
-                continue;
+            /** @var \SplFileInfo $file */
+            foreach($files as $file) {
+                if (! $file->isFile()) {
+                    continue;
+                }
+
+                $mappings = array_merge($mappings, $this->parseFile($file->getPathname()));
             }
+        }
 
-            $mappings = array_merge($mappings, $this->parseFile($file->getPathname()));
+        elseif (is_file($path)) {
+            $mappings = $this->parseFile($path);
         }
 
         return $this->postProcessUse($mappings);
@@ -72,7 +65,75 @@ class MappingsParser
      */
     protected function parseFile($fileName)
     {
-        $mappings = $this->parser->parse(file_get_contents($fileName));
+        $definitions = $this->parser->parse(file_get_contents($fileName));
+
+        if (count($definitions) == 0) {
+            // Erreur
+        }
+
+        if (count($definitions) > 1) {
+            // Erreur
+        }
+
+        $mappings = $this->mappingsExtract($definitions);
+        $mappings = $this->mappingsNormalizeSyntax($mappings);
+
+        return $mappings;
+    }
+
+    /**
+     * @param array $definitions
+     * @return array
+     */
+    protected function mappingsExtract(array $definitions)
+    {
+        $mappings = array();
+
+        $interface = current(array_keys($definitions));
+        $definitions = current($definitions);
+
+        foreach($definitions as $context => $definition) {
+            // Extract context concerned
+            if (isset($definition['context'])) {
+                $context = is_array($definition['context']) ? $definition['context'] : array($definition['context']);
+            } else {
+                $context = array($context);
+            }
+
+            // Extract mappings
+            if (isset($definition['mappings'])) {
+                $mapping = $definition['mappings'];
+            } else {
+                $mapping = $definition;
+
+                unset($mapping['context']);
+                unset($mapping['use']);
+            }
+
+            // Bind mapping to context
+            foreach($context as $name) {
+                $mappings[$name] = $mapping;
+            }
+
+            if (isset($definition['use'])) {
+                $uses = array();
+
+                foreach($definition['use'] as $useInterface => $useContext) {
+                    $uses[] = array(
+                        'interface' => $useInterface,
+                        'context' => $useContext
+                    );
+                }
+
+                $this->useToProcess[] = array(
+                    'origin' => array(
+                        'interface' => $interface,
+                        'context' => $context
+                    ),
+                    'uses' => $uses
+                );
+            }
+        }
 
         // Manage default value
         array_walk_recursive($mappings, function(&$value, $key) {
@@ -81,6 +142,17 @@ class MappingsParser
             }
         });
 
+        return array(
+            $interface => $mappings
+        );
+    }
+
+    /**
+     * @param array $mappings
+     * @return array
+     */
+    protected function mappingsNormalizeSyntax(array $mappings)
+    {
         // Manage syntax replacement : DOT by ARRAY notation
         array_walk_recursive($mappings, function(&$value, $key) {
             $newValue = '';
@@ -105,25 +177,6 @@ class MappingsParser
             $value = $newValue;
         });
 
-        // Manage use and attributes statements
-        foreach($mappings as $interface => &$mapping) {
-            if (isset($mapping['use'])) {
-                $this->useToProcess[$interface] = array();
-
-                foreach($mapping['use'] as $useInterface) {
-                    $this->useToProcess[$interface][] = $useInterface;
-                }
-
-                unset($mapping['use']);
-            }
-
-            if (isset($mapping['attributes'])) {
-                $attributes = $mapping['attributes'];
-                unset($mapping['attributes']);
-                $mapping = $attributes;
-            }
-        }
-
         return $mappings;
     }
 
@@ -133,10 +186,17 @@ class MappingsParser
      */
     protected function postProcessUse(array $mappings)
     {
-        foreach($this->useToProcess as $baseInterface => $useInterfaces) {
-            foreach($useInterfaces as $useInterface) {
-                $mergedMapping = array_replace_recursive($mappings[$useInterface], $mappings[$baseInterface]);
-                $mappings[$baseInterface] = $mergedMapping;
+        foreach($this->useToProcess as $value) {
+            $originInterface = $value['origin']['interface'];
+
+            foreach($value['origin']['context'] as $originContext) {
+                foreach($value['uses'] as $use) {
+                    $useContext = $use['context'];
+                    $useInterface = $use['interface'];
+
+                    $mergedMapping = array_replace_recursive($mappings[$useInterface][$useContext], $mappings[$originInterface][$originContext]);
+                    $mappings[$originInterface][$originContext] = $mergedMapping;
+                }
             }
         }
 

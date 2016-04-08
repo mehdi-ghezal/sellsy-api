@@ -67,7 +67,7 @@ class Documents
      */
     public function searchEstimates(SearchEstimatesCriteria $criteria, Paginator $paginator = null)
     {
-        return $this->adapter->map(EstimateInterface::class)->call('Document.getList', $criteria, $paginator);
+        return $this->adapter->map(EstimateInterface::class, 'list')->call('Document.getList', $criteria, $paginator);
     }
 
     /**
@@ -77,7 +77,7 @@ class Documents
      */
     public function searchInvoices(SearchInvoicesCriteria $criteria, Paginator $paginator = null)
     {
-        return $this->adapter->map(InvoiceInterface::class)->call('Document.getList', $criteria, $paginator);
+        return $this->adapter->map(InvoiceInterface::class, 'list')->call('Document.getList', $criteria, $paginator);
     }
 
     /**
@@ -87,7 +87,7 @@ class Documents
      */
     public function searchOrders(SearchOrdersCriteria $criteria, Paginator $paginator = null)
     {
-        return $this->adapter->map(OrderInterface::class)->call('Document.getList', $criteria, $paginator);
+        return $this->adapter->map(OrderInterface::class, 'list')->call('Document.getList', $criteria, $paginator);
     }
 
     /**
@@ -97,7 +97,7 @@ class Documents
      */
     public function searchDelivery(SearchDeliveriesCriteria $criteria, Paginator $paginator = null)
     {
-        return $this->adapter->map(DeliveryInterface::class)->call('Document.getList', $criteria, $paginator);
+        return $this->adapter->map(DeliveryInterface::class, 'list')->call('Document.getList', $criteria, $paginator);
     }
 
     /**
@@ -107,7 +107,7 @@ class Documents
      */
     public function searchProforma(SearchProformaCriteria $criteria, Paginator $paginator = null)
     {
-        return $this->adapter->map(ProformaInterface::class)->call('Document.getList', $criteria, $paginator);
+        return $this->adapter->map(ProformaInterface::class, 'list')->call('Document.getList', $criteria, $paginator);
     }
 
     /**
@@ -116,7 +116,7 @@ class Documents
      */
     public function getEstimate(GetEstimateCriteria $criteria)
     {
-        return $this->adapter->map(EstimateInterface::class)->call('Document.getOne', $criteria);
+        return $this->adapter->map(EstimateInterface::class, 'one')->call('Document.getOne', $criteria);
     }
 
     /**
@@ -125,7 +125,7 @@ class Documents
      */
     public function getInvoice(GetInvoiceCriteria $criteria)
     {
-        return $this->adapter->map(InvoiceInterface::class)->call('Document.getOne', $criteria);
+        return $this->adapter->map(InvoiceInterface::class, 'one')->call('Document.getOne', $criteria);
     }
 
     /**
@@ -134,7 +134,7 @@ class Documents
      */
     public function getDelivery(GetDeliveryCriteria $criteria)
     {
-        return $this->adapter->map(DeliveryInterface::class)->call('Document.getOne', $criteria);
+        return $this->adapter->map(DeliveryInterface::class, 'one')->call('Document.getOne', $criteria);
     }
 
     /**
@@ -143,7 +143,7 @@ class Documents
      */
     public function getOrder(GetOrderCriteria $criteria)
     {
-        return $this->adapter->map(OrderInterface::class)->call('Document.getOne', $criteria);
+        return $this->adapter->map(OrderInterface::class, 'one')->call('Document.getOne', $criteria);
     }
 
     /**
@@ -152,7 +152,7 @@ class Documents
      */
     public function getProforma(GetProformaCriteria $criteria)
     {
-        return $this->adapter->map(ProformaInterface::class)->call('Document.getOne', $criteria);
+        return $this->adapter->map(ProformaInterface::class, 'one')->call('Document.getOne', $criteria);
     }
 
     /**

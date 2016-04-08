@@ -1,8 +1,10 @@
 Sellsy\Models\Documents\EstimateInterface:
-    use:
-        - Sellsy\Models\Documents\DocumentInterface
-    attributes:
-        marginAmount: number(marge)
-        marginRate: number(marge_tauxMarge)
-        markupRate: number(marge_tauxMarque)
-        expireAt: parseDateTime(expireDate)
+    default:
+        context: ['list', 'one']
+        use:
+            Sellsy\Models\Documents\DocumentInterface: list
+        mappings:
+            marginAmount: number(marge)
+            marginRate: number(marge_tauxMarge)
+            markupRate: number(marge_tauxMarque)
+            expireAt: parseDateTime(expireDate)

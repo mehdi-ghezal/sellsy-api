@@ -20,10 +20,11 @@ interface AdapterInterface extends LoggerAwareInterface
     public function getTransport();
 
     /**
-     * @param mixed $object
+     * @param string $interface
+     * @param string $context
      * @return $this
      */
-    public function map($object);
+    public function map($interface, $context);
 
     /**
      * @param $method

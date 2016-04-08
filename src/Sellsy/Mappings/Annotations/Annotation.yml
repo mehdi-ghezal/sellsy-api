@@ -1,9 +1,12 @@
 Sellsy\Models\Annotations\AnnotationInterface:
-    id: number(datas.id)
-    ownerId: number(datas.ownerid)
-    relatedType: datas.relatedtype
-    relatedId: number(datas.relatedid)
-    createAt: parseTimestamp(datas.timestamp)
-    updateAt: parseTimestamp(datas.lastupdatetimestamp)
-    title: datas.title
-    content: datas.annotation
+    list:
+        context: list
+        mappings:
+            id: number(datas.id)
+            ownerId: number(datas.ownerid)
+            relatedType: datas.relatedtype
+            relatedId: number(datas.relatedid)
+            createAt: parseTimestamp(datas.timestamp)
+            updateAt: parseTimestamp(datas.lastupdatetimestamp)
+            title: datas.title
+            content: datas.annotation

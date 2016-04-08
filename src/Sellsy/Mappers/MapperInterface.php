@@ -12,9 +12,10 @@ use Psr\Log\LoggerAwareInterface;
 interface MapperInterface extends LoggerAwareInterface
 {
     /**
-     * @param $interface
+     * @param string $interface
+     * @param string $context
      * @param array $data
      * @return mixed
      */
-    public function mapObject($interface, array $data);
+    public function mapObject($interface, $context, array $data);
 }

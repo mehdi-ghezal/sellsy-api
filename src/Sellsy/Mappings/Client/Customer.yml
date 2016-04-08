@@ -1,72 +1,75 @@
 Sellsy\Models\Client\CustomerInterface:
-    id: number(id)
-    createAt: parseDateTime(joindate)
-    picture: url(pic)
-    name: ~
-    fullName: ~
-    email: ~
-    phoneNumber: tel
-    mobileNumber: mobile
-    fax: ~
-    nafCode: apenaf
-    rcs: ~
-    siret: ~
-    vatNumber: vat
-    website: webUrl
-    massmailingUnsubscribed: boolean(massmailingUnsubscribed)
-    massmailingUnsubscribedSMS: boolean(massmailingUnsubscribedSMS)
-    mainAddressId: number(mainaddressid)
-    mainContactId: number(maincontactid)
-
-    owner:
-        type: Sellsy\Models\Staff\PeopleInterface
-        mappings:
-            id: number(ownerid)
-            fullName: owner
-
-    customFields:
-        type: Sellsy\Models\CustomFields\CustomFieldInterface
-        collection: true
-        origin: customfields
+    list:
+        context: list
         mappings:
             id: number(id)
-            fieldId: number(cfid)
-            type: ~
-            textValue: textval
-            boolValue: boolean(boolval)
-            timestampValue: timestampval
-            decimalValue: number(decimalval)
-            numericValue: number(numericval)
-            stringValue: stringval
-            formattedValue: formatted_value
-
-    contacts:
-        type: Sellsy\Models\Client\ContactInterface
-        collection: true
-        origin: contacts
-        mappings:
-            id: number(id)
-            firstName: forename
-            lastName: name
-            fullName: forename~" "~name
+            createAt: parseDateTime(joindate)
             picture: url(pic)
+            name: ~
+            fullName: ~
             email: ~
             phoneNumber: tel
             mobileNumber: mobile
             fax: ~
+            nafCode: apenaf
+            rcs: ~
+            siret: ~
+            vatNumber: vat
+            website: webUrl
+            massmailingUnsubscribed: boolean(massmailingUnsubscribed)
+            massmailingUnsubscribedSMS: boolean(massmailingUnsubscribedSMS)
+            mainAddressId: number(mainaddressid)
+            mainContactId: number(maincontactid)
 
-    addresses:
-        type: Sellsy\Models\Addresses\AddressInterface
-        collection: true
-        mappings:
-            id: number(mainaddressid)
-            name: addr_name
-            part1: addr_part1
-            part2: addr_part2
-            zip: addr_zip
-            city: addr_town
-            state: addr_state
-            countryCode: addr_countrycode
-            lat: addr_lat
-            lng: addr_lng
-            formattedAddress: mainAddress
+            owner:
+                type: Sellsy\Models\Staff\PeopleInterface
+                mappings:
+                    id: number(ownerid)
+                    fullName: owner
+
+            customFields:
+                type: Sellsy\Models\CustomFields\CustomFieldInterface
+                collection: true
+                origin: customfields
+                mappings:
+                    id: number(id)
+                    fieldId: number(cfid)
+                    type: ~
+                    textValue: textval
+                    boolValue: boolean(boolval)
+                    timestampValue: timestampval
+                    decimalValue: number(decimalval)
+                    numericValue: number(numericval)
+                    stringValue: stringval
+                    formattedValue: formatted_value
+
+            contacts:
+                type: Sellsy\Models\Client\ContactInterface
+                collection: true
+                origin: contacts
+                mappings:
+                    id: number(id)
+                    firstName: forename
+                    lastName: name
+                    fullName: forename~" "~name
+                    picture: url(pic)
+                    email: ~
+                    phoneNumber: tel
+                    mobileNumber: mobile
+                    fax: ~
+
+            addresses:
+                type: Sellsy\Models\Addresses\AddressInterface
+                collection: true
+                mappings:
+                    id: number(mainaddressid)
+                    name: addr_name
+                    part1: addr_part1
+                    part2: addr_part2
+                    zip: addr_zip
+                    city: addr_town
+                    state: addr_state
+                    countryCode: addr_countrycode
+                    lat: addr_lat
+                    lng: addr_lng
+                    formattedAddress: mainAddress

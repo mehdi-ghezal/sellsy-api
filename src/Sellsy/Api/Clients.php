@@ -48,6 +48,6 @@ class Clients
      */
     public function searchCustomers(SearchCustomersCriteria $criteria, Paginator $paginator = null)
     {
-        return $this->adapter->map(CustomerInterface::class)->call('Client.getList', $criteria, $paginator);
+        return $this->adapter->map(CustomerInterface::class, 'list')->call('Client.getList', $criteria, $paginator);
     }
 } 

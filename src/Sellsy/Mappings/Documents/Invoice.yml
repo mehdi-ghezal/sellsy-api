@@ -1,10 +1,12 @@
 Sellsy\Models\Documents\InvoiceInterface:
-    use:
-        - Sellsy\Models\Documents\DocumentInterface
-    attributes:
-        dueAmount: number(dueAmount)
-        marginAmount: number(marge)
-        marginRate: number(marge_tauxMarge)
-        markupRate: number(marge_tauxMarque)
+    default:
+        context: ['list', 'one']
+        use:
+            Sellsy\Models\Documents\DocumentInterface: list
+        mappings:
+            dueAmount: number(dueAmount)
+            marginAmount: number(marge)
+            marginRate: number(marge_tauxMarge)
+            markupRate: number(marge_tauxMarque)
 
 

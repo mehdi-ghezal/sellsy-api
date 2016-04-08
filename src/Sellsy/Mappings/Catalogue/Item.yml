@@ -1,50 +1,53 @@
 Sellsy\Models\Catalogue\ItemInterface:
-    id: number(id)
-    isActive: boolean(actif)
-    analyticsCode: ~
-    isEnabled: boolean(isEnabled)
-    name: ~
-    slug: ~
-    tradename: ~
-    description: notes
-    saleUnitAmountWithoutTax: number(unitAmount)
-    saleUnitTaxAmount: number(unitAmountTaxesInc - unitAmount)
-    purchaseUnitAmountWithoutTax: number(purchaseAmount)
-    purchaseUnitTaxAmount: number(purchaseAmountTaxesInc - purchaseAmount)
-    unit: ~
-    quantity: number(qt)
-    createAt: parseDateTime(createdAt)
-    updateAt: parseDateTime(updatedAt)
-    image: url(defaultImage.file.public_path)
-    packaging:
-        type: Sellsy\Models\Catalogue\Item\PackagingInterface
-        mappings:
-            width: number(characteristics.width)
-            deepth: number(characteristics.deepth)
-            length: number(characteristics.length)
-            height: number(characteristics.height)
-            weight: number(characteristics.weight)
-            packing: number(characteristics.packing)
-    tags:
-        type: Sellsy\Models\SmartTags\TagInterface
-        collection: true
-        origin: tags
+    default:
+        context: ['list', 'one']
         mappings:
             id: number(id)
-            name: word
-            category: ~
-    customFields:
-        type: Sellsy\Models\CustomFields\CustomFieldInterface
-        collection: true
-        origin: customfields
-        mappings:
-            id: number(id)
-            fieldId: number(cfid)
-            type: ~
-            textValue: textval
-            boolValue: boolean(boolval)
-            timestampValue: timestampval
-            decimalValue: number(decimalval)
-            numericValue: number(numericval)
-            stringValue: stringval
-            formattedValue: formatted_value
+            isActive: boolean(actif)
+            analyticsCode: ~
+            isEnabled: boolean(isEnabled)
+            name: ~
+            slug: ~
+            tradename: ~
+            description: notes
+            saleUnitAmountWithoutTax: number(unitAmount)
+            saleUnitTaxAmount: number(unitAmountTaxesInc - unitAmount)
+            purchaseUnitAmountWithoutTax: number(purchaseAmount)
+            purchaseUnitTaxAmount: number(purchaseAmountTaxesInc - purchaseAmount)
+            unit: ~
+            quantity: number(qt)
+            createAt: parseDateTime(createdAt)
+            updateAt: parseDateTime(updatedAt)
+            image: url(defaultImage.file.public_path)
+            packaging:
+                type: Sellsy\Models\Catalogue\Item\PackagingInterface
+                mappings:
+                    width: number(characteristics.width)
+                    deepth: number(characteristics.deepth)
+                    length: number(characteristics.length)
+                    height: number(characteristics.height)
+                    weight: number(characteristics.weight)
+                    packing: number(characteristics.packing)
+            tags:
+                type: Sellsy\Models\SmartTags\TagInterface
+                collection: true
+                origin: tags
+                mappings:
+                    id: number(id)
+                    name: word
+                    category: ~
+            customFields:
+                type: Sellsy\Models\CustomFields\CustomFieldInterface
+                collection: true
+                origin: customfields
+                mappings:
+                    id: number(id)
+                    fieldId: number(cfid)
+                    type: ~
+                    textValue: textval
+                    boolValue: boolean(boolval)
+                    timestampValue: timestampval
+                    decimalValue: number(decimalval)
+                    numericValue: number(numericval)
+                    stringValue: stringval
+                    formattedValue: formatted_value

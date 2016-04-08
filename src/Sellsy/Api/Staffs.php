@@ -47,6 +47,6 @@ class Staffs
      */
     public function listAll(Paginator $paginator = null)
     {
-        return $this->adapter->map(PeopleInterface::class)->call('Staffs.getList', new EmptyCriteria(), $paginator);
+        return $this->adapter->map(PeopleInterface::class, 'list')->call('Staffs.getList', new EmptyCriteria(), $paginator);
     }
 } 

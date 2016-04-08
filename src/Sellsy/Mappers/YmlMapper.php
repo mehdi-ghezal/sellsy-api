@@ -45,13 +45,13 @@ class YmlMapper extends AbstractMapper
     /**
      * @inheritdoc
      */
-    public function mapObject($interface, array $data)
+    public function mapObject($interface, $context, array $data)
     {
-        if (! isset($this->mappings[$interface])) {
-            throw new RuntimeException("Unable to find a valid mapping for interface " . $interface);
+        if (! isset($this->mappings[$interface][$context])) {
+            throw new RuntimeException(sprintf("Unable to find a valid mapping for interface %s in context %s", $interface, $context));
         }
 
-        return $this->_mapObject($interface, $data, $this->mappings[$interface]);
+        return $this->_mapObject($interface, $data, $this->mappings[$interface][$context]);
     }
 
     /**
@@ -71,14 +71,14 @@ class YmlMapper extends AbstractMapper
             'mappings' => $mappings
         ));
 
-        foreach($mappings as $attribute => $expression) {
+        foreach($mappings as $attribute => $definition) {
             $property = $reflectionObject->getProperty($attribute);
 
             if ($property->isPrivate() || $property->isProtected()) {
                 $property->setAccessible(true);
             }
 
-            $value = $this->getAttributeValue($attribute, $expression, $data);
+            $value = $this->getAttributeValue($attribute, $definition, $data);
             $property->setValue($object, $value);
 
             $this->logger->debug(sprintf('Set attribute %s value ', $attribute), array(
@@ -91,54 +91,54 @@ class YmlMapper extends AbstractMapper
 
     /**
      * @param string $attribute
-     * @param string $expression
+     * @param string $definition
      * @param array $data
      * @return null|string
      */
-    protected function getAttributeValue($attribute, $expression, array $data)
+    protected function getAttributeValue($attribute, $definition, array $data)
     {
-        // Simple scalar attribute
-        if (is_string($expression)) {
+        // Definition is a string (ie. string expression) ; it's a scalar attribute
+        if (is_string($definition)) {
             $this->logger->debug(sprintf('Get scalar value for attribute %s', $attribute), array(
-                'expression' => $expression,
+                'expression' => $definition,
                 'data' => $data
             ));
 
-            return $this->evaluate($expression, $data);
+            return $this->evaluate($definition, $data);
         }
 
         // Linked object
-        if (is_array($expression) && (!isset($expression['collection']) || !$expression['collection'])) {
+        if (is_array($definition) && (!isset($definition['collection']) || !$definition['collection'])) {
             $this->logger->debug(sprintf('Get linked object for attribute %s', $attribute), array(
-                'expression' => $expression,
+                'expression' => $definition,
                 'data' => $data
             ));
 
-            return $this->_mapObject($expression['type'], $data, $expression['mappings']);
+            return $this->_mapObject($definition['type'], $data, $definition['mappings']);
         }
 
         // Linked collection of objects
-        if (is_array($expression) && isset($expression['collection']) && $expression['collection']) {
+        if (is_array($definition) && isset($definition['collection']) && $definition['collection']) {
             $this->logger->debug(sprintf('Get linked collection of objects for attribute %s', $attribute), array(
-                'expression' => $expression,
+                'expression' => $definition,
                 'data' => $data
             ));
 
             $value = array();
 
             // Multiple item collection
-            if (isset($expression['origin'])) {
-                $collectionData = $this->evaluate($expression['origin'], $data);
+            if (isset($definition['origin'])) {
+                $collectionData = $this->evaluate($definition['origin'], $data);
 
                 // Manage special response format for SmartTags
-                if ($expression['type'] == TagInterface::class) {
+                if ($definition['type'] == TagInterface::class) {
                     $collectionData = is_array($collectionData) ? current($collectionData) : $collectionData;
                 }
 
                 if (is_array($collectionData)) {
                     foreach($collectionData as $collectionDataValue) {
                         if (is_array($collectionDataValue)) {
-                            $value[] = $this->_mapObject($expression['type'], $collectionDataValue, $expression['mappings']);
+                            $value[] = $this->_mapObject($definition['type'], $collectionDataValue, $definition['mappings']);
                         }
                     }
                 }
@@ -146,7 +146,7 @@ class YmlMapper extends AbstractMapper
 
             // Single item collection
             else {
-                $value[] = $this->_mapObject($expression['type'], $data, $expression['mappings']);
+                $value[] = $this->_mapObject($definition['type'], $data, $definition['mappings']);
             }
 
             return $value;

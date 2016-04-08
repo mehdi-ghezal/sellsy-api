@@ -9,6 +9,7 @@ use Sellsy\Criteria\CriteriaInterface;
 
 /**
  * Class Collection
+ *
  * @package Sellsy\Collections
  */
 class Collection implements \Iterator, \ArrayAccess, \SeekableIterator, \Countable
@@ -34,6 +35,11 @@ class Collection implements \Iterator, \ArrayAccess, \SeekableIterator, \Countab
      * @var string
      */
     private $subject;
+
+    /**
+     * @var string
+     */
+    private $context;
 
     /**
      * @var Paginator
@@ -81,6 +87,7 @@ class Collection implements \Iterator, \ArrayAccess, \SeekableIterator, \Countab
         $this->method = $options['method'];
 
         $this->subject = isset($options['subject']) ? $options['subject'] : null;
+        $this->context = isset($options['context']) ? $options['context'] : null;
         $this->criteria = isset($options['criteria']) ? $options['criteria'] : null;
 
         $this->iterator = new \ArrayIterator($options['items']);
@@ -95,7 +102,7 @@ class Collection implements \Iterator, \ArrayAccess, \SeekableIterator, \Countab
             $this->paginator->setPageNumber(1);
 
             /** @var Collection $newCollection */
-            $newCollection = $this->adapter->map($this->subject)->call($this->method, $this->criteria, $this->paginator);
+            $newCollection = $this->adapter->map($this->subject, $this->context)->call($this->method, $this->criteria, $this->paginator);
             $this->iterator = new \ArrayIterator($newCollection->asArray(false));
         }
 
@@ -113,7 +120,7 @@ class Collection implements \Iterator, \ArrayAccess, \SeekableIterator, \Countab
             $this->paginator->incrPageNumber();
 
             /** @var Collection $newCollection */
-            $newCollection = $this->adapter->map($this->subject)->call($this->method, $this->criteria, $this->paginator);
+            $newCollection = $this->adapter->map($this->subject, $this->context)->call($this->method, $this->criteria, $this->paginator);
             $this->iterator = new \ArrayIterator($newCollection->asArray(false));
 
             $this->iterator->rewind();

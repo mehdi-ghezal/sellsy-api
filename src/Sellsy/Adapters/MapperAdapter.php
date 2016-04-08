@@ -31,9 +31,14 @@ class MapperAdapter implements AdapterInterface
     protected $mapper;
 
     /**
-     * @var mixed
+     * @var string
      */
     protected $subject;
+
+    /**
+     * @var string
+     */
+    protected $context;
 
     /**
      * MapperAdapter constructor.
@@ -57,12 +62,13 @@ class MapperAdapter implements AdapterInterface
     }
 
     /**
-     * @param mixed $object
-     * @return $this
+     * @inheritdoc
      */
-    public function map($object)
+    public function map($interface, $context)
     {
-        $this->subject = $object;
+        $this->subject = $interface;
+        $this->context = $context;
+
         return $this;
     }
 
@@ -85,7 +91,8 @@ class MapperAdapter implements AdapterInterface
 
             $this->logger->debug(sprintf('API Call - Method %s', $method), array(
                 'parameters' => $parameters,
-                'subject' => $this->subject
+                'subject' => $this->subject,
+                'context' => $this->context
             ));
 
             // Send API Call with the transport
@@ -99,13 +106,14 @@ class MapperAdapter implements AdapterInterface
             // API Call that return only a status
             if (array_key_exists('response', $apiResult) && ! is_array($apiResult['response'])) {
                 $this->subject = null;
+                $this->context = null;
 
                 return true;
             }
 
-            // In this case, the subject is required for this adapter
-            if (! $this->subject) {
-                throw new RuntimeException('No subject mapped, you must call "map" method before use the "call" method');
+            // In this case, the subject and context is required for this adapter
+            if (! $this->subject || !$this->context) {
+                throw new RuntimeException('No interface mapped or no context defined, you must call "map" method before use the "call" method');
             }
 
             // API Call that return a collection
@@ -130,7 +138,7 @@ class MapperAdapter implements AdapterInterface
 
                 // Map objects
                 foreach($apiResult['response']['result'] as $value) {
-                    $items[] = $this->mapper->mapObject($this->subject, $value);
+                    $items[] = $this->mapper->mapObject($this->subject, $this->context, $value);
                 }
 
                 $result = new Collection(array(
@@ -138,6 +146,7 @@ class MapperAdapter implements AdapterInterface
                     'adapter' => $this,
                     'method' => $method,
                     'subject' => $this->subject,
+                    'context' => $this->context,
                     'paginator' => $paginator,
                     'criteria' => $criteria
                 ));
@@ -145,7 +154,7 @@ class MapperAdapter implements AdapterInterface
 
             // API Call that return an object
             else {
-                $result = $this->mapper->mapObject($this->subject, $apiResult['response']);
+                $result = $this->mapper->mapObject($this->subject, $this->context, $apiResult['response']);
             }
         }
 
@@ -154,9 +163,10 @@ class MapperAdapter implements AdapterInterface
             throw $e;
         }
 
-        // Reset subject for next call
+        // Reset subject and context for next call
         finally {
             $this->subject = null;
+            $this->context = null;
         }
 
         return $result;
