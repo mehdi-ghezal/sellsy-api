@@ -25,6 +25,12 @@
 
         <const name="ANNOTATIONS_SEARCH_TYPE" value="document" />
         <const name="ANNOTATIONS_SEARCH_ID" value="2782598" />
+
+        <const name="DOCUMENT_ESTIMATE_ID" value="3526891" />
+        <const name="DOCUMENT_INVOICE_ID" value="3259256" />
+        <const name="DOCUMENT_ORDER_ID" value="3555350" />
+        <const name="DOCUMENT_PROFORMA_ID" value="3401558" />
+        <const name="DOCUMENT_DELIVERY_ID" value="3558520" />
     </php>
 
     <testsuites>

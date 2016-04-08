@@ -5,10 +5,11 @@ namespace Sellsy\Criteria\Generic;
 use Sellsy\Criteria\CriteriaInterface;
 
 /**
- * Class GetOne
+ * Class GetOneCriteria
+ *
  * @package Sellsy\Criteria\Generic
  */
-class GetOneCriteria implements CriteriaInterface
+abstract class GetOneCriteria implements CriteriaInterface
 {
     /**
      * @var int

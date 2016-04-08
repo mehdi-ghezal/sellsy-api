@@ -3,6 +3,11 @@
 namespace Sellsy\Api;
 
 use Sellsy\Collections\Collection;
+use Sellsy\Criteria\Documents\GetDocumentCriteria\GetDeliveryCriteria;
+use Sellsy\Criteria\Documents\GetDocumentCriteria\GetEstimateCriteria;
+use Sellsy\Criteria\Documents\GetDocumentCriteria\GetInvoiceCriteria;
+use Sellsy\Criteria\Documents\GetDocumentCriteria\GetOrderCriteria;
+use Sellsy\Criteria\Documents\GetDocumentCriteria\GetProformaCriteria;
 use Sellsy\Criteria\Documents\SearchCriteria\SearchEstimatesCriteria;
 use Sellsy\Criteria\Documents\SearchCriteria\SearchInvoicesCriteria;
 use Sellsy\Criteria\Documents\SearchCriteria\SearchDeliveriesCriteria;
@@ -103,6 +108,51 @@ class Documents
     public function searchProforma(SearchProformaCriteria $criteria, Paginator $paginator = null)
     {
         return $this->adapter->map(ProformaInterface::class)->call('Document.getList', $criteria, $paginator);
+    }
+
+    /**
+     * @param GetEstimateCriteria $criteria
+     * @return EstimateInterface|array
+     */
+    public function getEstimate(GetEstimateCriteria $criteria)
+    {
+        return $this->adapter->map(EstimateInterface::class)->call('Document.getOne', $criteria);
+    }
+
+    /**
+     * @param GetInvoiceCriteria $criteria
+     * @return InvoiceInterface|array
+     */
+    public function getInvoice(GetInvoiceCriteria $criteria)
+    {
+        return $this->adapter->map(InvoiceInterface::class)->call('Document.getOne', $criteria);
+    }
+
+    /**
+     * @param GetDeliveryCriteria $criteria
+     * @return DeliveryInterface|array
+     */
+    public function getDelivery(GetDeliveryCriteria $criteria)
+    {
+        return $this->adapter->map(DeliveryInterface::class)->call('Document.getOne', $criteria);
+    }
+
+    /**
+     * @param GetOrderCriteria $criteria
+     * @return OrderInterface|array
+     */
+    public function getOrder(GetOrderCriteria $criteria)
+    {
+        return $this->adapter->map(OrderInterface::class)->call('Document.getOne', $criteria);
+    }
+
+    /**
+     * @param GetProformaCriteria $criteria
+     * @return ProformaInterface|array
+     */
+    public function getProforma(GetProformaCriteria $criteria)
+    {
+        return $this->adapter->map(ProformaInterface::class)->call('Document.getOne', $criteria);
     }
 
     /**

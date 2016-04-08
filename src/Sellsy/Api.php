@@ -94,7 +94,7 @@ class Api
     }
 
     /**
-     * @return Annotations
+     * @return Staffs
      */
     public function staffs()
     {
