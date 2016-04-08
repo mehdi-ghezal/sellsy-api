@@ -2,6 +2,8 @@
 
 namespace Sellsy\Adapters;
 
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\NullLogger;
 use Sellsy\Collections\Collection;
 use Sellsy\Criteria\Paginator;
 use Sellsy\Exception\RuntimeException;
@@ -11,10 +13,13 @@ use Sellsy\Transports\TransportInterface;
 
 /**
  * Class MapperAdapter
+ *
  * @package Sellsy\Adapters
  */
 class MapperAdapter implements AdapterInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var TransportInterface
      */
@@ -40,6 +45,7 @@ class MapperAdapter implements AdapterInterface
     {
         $this->transport = $transport;
         $this->mapper = $mapper;
+        $this->logger = new NullLogger();
     }
 
     /**
@@ -72,14 +78,23 @@ class MapperAdapter implements AdapterInterface
     {
         // Ensure to clean subject, @see finally
         try {
+            $parameters = array_merge(
+                $criteria ? $criteria->getParameters() : array(),
+                $paginator ? $paginator->getParameters() : array()
+            );
+
+            $this->logger->debug(sprintf('API Call - Method %s', $method), array(
+                'parameters' => $parameters,
+                'subject' => $this->subject
+            ));
+
             // Send API Call with the transport
             $apiResult = $this->transport->call(array(
                 'method' => $method,
-                'params' => array_merge(
-                    $criteria ? $criteria->getParameters() : array(),
-                    $paginator ? $paginator->getParameters() : array()
-                )
+                'params' => $parameters
             ));
+
+            $this->logger->debug(sprintf('API Result - Method %s', $method), array( 'result' => $apiResult ));
 
             // API Call that return only a status
             if (array_key_exists('response', $apiResult) && ! is_array($apiResult['response'])) {

@@ -2,6 +2,8 @@
 
 namespace Sellsy\Mappers;
 
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\NullLogger;
 use Sellsy\Exception\RuntimeException;
 use Doctrine\Instantiator\Instantiator;
 
@@ -47,6 +49,8 @@ use Sellsy\Models\Addresses\Address;
  */
 abstract class AbstractMapper implements MapperInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var array
      */
@@ -56,6 +60,14 @@ abstract class AbstractMapper implements MapperInterface
      * @var array
      */
     protected $instantiator;
+
+    /**
+     * AbstractMapper constructor.
+     */
+    public function __construct()
+    {
+        $this->logger = new NullLogger();
+    }
 
     /**
      * @param string $interface
@@ -68,6 +80,8 @@ abstract class AbstractMapper implements MapperInterface
             throw new RuntimeException(sprintf("Unable to set a mapping for unknown interface %s", $interface));
         }
 
+        $this->logger->debug(sprintf('Register interface mappings %s ==> %s', $interface, $class));
+
         $this->interfacesMappings[$interface] = $class;
     }
 
@@ -77,8 +91,22 @@ abstract class AbstractMapper implements MapperInterface
      */
     public function resetInterfaceMapping($interface = null)
     {
-        if (isset($this->interfacesMappings[$interface])) {
-            $this->interfacesMappings[$interface] = $this->getDefaultInterfacesMappings()[$interface];
+        if (is_null($interface)) {
+            $this->logger->debug('Reset all interfaces mappings');
+            $this->interfacesMappings = $this->getDefaultInterfacesMappings();
+
+            return true;
+        }
+
+        $defaultMappings = $this->getDefaultInterfacesMappings();
+
+        if (isset($this->interfacesMappings[$interface]) && isset($defaultMappings[$interface])) {
+            $this->logger->debug(sprintf('Reset interface mappings for interface %s', $interface), array(
+                'before' => array($interface => $this->interfacesMappings[$interface]),
+                'after' => array($interface => $this->$defaultMappings[$interface]),
+            ));
+
+            $this->interfacesMappings[$interface] = $defaultMappings[$interface];
 
             return true;
         }

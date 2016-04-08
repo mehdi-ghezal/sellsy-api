@@ -32,7 +32,9 @@ class YmlMapper extends AbstractMapper
      */
     public function __construct($path = null)
     {
-        $parser = new MappingsParser();
+        parent::__construct();
+
+        $parser = new MappingsParser($this->logger);
 
         $this->interfacesMappings = $this->getDefaultInterfacesMappings();
         $this->mappings = $parser->parse($path ?: realpath(dirname(__DIR__) . '/Mappings'));
@@ -64,6 +66,11 @@ class YmlMapper extends AbstractMapper
         $object = $this->getObjectInstance($interface);
         $reflectionObject = new \ReflectionObject($object);
 
+        $this->logger->debug(sprintf('Map object %s from interface %s', $reflectionObject->getNamespaceName(), $interface), array(
+            'data' => $data,
+            'mappings' => $mappings
+        ));
+
         foreach($mappings as $attribute => $expression) {
             $property = $reflectionObject->getProperty($attribute);
 
@@ -71,31 +78,52 @@ class YmlMapper extends AbstractMapper
                 $property->setAccessible(true);
             }
 
-            $property->setValue($object, $this->getAttributeValue($expression, $data));
+            $value = $this->getAttributeValue($attribute, $expression, $data);
+            $property->setValue($object, $value);
+
+            $this->logger->debug(sprintf('Set attribute %s value ', $attribute), array(
+                'value' => $value,
+            ));
         }
 
         return $object;
     }
 
     /**
-     * @param $expression
+     * @param string $attribute
+     * @param string $expression
      * @param array $data
      * @return null|string
      */
-    protected function getAttributeValue($expression, array $data)
+    protected function getAttributeValue($attribute, $expression, array $data)
     {
         // Simple scalar attribute
         if (is_string($expression)) {
+            $this->logger->debug(sprintf('Get scalar value for attribute %s', $attribute), array(
+                'expression' => $expression,
+                'data' => $data
+            ));
+
             return $this->evaluate($expression, $data);
         }
 
         // Linked object
         if (is_array($expression) && (!isset($expression['collection']) || !$expression['collection'])) {
+            $this->logger->debug(sprintf('Get linked object for attribute %s', $attribute), array(
+                'expression' => $expression,
+                'data' => $data
+            ));
+
             return $this->_mapObject($expression['type'], $data, $expression['mappings']);
         }
 
         // Linked collection of objects
         if (is_array($expression) && isset($expression['collection']) && $expression['collection']) {
+            $this->logger->debug(sprintf('Get linked collection of objects for attribute %s', $attribute), array(
+                'expression' => $expression,
+                'data' => $data
+            ));
+
             $value = array();
 
             // Multiple item collection
@@ -136,6 +164,11 @@ class YmlMapper extends AbstractMapper
     protected function evaluate($expression, array $data, $default = null)
     {
         try {
+            $this->logger->debug(sprintf('Evaluate expression %s', $expression), array(
+                'data' => $data,
+                'default' => $default
+            ));
+
             return $this->expressionLanguage->evaluate($expression, $data);
         }
         catch(SyntaxError $e) {

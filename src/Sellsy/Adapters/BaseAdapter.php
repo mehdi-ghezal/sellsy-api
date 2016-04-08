@@ -2,6 +2,8 @@
 
 namespace Sellsy\Adapters;
 
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\NullLogger;
 use Sellsy\Collections\Collection;
 use Sellsy\Criteria\Paginator;
 use Sellsy\Criteria\CriteriaInterface;
@@ -9,10 +11,13 @@ use Sellsy\Transports\TransportInterface;
 
 /**
  * Class BaseAdapter
+ *
  * @package Sellsy\Adapters
  */
 class BaseAdapter implements AdapterInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var TransportInterface
      */
@@ -26,6 +31,7 @@ class BaseAdapter implements AdapterInterface
     public function __construct(TransportInterface $transport)
     {
         $this->transport = $transport;
+        $this->logger = new NullLogger();
     }
 
     /**
@@ -53,13 +59,20 @@ class BaseAdapter implements AdapterInterface
      */
     public function call($method, CriteriaInterface $criteria = null, Paginator $paginator = null)
     {
+        $parameters = array_merge(
+            $criteria ? $criteria->getParameters() : array(),
+            $paginator ? $paginator->getParameters() : array()
+        );
+
+        $this->logger->debug(sprintf('API Call - Method %s', $method), array( 'parameters' => $parameters ));
+
         $result = $this->transport->call(array(
             'method' => $method,
-            'params' => array_merge(
-                $criteria ? $criteria->getParameters() : array(),
-                $paginator ? $paginator->getParameters() : array()
-            )
+            'params' => $parameters
         ));
+
+        $this->logger->debug(sprintf('API Result - Method %s', $method), array( 'result' => $result ));
+
 
         // API Call that return a collection
         if (isset($result['response']['result'])) {

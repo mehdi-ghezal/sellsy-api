@@ -2,6 +2,7 @@
 
 namespace Sellsy\Mappers\YmlMapper;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -11,6 +12,11 @@ use Symfony\Component\Yaml\Yaml;
  */
 class MappingsParser
 {
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
     /**
      * @var Yaml
      */
@@ -22,14 +28,21 @@ class MappingsParser
     protected $useToProcess;
 
     /**
-     * Parser constructor.
+     * MappingsParser constructor.
+     *
+     * @param LoggerInterface $logger
      */
-    public function __construct()
+    public function __construct(LoggerInterface $logger)
     {
+        $this->logger = $logger;
         $this->parser = new Yaml();
         $this->useToProcess = array();
     }
 
+    /**
+     * @param $path
+     * @return array|mixed
+     */
     public function parse($path)
     {
         if (is_file($path)) {
