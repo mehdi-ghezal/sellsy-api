@@ -3,6 +3,7 @@
 namespace Sellsy\Criteria\Generic;
 
 use Sellsy\Criteria\CriteriaInterface;
+use Sellsy\Models\SmartTags\TagInterface;
 
 /**
  * Class GetListCriteria
@@ -21,6 +22,10 @@ abstract class GetListCriteria implements CriteriaInterface
      */
     public function addTag($tag)
     {
+        if ($tag instanceof TagInterface) {
+            $tag = $tag->getName();
+        }
+
         $this->tags[] = $tag;
         return $this;
     }
@@ -31,7 +36,12 @@ abstract class GetListCriteria implements CriteriaInterface
      */
     public function setTags(array $tags)
     {
-        $this->tags = $tags;
+        $this->clearTags();
+
+        foreach($tags as $tag) {
+            $this->addTag($tag);
+        }
+
         return $this;
     }
 
