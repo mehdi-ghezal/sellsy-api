@@ -90,7 +90,10 @@ class ReadTest extends \PHPUnit_Framework_TestCase
      */
     public function testEstimateMapping(EstimateInterface $estimate)
     {
-        ///TODO Implement
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
     }
 
     /**
@@ -115,7 +118,10 @@ class ReadTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvoiceMapping(InvoiceInterface $invoice)
     {
-        ///TODO Implement
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
     }
 
     /**
@@ -159,7 +165,10 @@ class ReadTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeliveryMapping(DeliveryInterface $delivery)
     {
-        ///TODO Implement
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
     }
 
     /**
@@ -186,7 +195,10 @@ class ReadTest extends \PHPUnit_Framework_TestCase
      */
     public function testOrderMapping(OrderInterface $order)
     {
-        ///TODO Implement
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
     }
 
     /**
@@ -211,7 +223,10 @@ class ReadTest extends \PHPUnit_Framework_TestCase
      */
     public function testProformaMapping(ProformaInterface $proforma)
     {
-        ///TODO Implement
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
     }
 
     /**

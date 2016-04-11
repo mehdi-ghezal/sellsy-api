@@ -26,6 +26,7 @@ class GetOneTest extends \PHPUnit_Framework_TestCase
      * @return \PHPUnit_Framework_MockObject_MockObject
      *
      * @depends testImplementCriteriaInterface
+     * @covers Sellsy\Criteria\Generic\GetOneCriteria::setId
      */
     public function testSetId(\PHPUnit_Framework_MockObject_MockObject $criteria)
     {
@@ -40,6 +41,7 @@ class GetOneTest extends \PHPUnit_Framework_TestCase
      * @return \PHPUnit_Framework_MockObject_MockObject
      *
      * @depends testSetId
+     * @covers Sellsy\Criteria\Generic\GetOneCriteria::getParameters
      */
     public function testGetParametersIsArray(\PHPUnit_Framework_MockObject_MockObject $criteria)
     {
@@ -52,6 +54,7 @@ class GetOneTest extends \PHPUnit_Framework_TestCase
      * @param \PHPUnit_Framework_MockObject_MockObject $criteria
      *
      * @depends testGetParametersIsArray
+     * @covers Sellsy\Criteria\Generic\GetOneCriteria::getParameters
      */
     public function testGetParametersArrayHasIdKey(\PHPUnit_Framework_MockObject_MockObject $criteria)
     {

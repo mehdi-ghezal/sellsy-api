@@ -24,6 +24,7 @@ class GetListTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @return void
+     * @covers Sellsy\Criteria\Generic\GetListCriteria::addTag
      */
     public function testAddStringTag()
     {
@@ -40,6 +41,7 @@ class GetListTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @return void
+     * @covers Sellsy\Criteria\Generic\GetListCriteria::addTag
      */
     public function testAddObjectTag()
     {
@@ -60,6 +62,7 @@ class GetListTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @return void
+     * @covers Sellsy\Criteria\Generic\GetListCriteria::addTag
      */
     public function testAddMultipleTags()
     {

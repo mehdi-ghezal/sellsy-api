@@ -28,6 +28,7 @@ class EmptyCriteriaTest extends \PHPUnit_Framework_TestCase
      * @return EmptyCriteria
      *
      * @depends testImplementCriteriaInterface
+     * @covers Sellsy\Criteria\EmptyCriteria::getParameters
      */
     public function testGetParametersIsArray(EmptyCriteria $criteria)
     {
@@ -41,6 +42,7 @@ class EmptyCriteriaTest extends \PHPUnit_Framework_TestCase
      * @return void
      *
      * @depends testGetParametersIsArray
+     * @covers Sellsy\Criteria\EmptyCriteria::getParameters
      */
     public function testGetParametersIsEmpty(EmptyCriteria $criteria)
     {

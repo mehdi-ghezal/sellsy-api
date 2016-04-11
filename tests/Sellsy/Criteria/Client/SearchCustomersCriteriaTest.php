@@ -29,6 +29,7 @@ class SearchCustomersCriteriaTest extends \PHPUnit_Framework_TestCase
      * @return SearchCustomersCriteria
      *
      * @depends testImplementCriteriaInterface
+     * @covers Sellsy\Criteria\Client\SearchCustomersCriteria::getParameters
      */
     public function testGetParametersIsArray(SearchCustomersCriteria $criteria)
     {
@@ -42,6 +43,7 @@ class SearchCustomersCriteriaTest extends \PHPUnit_Framework_TestCase
      * @return void
      *
      * @depends testGetParametersIsArray
+     * @covers Sellsy\Criteria\Client\SearchCustomersCriteria::getParameters
      */
     public function testGetParametersIsEmptyArray(SearchCustomersCriteria $criteria)
     {
@@ -53,6 +55,7 @@ class SearchCustomersCriteriaTest extends \PHPUnit_Framework_TestCase
      * @return void
      *
      * @depends testGetParametersIsArray
+     * @covers Sellsy\Criteria\Client\SearchCustomersCriteria::setType
      */
     public function testSetTypePerson(SearchCustomersCriteria $criteria)
     {
@@ -68,6 +71,7 @@ class SearchCustomersCriteriaTest extends \PHPUnit_Framework_TestCase
      * @return void
      *
      * @depends testGetParametersIsArray
+     * @covers Sellsy\Criteria\Client\SearchCustomersCriteria::setType
      */
     public function testSetTypeCompany(SearchCustomersCriteria $criteria)
     {
@@ -83,25 +87,11 @@ class SearchCustomersCriteriaTest extends \PHPUnit_Framework_TestCase
      * @return void
      *
      * @depends testGetParametersIsArray
+     * @covers Sellsy\Criteria\Client\SearchCustomersCriteria::setType
      */
     public function testSetTypeUnknown(SearchCustomersCriteria $criteria)
     {
-        $this->setExpectedException(RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $criteria->setType('woot');
-    }
-
-    /**
-     * @param SearchCustomersCriteria $criteria
-     * @return void
-     *
-     * @depends testGetParametersIsArray
-     */
-    public function testSetTags(SearchCustomersCriteria $criteria)
-    {
-        $criteria->setTags(array('hello', 'world'));
-        $parameters = $criteria->getParameters();
-
-        $this->assertTrue(isset($parameters['search']['tags']));
-        $this->assertEquals('hello,world', $parameters['search']['tags']);
     }
 }
