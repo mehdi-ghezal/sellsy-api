@@ -2,11 +2,11 @@
 
 namespace Sellsy\Models\Documents;
 
-use Sellsy\Exception\RuntimeException;
 use Sellsy\Models\Accounting\CurrencyInterface;
 use Sellsy\Models\Client\ContactInterface;
 use Sellsy\Models\Client\CustomerInterface;
 use Sellsy\Models\CustomFields\CustomFieldTrait;
+use Sellsy\Models\Documents\Document\RowInterface;
 use Sellsy\Models\Documents\Document\StepInterface;
 use Sellsy\Models\SmartTags\TagTrait;
 use Sellsy\Models\Staff\PeopleInterface;
@@ -105,6 +105,11 @@ abstract class Document implements DocumentInterface
      * @var ContactInterface
      */
     protected $contact;
+
+    /**
+     * @var RowInterface[]
+     */
+    protected $rows;
 
     /**
      * @inheritdoc
@@ -384,5 +389,61 @@ abstract class Document implements DocumentInterface
     public function isDraft()
     {
         return $this->step->getName() == StepInterface::STEP_DRAFT;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getRows()
+    {
+        return $this->rows;
+    }
+
+    /**
+     * @param \Closure $closure
+     * @return null|RowInterface
+     */
+    public function getRow(\Closure $closure)
+    {
+        foreach($this->rows as $row) {
+            if ($closure($row)) {
+                return $row;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string|null $label
+     * @return bool
+     */
+    public function hasRow($label = null)
+    {
+        if (! $label) {
+            return !! $this->getRows();
+        }
+
+        $rowFound = $this->getRow(function(RowInterface $row) use($label) {
+            return $row->getLabel() == $label;
+        });
+
+        return $rowFound !== null;
+    }
+
+    /**
+     * @param RowInterface[] $rows
+     */
+    public function setRows(array $rows)
+    {
+        $this->rows = $rows;
+    }
+
+    /**
+     * @param RowInterface $row
+     */
+    public function addRow($row)
+    {
+        $this->rows[] = $row;
     }
 }

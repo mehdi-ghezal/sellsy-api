@@ -1,6 +1,6 @@
 Sellsy\Models\Documents\DocumentInterface:
-    default:
-        context: ['list', 'one']
+    list:
+        context: list
         mappings:
             id: number(id)
             reference: ident
@@ -67,3 +67,89 @@ Sellsy\Models\Documents\DocumentInterface:
                     stringValue: stringval
                     formattedValue: formatted_value
 
+    one:
+        context: one
+        mappings:
+            id: number(id)
+            reference: ident
+            note: notes
+            createAt: parseDateTime(created)
+            displayDate: parseDateTime(displayedDate)
+            analyticsCode: ~
+            amountWithoutTax: number(totalAmountTaxesFree)
+            taxAmount: number(taxesAmountSum)
+            packagingsAmount: number(packagingsAmount)
+            shippingsAmount: number(shippingsAmount)
+            discountPercent: number(discountPercent)
+            discountAmount: number(discountAmount)
+            step:
+                type: Sellsy\Models\Documents\Document\StepInterface
+                mappings:
+                    id: step_id
+                    name: step
+                    label: step_label
+            owner:
+                type: Sellsy\Models\Staff\PeopleInterface
+                mappings:
+                    id: number(ownerid)
+                    fullName: ownerFullName
+            currency:
+                type: Sellsy\Models\Accounting\CurrencyInterface
+                mappings:
+                    id: number(currencyid)
+                    symbol: currencysymbol
+            customer:
+                type: Sellsy\Models\Client\CustomerInterface
+                mappings:
+                    id: number(thirdid)
+                    name: thirdname
+                    email: thirdemail
+                    phoneNumber: thirdtel
+                    mobileNumber: thirdmobile
+            contact:
+                type: Sellsy\Models\Client\ContactInterface
+                mappings:
+                    id: number(contactId)
+                    fullName: contactName
+            tags:
+                type: Sellsy\Models\SmartTags\TagInterface
+                collection: true
+                mappings:
+                    id: number(id)
+                    name: word
+                    category: ~
+            customFields:
+                type: Sellsy\Models\CustomFields\CustomFieldInterface
+                collection: true
+                origin: customfieldsGroups
+                mappings:
+                    id: number(id)
+                    fieldId: number(cfid)
+                    type: ~
+                    textValue: textval
+                    boolValue: boolean(boolval)
+                    timestampValue: timestampval
+                    decimalValue: number(decimalval)
+                    numericValue: number(numericval)
+                    stringValue: stringval
+                    formattedValue: formatted_value
+            rows:
+                type: Sellsy\Models\Documents\Document\RowInterface
+                collection: true
+                origin: map.rows
+                mappings:
+                    position: number(rank)
+                    type: type
+                    label: name
+                    description: notes
+                    picture: url(defaultImage.file.public_path)
+                    quantity: number(qt)
+                    unit: unitText
+                    unitAmount: number(unitAmount)
+                    taxRate: number(taxrate)
+                    taxAmount: number(taxAmount)
+                    unitPurchaseAmount: number(purchaseAmount)
+                    markupRate: number(tauxMarque)
+                    marginRate: number(tauxMarge)
+                    accountingCode: accountingCode
+                    

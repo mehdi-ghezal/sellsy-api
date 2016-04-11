@@ -5,6 +5,7 @@ namespace Sellsy\Mappers;
 use Sellsy\Exception\RuntimeException;
 use Sellsy\ExpressionLanguage\ExpressionLanguage;
 use Sellsy\Models\SmartTags\TagInterface;
+use Sellsy\Models\CustomFields\CustomFieldInterface;
 use Sellsy\Mappers\YmlMapper\MappingsParser;
 use Symfony\Component\ExpressionLanguage\SyntaxError;
 
@@ -131,8 +132,21 @@ class YmlMapper extends AbstractMapper
                 $collectionData = $this->evaluate($definition['origin'], $data);
 
                 // Manage special response format for SmartTags
+                // TODO : Find a way to handle this case more nicely
                 if ($definition['type'] == TagInterface::class) {
                     $collectionData = is_array($collectionData) ? current($collectionData) : $collectionData;
+                }
+
+                // Manage special response format for CustomFields in Document.getOne
+                // TODO : Find a way to handle this case more nicely
+                if ($definition['type'] == CustomFieldInterface::class && $definition['origin'] == 'customfieldsGroups') {
+                    $collectionDataByGroups = array_column($collectionData, 'list');
+
+                    $collectionData = array();
+
+                    foreach($collectionDataByGroups as $collectionDataForOneGroup) {
+                        $collectionData = $collectionDataForOneGroup + $collectionData;
+                    }
                 }
 
                 if (is_array($collectionData)) {

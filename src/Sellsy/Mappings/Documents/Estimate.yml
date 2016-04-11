@@ -1,8 +1,15 @@
 Sellsy\Models\Documents\EstimateInterface:
-    default:
-        context: ['list', 'one']
+    list:
         use:
             Sellsy\Models\Documents\DocumentInterface: list
+        mappings:
+            marginAmount: number(marge)
+            marginRate: number(marge_tauxMarge)
+            markupRate: number(marge_tauxMarque)
+            expireAt: parseDateTime(expireDate)
+    one:
+        use:
+            Sellsy\Models\Documents\DocumentInterface: one
         mappings:
             marginAmount: number(marge)
             marginRate: number(marge_tauxMarge)

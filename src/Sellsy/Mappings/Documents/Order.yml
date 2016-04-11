@@ -1,7 +1,11 @@
 Sellsy\Models\Documents\OrderInterface:
-    default:
-        context: ['list', 'one']
+    list:
         use:
             Sellsy\Models\Documents\DocumentInterface: list
+        mappings:
+            expireAt: parseDateTime(expireDate)
+    one:
+        use:
+            Sellsy\Models\Documents\DocumentInterface: one
         mappings:
             expireAt: parseDateTime(expireDate)

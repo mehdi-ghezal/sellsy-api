@@ -49,6 +49,46 @@ class GetOneTest extends \PHPUnit_Framework_TestCase
         return $invoice;
     }
 
+
+    /**
+     * @param InvoiceInterface $invoice
+     * @depends testGetInvoice
+     */
+    public function testInvoiceMappings(InvoiceInterface $invoice)
+    {
+        $this->assertInstanceOf('\DateTime', $invoice->getCreateAt());
+        $this->assertInstanceOf('\DateTime', $invoice->getDisplayDate());
+        $this->assertInstanceOf('Sellsy\Models\Client\ContactInterface', $invoice->getContact());
+        $this->assertInstanceOf('Sellsy\Models\Accounting\CurrencyInterface', $invoice->getCurrency());
+        $this->assertInstanceOf('Sellsy\Models\Client\CustomerInterface', $invoice->getCustomer());
+        $this->assertInstanceOf('Sellsy\Models\Staff\PeopleInterface', $invoice->getOwner());
+        $this->assertInstanceOf('Sellsy\Models\Documents\Document\StepInterface', $invoice->getStep());
+
+        $this->assertInternalType('integer', $invoice->getId());
+        $this->assertInternalType('float', $invoice->getAmountWithoutTax());
+        $this->assertInternalType('float', $invoice->getDiscountAmount());
+        $this->assertInternalType('float', $invoice->getDiscountPercent());
+        $this->assertInternalType('float', $invoice->getPackagingsAmount());
+        $this->assertInternalType('float', $invoice->getShippingsAmount());
+        $this->assertInternalType('float', $invoice->getTaxAmount());
+
+        $this->assertEquals('analyticsCode_value', $invoice->getAnalyticsCode());
+        $this->assertEquals('notes_value', $invoice->getNote());
+        $this->assertEquals('ident_value', $invoice->getReference());
+
+        $this->assertInternalType('array', $invoice->getTags());
+        $this->assertInstanceOf('Sellsy\Models\SmartTags\TagInterface', $invoice->getTag(function() { return true; }));
+        $this->assertGreaterThan(0, count($invoice->getTags()));
+
+        $this->assertInternalType('array', $invoice->getCustomFields());
+        $this->assertInstanceOf('Sellsy\Models\CustomFields\CustomFieldInterface', $invoice->getCustomField(function() { return true; }));
+        $this->assertGreaterThan(0, count($invoice->getCustomFields()));
+
+        $this->assertInternalType('array', $invoice->getRows());
+        $this->assertInstanceOf('Sellsy\Models\Documents\Document\RowInterface', $invoice->getRow(function() { return true; }));
+        $this->assertGreaterThan(0, count($invoice->getRows()));
+    }
+
     /**
      * @return OrderInterface
      */

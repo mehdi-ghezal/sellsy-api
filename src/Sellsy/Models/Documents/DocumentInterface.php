@@ -7,6 +7,7 @@ use Sellsy\Models\Client\ContactInterface;
 use Sellsy\Models\Client\CustomerInterface;
 use Sellsy\Models\CustomFields\CustomFieldInterface;
 use Sellsy\Models\CustomFields\CustomFieldTraitInterface;
+use Sellsy\Models\Documents\Document\RowInterface;
 use Sellsy\Models\Documents\Document\StepInterface;
 use Sellsy\Models\SmartTags\TagInterface;
 use Sellsy\Models\SmartTags\TagTraitInterface;
@@ -198,4 +199,31 @@ interface DocumentInterface extends TagTraitInterface, CustomFieldTraitInterface
      * @return string
      */
     public function getDoctype();
+
+    /**
+     * @return RowInterface[]
+     */
+    public function getRows();
+
+    /**
+     * @param \Closure $closure
+     * @return null|RowInterface
+     */
+    public function getRow(\Closure $closure);
+
+    /**
+     * @param string|null $label
+     * @return bool
+     */
+    public function hasRow($label = null);
+
+    /**
+     * @param RowInterface[] $rows
+     */
+    public function setRows(array $rows);
+
+    /**
+     * @param RowInterface $row
+     */
+    public function addRow($row);
 }

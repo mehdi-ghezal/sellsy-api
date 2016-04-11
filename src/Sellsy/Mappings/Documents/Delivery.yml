@@ -1,8 +1,10 @@
 Sellsy\Models\Documents\DeliveryInterface:
-    default:
-        context: ['list', 'one']
+    list:
         use:
             Sellsy\Models\Documents\DocumentInterface: list
+    one:
+        use:
+            Sellsy\Models\Documents\DocumentInterface: one
 
 
 

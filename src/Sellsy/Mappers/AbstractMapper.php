@@ -33,6 +33,8 @@ use Sellsy\Models\Documents\Order;
 use Sellsy\Models\Documents\OrderInterface;
 use Sellsy\Models\Documents\Proforma;
 use Sellsy\Models\Documents\ProformaInterface;
+use Sellsy\Models\Documents\Document\Row;
+use Sellsy\Models\Documents\Document\RowInterface;
 use Sellsy\Models\SmartTags\Tag;
 use Sellsy\Models\SmartTags\TagInterface;
 use Sellsy\Models\Staff\People;
@@ -137,6 +139,7 @@ abstract class AbstractMapper implements MapperInterface
             PackagingInterface::class => Packaging::class,
             AddressInterface::class => Address::class,
             AnnotationInterface::class => Annotation::class,
+            RowInterface::class => Row::class
         );
     }
 
