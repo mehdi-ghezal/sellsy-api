@@ -134,4 +134,12 @@ class Invoice extends Document implements InvoiceInterface
     {
         return $this->step->getName() == StepInterface::STEP_CANCELLED;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDoctype()
+    {
+        return 'invoice';
+    }
 }

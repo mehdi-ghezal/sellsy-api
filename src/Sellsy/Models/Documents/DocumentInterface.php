@@ -5,7 +5,11 @@ namespace Sellsy\Models\Documents;
 use Sellsy\Models\Accounting\CurrencyInterface;
 use Sellsy\Models\Client\ContactInterface;
 use Sellsy\Models\Client\CustomerInterface;
+use Sellsy\Models\CustomFields\CustomFieldInterface;
+use Sellsy\Models\CustomFields\CustomFieldTraitInterface;
 use Sellsy\Models\Documents\Document\StepInterface;
+use Sellsy\Models\SmartTags\TagInterface;
+use Sellsy\Models\SmartTags\TagTraitInterface;
 use Sellsy\Models\Staff\PeopleInterface;
 
 /**
@@ -13,7 +17,7 @@ use Sellsy\Models\Staff\PeopleInterface;
  *
  * @package Sellsy\Models\Documents
  */
-interface DocumentInterface
+interface DocumentInterface extends TagTraitInterface, CustomFieldTraitInterface
 {
     /**
      * @return int

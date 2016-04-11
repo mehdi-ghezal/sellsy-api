@@ -158,4 +158,12 @@ class Estimate extends Document implements EstimateInterface
     {
         return $this->step->getName() == StepInterface::STEP_CANCELLED;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDoctype()
+    {
+        return 'estimate';
+    }
 }

@@ -26,4 +26,12 @@ class Delivery extends Document implements DeliveryInterface
     {
         return $this->step->getName() == StepInterface::STEP_READ;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDoctype()
+    {
+        return 'delivery';
+    }
 }

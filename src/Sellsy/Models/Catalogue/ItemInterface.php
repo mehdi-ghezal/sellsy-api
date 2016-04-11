@@ -3,13 +3,15 @@
 namespace Sellsy\Models\Catalogue;
 
 use Sellsy\Models\Catalogue\Item\PackagingInterface;
+use Sellsy\Models\CustomFields\CustomFieldTraitInterface;
+use Sellsy\Models\SmartTags\TagTraitInterface;
 
 /**
  * Class Item
  *
  * @package Sellsy\Models\Catalogue
  */
-interface ItemInterface
+interface ItemInterface extends TagTraitInterface, CustomFieldTraitInterface
 {
     /**
      * @return int

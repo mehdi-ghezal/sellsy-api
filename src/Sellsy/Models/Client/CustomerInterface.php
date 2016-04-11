@@ -3,6 +3,7 @@
 namespace Sellsy\Models\Client;
 
 use Sellsy\Models\Addresses\AddressInterface;
+use Sellsy\Models\CustomFields\CustomFieldTraitInterface;
 use Sellsy\Models\Staff\PeopleInterface;
 
 /**
@@ -10,7 +11,7 @@ use Sellsy\Models\Staff\PeopleInterface;
  *
  * @package Sellsy\Models\Client
  */
-interface CustomerInterface
+interface CustomerInterface extends CustomFieldTraitInterface
 {
     /**
      * @return int

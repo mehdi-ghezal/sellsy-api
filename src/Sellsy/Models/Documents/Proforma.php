@@ -79,4 +79,12 @@ class Proforma extends Document implements ProformaInterface
     {
         return $this->step->getName() == StepInterface::STEP_CANCELLED;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDoctype()
+    {
+        return 'proforma';
+    }
 }

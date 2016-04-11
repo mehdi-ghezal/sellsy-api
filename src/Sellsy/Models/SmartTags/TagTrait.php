@@ -38,11 +38,15 @@ trait TagTrait
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      * @return boolean
      */
-    public function hasTag($name)
+    public function hasTag($name = null)
     {
+        if (! $name) {
+            return !! $this->getTags();
+        }
+
         $tagFound = $this->getTag(function(TagInterface $tag) use($name) {
             return $tag->getName() == $name;
         });
