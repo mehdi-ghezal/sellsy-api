@@ -114,6 +114,7 @@ Sellsy\Models\Documents\DocumentInterface:
             tags:
                 type: Sellsy\Models\SmartTags\TagInterface
                 collection: true
+                origin: tags
                 mappings:
                     id: number(id)
                     name: word

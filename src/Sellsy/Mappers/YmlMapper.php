@@ -133,8 +133,8 @@ class YmlMapper extends AbstractMapper
 
                 // Manage special response format for SmartTags
                 // TODO : Find a way to handle this case more nicely
-                if ($definition['type'] == TagInterface::class) {
-                    $collectionData = is_array($collectionData) ? current($collectionData) : $collectionData;
+                if ($definition['type'] == TagInterface::class && is_array($collectionData)) {
+                    $collectionData = isset($collectionData[0]) ? current($collectionData) : $collectionData;
                 }
 
                 // Manage special response format for CustomFields in Document.getOne
