@@ -93,6 +93,10 @@ abstract class AbstractTransport implements TransportInterface
     protected function convertResponseBody($httpResponseBody, $httpResponseStatusCode)
     {
         try {
+            if ($httpResponseStatusCode != 200) {
+                throw new \Exception(sprintf("The API call returned an unexpected status code : %s", $httpResponseStatusCode));
+            }
+
             if (false !== strpos($httpResponseBody, 'oauth_problem=signature_invalid')) {
                 throw new \Exception("The oauth signature is invalid, please verify the authentication credentials provided");
             }

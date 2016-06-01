@@ -57,6 +57,6 @@ class Guzzle extends AbstractTransport
             throw new ServerException($e->getMessage(), $e->getCode(), $e);
         }
 
-        return $this->convertResponseBody($response->getBody(), $response->getStatusCode());
+        return $this->convertResponseBody($response->getBody()->getContents(), $response->getStatusCode());
     }
 }

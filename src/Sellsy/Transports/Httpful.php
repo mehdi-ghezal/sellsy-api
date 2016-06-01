@@ -50,6 +50,6 @@ class Httpful extends AbstractTransport
             throw new ServerException($e->getMessage(), $e->getCode(), $e);
         }
 
-        return $this->convertResponseBody($httpResponse->body, $httpResponse->code);
+        return $this->convertResponseBody($httpResponse->raw_body, $httpResponse->code);
     }
 }
